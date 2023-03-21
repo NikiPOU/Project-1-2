@@ -1,6 +1,5 @@
 package twentyone;
 
-package core;
 
 public class Vector3d implements Vector3dInterface{
 
