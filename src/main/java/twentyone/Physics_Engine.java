@@ -1,7 +1,7 @@
 package twentyone;
 //import java.util.Arrays;
 class Physics_Engine{
-    private final double g = 4;
+    private final double g = 6.6743E-20;
 
     public double[] getForce(CelestialBody theIbody, CelestialBody theJbody){
         double[] position_Ibody = {theIbody.velocityX, theIbody.velocityY, theIbody.velocityZ};
