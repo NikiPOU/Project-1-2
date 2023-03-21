@@ -1,4 +1,6 @@
-public class CelestialBody {
+package twentyone;
+
+public class CelestialBody2 {
 
   public static Double bigG = 6.6743/1e11; //gravitational constant
 
@@ -25,7 +27,7 @@ public class CelestialBody {
   public int x, y; // position on our 2D plane
 
 
-  CelestialBody(double mass, long positionX, long positionY, long positionZ, double d, double e, double f){ 
+  CelestialBody2(double mass, long positionX, long positionY, long positionZ, double d, double e, double f){ 
 
     this.mass = mass;
     this.positionX = positionX;
@@ -57,11 +59,13 @@ public class CelestialBody {
 
     double stepSize = 0.1; //step size
     double x = 0;
-    double x = 0;
+    //double x = 0;
     double v = 60; //initial velocity
 
 
-    for (int i = 0; i<1)
+    for (int i = 0; i<1; i++) {
+      
+    }
 
 
   }

@@ -1,3 +1,5 @@
+package twentyone;
+
 public class CelestialBody {
 
   public static Double bigG = 6.6743/1e11; //gravitational constant
