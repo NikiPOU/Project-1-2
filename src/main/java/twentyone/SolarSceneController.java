@@ -54,6 +54,7 @@ public class SolarSceneController implements Initializable {
     Label TimeElapsed;
 
     int i = 180;
+    int days = -1;
     int months = -1;
     int years = 0;
 
@@ -93,9 +94,9 @@ public class SolarSceneController implements Initializable {
                 double may = 180*Math.sin(Math.toRadians(0.52*i))+suny;
                 double jx = 419*Math.cos(Math.toRadians(0.08*i))+sunx;
                 double jy = 419*Math.sin(Math.toRadians(0.08*i))+suny;
-                double sx = 700*Math.cos(Math.toRadians(0.03*i))+sunx;
-                double sy = 700*Math.sin(Math.toRadians(0.03*i))+suny;
-                double tx = 40*Math.cos(Math.toRadians(22.64*i))+sx+50;
+                double sx = 700*Math.cos(Math.toRadians(0.034*i))+sunx;
+                double sy = 700*Math.sin(Math.toRadians(0.034*i))+suny;
+                double tx = 40*Math.cos(Math.toRadians(22.64*i))+sx+40;
                 double ty = 40*Math.sin(Math.toRadians(22.64*i))+sy+20;
                 earth.setLayoutX(ex);
                 earth.setLayoutY(ey);
@@ -113,14 +114,18 @@ public class SolarSceneController implements Initializable {
                 saturn.setLayoutY(sy);
                 titan.setLayoutX(tx);
                 titan.setLayoutY(ty);
-                if(i % 30 == 0){
+                days++;
+                if(days % 30 == 0){
                     months++;
+                    days = 0;
                     if(months/12 == 1){
                         months = 0;
                         years++;
                     }
-                    TimeElapsed.setText("Time Elapsed: " + years + " years and " + months + " months");
                 }
+                TimeElapsed.setText("Time Elapsed: " + years + " years, " + months + " months and " + days + " days");
+                probeCoords.setText("Currect probe coords: " + ex + " " + ey);
+                distanceTitan.setText("Distance to Titan: " + Math.sqrt(((tx-ex)*(tx-ex))+((ty-ey)*(ty-ey))));
                 i++;
             }
         };
