@@ -4,16 +4,16 @@ public class Main {
 
     public static void main(String[] args) {
         CelestialBody sun = new CelestialBody(1.991E30, 0, 0, 0, 0, 0, 0);
-        CelestialBody mercury = new CelestialBody(3.302E+23, (long) 7833268.439, (long) 44885949.37, (long) 2867693.201, -57.49674801, 11.52095127, 6.216953743);
-        CelestialBody venus = new CelestialBody(4.8685E+24, (long) -28216773.94, (long) 103994008.5, (long) 3012326.643, -34.02367371, -8.965212747, 1.840617353);
-        CelestialBody earth = new CelestialBody(5.97219E+24, (long) -148186906.893642, (long) -27823158.5715694, (long) 33746.8987977113, 5.052515776, -29.39266876,  0.001709743);
-        CelestialBody moon = new CelestialBody(7.3491E22, (long) -148458048.4, (long) -27524868.18, (long) 70233.64993,4.340326347, -30.04808342, -0.011610354);
-        CelestialBody mars = new CelestialBody(6.4171E+23, (long) -159116303.4, (long) 189235671.6, (long) 7870476.085, -17.69544692, -13.46352534, 0.152331928);
-        CelestialBody jupiter = new CelestialBody(1.89819E+27, (long) 692722875.9, (long) 258560760.8, (long) -16570817.71, -4.714430599, 12.8555097, 0.052211813);
-        CelestialBody saturn = new CelestialBody(5.6834E+26, (long) 1253801724, (long) -760453007.8, (long) -36697431.16, 4.467813413, 8.239895405,  -0.320745377);
-        CelestialBody titan = new CelestialBody(1.34553E+23, (long) 1254501625, (long) -761340299.1, (long) -36309613.84, 8.995932295, 11.10857136, -2.251309862);
-        CelestialBody neptune = new CelestialBody( 1.02409E+26, (long) 4454487339L, (long) -397895128.8, (long) -94464151.34, 0.447991657, 5.446106975, -0.122638125);
-        CelestialBody uranus = new CelestialBody(0, (long) 1958732436, (long) 2191808553L, (long) -17235283.83, -5.127662163, 4.220553473, 0.082119034);
+        CelestialBody mercury = new CelestialBody(3.302E+23, (long) 7833268.43923962, (long) 44885949.3703908, (long) 2867693.20054382, -57.4967480139828, 11.52095127176, 6.21695374334136);
+        CelestialBody venus = new CelestialBody(4.8685E+24, (long) -28216773.9426889, (long) 103994008.541512, (long) 3012326.64296788, -34.0236737066136, -8.96521274688838, 1.84061735279188);
+        CelestialBody earth = new CelestialBody(5.97219E+24, (long) -148186906.893642, (long) -27823158.5715694, (long) 33746.8987977113, 5.05251577575409, -29.3926687625899,  0.00170974277401292);
+        CelestialBody moon = new CelestialBody(7.3491E22, (long) -148458048.395164, (long) -27524868.1841142, (long) 33746.8987977113, 4.34032634654904, -30.0480834180741, -0.0116103535014229);
+        CelestialBody mars = new CelestialBody(6.4171E+23, (long) -159116303.422552, (long) 189235671.561057, (long) 7870476.08522969, -17.6954469224752, -13.4635253412947, 0.152331928200531);
+        CelestialBody jupiter = new CelestialBody(1.89819E+27, (long) 692722875.928222, (long) 258560760.813524, (long) -16570817.7105996, -4.71443059866156, 12.8555096964427, 0.0522118126939208);
+        CelestialBody saturn = new CelestialBody(5.6834E+26, (long) 1253801723.95465, (long) -760453007.810989, (long) -36697431.1565206, 4.46781341335014, 8.23989540475628,  -0.320745376969732);
+        CelestialBody titan = new CelestialBody(1.34553E+23, (long) 1254501624.95946, (long) -761340299.067828, (long) -36309613.8378104 , 8.99593229549645, 11.1085713608453, -2.25130986174761);
+        CelestialBody neptune = new CelestialBody( 1.02409E+26, (long) 4454487339.09447, (long) -397895128.763904, (long) -94464151.3421107, 0.447991656952326, 5.44610697514907, -0.122638125365954);
+        CelestialBody uranus = new CelestialBody(86.813E+24, (long) 1958732435.99338, (long) 2191808553.21893, (long) -17235283.8321992, -5.12766216337626, 4.22055347264457, 0.0821190336403063);
     
         Probe skeldVent21 = new Probe(0, 0, 0, 0, 0, 0);
 
