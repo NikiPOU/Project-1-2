@@ -4,8 +4,8 @@ class Physics_Engine{
     private final double g = 6.6743E-20;
 
     public double[] getForce(CelestialBody theIbody, CelestialBody theJbody){
-        double[] position_Ibody = {theIbody.velocityX, theIbody.velocityY, theIbody.velocityZ};
-        double[] position_Jbody = {theJbody.velocityX, theJbody.velocityY, theJbody.velocityZ};
+        double[] position_Ibody = {theIbody.positionX, theIbody.positionY, theIbody.positionZ};
+        double[] position_Jbody = {theJbody.positionX, theJbody.positionY, theJbody.positionZ};
         double[] returnForce = new double[3];
         double massI = theIbody.mass;
         double massJ = theJbody.mass;
