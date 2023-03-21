@@ -1,5 +1,7 @@
 package twentyone;
 
+import java.util.Arrays;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -17,7 +19,40 @@ public class Main {
     
         Probe skeldVent21 = new Probe(0, 0, 0, 0, 0, 0);
 
+        Physics_Engine physics = new Physics_Engine();
+
+        CelestialBody[] bodies = {sun, mercury, venus, earth, moon, mars, jupiter, saturn, titan, neptune, uranus};
+
+        for (int i = 1; i < bodies.length; i++) {
+            System.out.println(Arrays.toString(getTotalForce(physics, bodies, i)));
+        }
+
     }   
+
+    public static double[] getTotalForce(Physics_Engine unreal_engine, CelestialBody[] bs, int planet) {
+        double[] sumReturn = {0, 0, 0};
+        for (int i = 0; i < bs.length; i++){
+            if(planet != i){
+                sumReturn = sumvectors(sumReturn ,unreal_engine.getForce(bs[planet], bs[i]));
+            }
+        }
+        sumReturn = multiplyByNeg(sumReturn);
+        return sumReturn;
+    }
+
+    public static double[] sumvectors(double[] vector1, double[] vector2){      
+        for (int i = 0; i < vector1.length; i++) {
+            vector1[i] = vector1[i] + vector2[i];
+        }
+        return vector1;
+    }
+
+    public static double[] multiplyByNeg(double[] summedVector){
+        for (int i = 0; i < summedVector.length; i++) {
+            summedVector[i] = -1*summedVector[i];
+        }
+        return summedVector;
+    }
 }
 
 

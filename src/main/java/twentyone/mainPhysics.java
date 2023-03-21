@@ -7,7 +7,7 @@ class mainPhysics{
         double[] sumReturn = {0, 0, 0};
         for (int i = 0; i < theBodies.length; i++){
             if(planetIndex != i){
-                sumReturn = sumvectors(sumReturn ,unreal_engine.getForce(theBodies[planetIndex], theBodies[i]));
+                //sumReturn = sumvectors(sumReturn ,unreal_engine.getForce(theBodies[planetIndex], theBodies[i]));
             }
         }
         sumReturn = multiplyByNeg(sumReturn);
@@ -45,9 +45,9 @@ class mainPhysics{
         bodies[1] = earth;
         bodies[2] = venus;
         bodies[3] = mars;
-        System.out.println(Arrays.toString(physics.getForce(earth, sun)));
-        System.out.println(Arrays.toString(physics.getForce(earth, venus)));
-        System.out.println(Arrays.toString(physics.getForce(earth, mars)));
+        //System.out.println(Arrays.toString(physics.getForce(earth, sun)));
+        //System.out.println(Arrays.toString(physics.getForce(earth, venus)));
+        //System.out.println(Arrays.toString(physics.getForce(earth, mars)));
         System.out.println(Arrays.toString(sum(physics, bodies, 1)));
         
     }

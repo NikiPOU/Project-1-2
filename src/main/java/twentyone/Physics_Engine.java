@@ -3,12 +3,12 @@ package twentyone;
 class Physics_Engine{
     private final double g = 4;
 
-    public double[] getForce(CelestialBody3 theIbody, CelestialBody3 theJbody){
-        double[] position_Ibody = theIbody.getPosition();
-        double[] position_Jbody = theJbody.getPosition();
+    public double[] getForce(CelestialBody theIbody, CelestialBody theJbody){
+        double[] position_Ibody = {theIbody.velocityX, theIbody.velocityY, theIbody.velocityZ};
+        double[] position_Jbody = {theJbody.velocityX, theJbody.velocityY, theJbody.velocityZ};
         double[] returnForce = new double[3];
-        double massI = theIbody.getMass();
-        double massJ = theJbody.getMass();
+        double massI = theIbody.mass;
+        double massJ = theJbody.mass;
         
         double multiplication = massI * massJ * g;
         returnForce = subtract(position_Ibody, position_Jbody);
