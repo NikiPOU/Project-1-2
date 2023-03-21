@@ -14,6 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+//1 unit is 15474 km
+
 public class SolarSceneController implements Initializable {
 
     int probeCoords2;
@@ -21,8 +23,8 @@ public class SolarSceneController implements Initializable {
     int launchCoords2;
     int launchVelocity2;
 
-    int sunx = 800;
-    int suny = 400;
+    int sunx = 840;
+    int suny = 440;
 
     @FXML
     Label probeCoords;
@@ -46,13 +48,21 @@ public class SolarSceneController implements Initializable {
     ImageView jupiter;
     @FXML
     ImageView saturn;
+    @FXML
+    ImageView titan;
+    @FXML
+    Label TimeElapsed;
 
     int i = 180;
+    int months = -1;
+    int years = 0;
 
     private Timeline timeline;
 
     int[] xs = {355, 601, 355, 140};
     int[] ys = {49, 230, 415, 230};
+
+    //1 = 2000000
 
 
 
@@ -71,20 +81,22 @@ public class SolarSceneController implements Initializable {
         //one can add a specific action when the keyframe is reached
         EventHandler<ActionEvent> movement = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
-                double ex = 300*Math.cos(Math.toRadians(i))+sunx;
-                double ey = 300*Math.sin(Math.toRadians(i))+suny;
-                double mx = 50*Math.cos(Math.toRadians(12*i))+ex+20;
-                double my = 50*Math.sin(Math.toRadians(12*i))+ey+10;
-                double mex = 80*Math.cos(Math.toRadians(4*i))+sunx+30;
-                double mey = 80*Math.sin(Math.toRadians(4*i))+suny+50;
-                double vx = 170*Math.cos(Math.toRadians(1.7*i))+sunx;
-                double vy = 170*Math.sin(Math.toRadians(1.7*i))+suny;
-                double max = 380*Math.cos(Math.toRadians(0.52*i))+sunx;
-                double may = 380*Math.sin(Math.toRadians(0.52*i))+suny;
-                double jx = 550*Math.cos(Math.toRadians(0.08*i))+sunx;
-                double jy = 550*Math.sin(Math.toRadians(0.08*i))+suny;
+                double ex = 120*Math.cos(Math.toRadians(i))+sunx;
+                double ey = 120*Math.sin(Math.toRadians(i))+suny;
+                double mx = 15*Math.cos(Math.toRadians(12*i))+ex+7;
+                double my = 15*Math.sin(Math.toRadians(12*i))+ey+7;
+                double mex = 59*Math.cos(Math.toRadians(4*i))+sunx;
+                double mey = 59*Math.sin(Math.toRadians(4*i))+suny;
+                double vx = 80*Math.cos(Math.toRadians(1.7*i))+sunx;
+                double vy = 80*Math.sin(Math.toRadians(1.7*i))+suny;
+                double max = 180*Math.cos(Math.toRadians(0.52*i))+sunx;
+                double may = 180*Math.sin(Math.toRadians(0.52*i))+suny;
+                double jx = 419*Math.cos(Math.toRadians(0.08*i))+sunx;
+                double jy = 419*Math.sin(Math.toRadians(0.08*i))+suny;
                 double sx = 700*Math.cos(Math.toRadians(0.03*i))+sunx;
                 double sy = 700*Math.sin(Math.toRadians(0.03*i))+suny;
+                double tx = 40*Math.cos(Math.toRadians(22.64*i))+sx+50;
+                double ty = 40*Math.sin(Math.toRadians(22.64*i))+sy+20;
                 earth.setLayoutX(ex);
                 earth.setLayoutY(ey);
                 moon.setLayoutX(mx);
@@ -99,6 +111,16 @@ public class SolarSceneController implements Initializable {
                 jupiter.setLayoutY(jy);
                 saturn.setLayoutX(sx);
                 saturn.setLayoutY(sy);
+                titan.setLayoutX(tx);
+                titan.setLayoutY(ty);
+                if(i % 30 == 0){
+                    months++;
+                    if(months/12 == 1){
+                        months = 0;
+                        years++;
+                    }
+                    TimeElapsed.setText("Time Elapsed: " + years + " years and " + months + " months");
+                }
                 i++;
             }
         };
