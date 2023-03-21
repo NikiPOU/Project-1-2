@@ -13,44 +13,54 @@
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Button>
+      <ImageView fx:id="milkyway" fitHeight="1080" fitWidth="1920" layoutX="0.0" layoutY="0.0">
+         <image>
+            <Image url="@MilkyWayGalaxy1.png" />
+         </image>
+      </ImageView>
       <ImageView fitHeight="90.0" fitWidth="90.0" layoutX="800.0" layoutY="400.0">
          <image>
             <Image url="@RealisticSun1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="earth" fitHeight="49.0" fitWidth="54.0" layoutX="140.0" layoutY="230.0">
+      <ImageView fx:id="earth" fitHeight="20.0" fitWidth="20.0" layoutX="140.0" layoutY="230.0">
          <image>
             <Image url="@RealisticEarth1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="moon" fitHeight="15.0" fitWidth="20.0" layoutX="201.0" layoutY="209.0">
+      <ImageView fx:id="moon" fitHeight="5.0" fitWidth="5.0" layoutX="201.0" layoutY="209.0">
          <image>
             <Image url="@RealisticMoon1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="mercury" fitHeight="15.0" fitWidth="20.0" layoutX="201.0" layoutY="300.0">
+      <ImageView fx:id="mercury" fitHeight="10.0" fitWidth="10.0" layoutX="201.0" layoutY="300.0">
          <image>
             <Image url="@Mercury.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="venus" fitHeight="48.0" fitWidth="53.0" layoutX="201.0" layoutY="450.0">
+      <ImageView fx:id="venus" fitHeight="19.0" fitWidth="20.0" layoutX="201.0" layoutY="450.0">
          <image>
             <Image url="@Venus.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="mars" fitHeight="40.0" fitWidth="43.0" layoutX="201.0" layoutY="500.0">
+      <ImageView fx:id="mars" fitHeight="16.0" fitWidth="16.0" layoutX="201.0" layoutY="500.0">
          <image>
             <Image url="@Mars.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="jupiter" fitHeight="100.0" fitWidth="100.0" layoutX="201.0" layoutY="600.0">
+      <ImageView fx:id="jupiter" fitHeight="60.0" fitWidth="60.0" layoutX="201.0" layoutY="600.0">
          <image>
             <Image url="@Jupiter.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="saturn" fitHeight="70.0" fitWidth="140.0" layoutX="201.0" layoutY="800.0">
+      <ImageView fx:id="saturn" fitHeight="48.0" fitWidth="96.0" layoutX="201.0" layoutY="800.0">
          <image>
             <Image url="@Saturn.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="titan" fitHeight="18.0" fitWidth="18.0" layoutX="201.0" layoutY="860.0">
+         <image>
+            <Image url="@Titan.png" />
          </image>
       </ImageView>
       <Label fx:id="probeCoords" layoutX="14.0" layoutY="850.0" text="Currect probe coords: " textFill="WHITE">
@@ -69,6 +79,11 @@
          </font>
       </Label>
       <Label fx:id="launchVelocity" layoutX="14.0" layoutY="904.0" text="Launch velocity:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="TimeElapsed" layoutX="14.0" layoutY="832.0" text="Time Elapsed:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
