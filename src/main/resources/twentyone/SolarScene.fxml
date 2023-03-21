@@ -5,9 +5,10 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="508.0" prefWidth="785.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.SolarSceneController">
+<AnchorPane style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.SolarSceneController">
    <children>
         <Button fx:id="secondaryButton" layoutX="14.0" layoutY="14.0" onAction="#switchToStart" style="-fx-background-color: white;" text="Return">
          <font>
@@ -63,30 +64,34 @@
             <Image url="@Titan.png" />
          </image>
       </ImageView>
-      <Label fx:id="probeCoords" layoutX="14.0" layoutY="850.0" text="Currect probe coords: " textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <Label fx:id="distanceTitan" layoutX="14.0" layoutY="868.0" text="Distance to Titan: " textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <Label fx:id="launchCoords" layoutX="14.0" layoutY="886.0" text="Launch coords: " textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <Label fx:id="launchVelocity" layoutX="14.0" layoutY="904.0" text="Launch velocity: " textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <Label fx:id="TimeElapsed" layoutX="14.0" layoutY="832.0" text="Time Elapsed:" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
+      <VBox fx:id="data" layoutX="27.0" layoutY="960.0" prefHeight="90.0" prefWidth="382.0">
+         <children>
+            <Label fx:id="TimeElapsed" text="Time Elapsed:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="probeCoords" text="Currect probe coords: " textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="distanceTitan" text="Distance to Titan: " textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="launchCoords" text="Launch coords: " textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="launchVelocity" text="Launch velocity: " textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

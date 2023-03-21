@@ -1,5 +1,7 @@
 package twentyone;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 //1 unit is 15474 km
@@ -52,6 +55,8 @@ public class SolarSceneController implements Initializable {
     ImageView titan;
     @FXML
     Label TimeElapsed;
+    @FXML
+    VBox data;
 
     int i = 180;
     int days = -1;
@@ -69,6 +74,11 @@ public class SolarSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();        
+
+        data.setLayoutX(25);
+        data.setLayoutY((int)size.getHeight() - 2 * data.getPrefHeight());
+
         probeCoords.setText("Currect probe coords: " + probeCoords2);
         distanceTitan.setText("Distance to Titan: " + distanceTitan2);
         launchCoords.setText("Launch coords: " + launchCoords2);
