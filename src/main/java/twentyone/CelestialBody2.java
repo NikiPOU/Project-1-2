@@ -61,6 +61,8 @@ public class CelestialBody2 {
     double x = 0;
     //double x = 0;
     double v = 60; //initial velocity
+    
+    int numSteps = 0;
 
 
     for (int i = 0; i<1; i++) {
