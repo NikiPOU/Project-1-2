@@ -14,6 +14,9 @@ public class Main {
         CelestialBody titan = new CelestialBody(1.34553E+23, (long) 1254501625, (long) -761340299.1, (long) -36309613.84, 8.995932295, 11.10857136, -2.251309862);
         CelestialBody neptune = new CelestialBody( 1.02409E+26, (long) 4454487339L, (long) -397895128.8, (long) -94464151.34, 0.447991657, 5.446106975, -0.122638125);
         CelestialBody uranus = new CelestialBody(0, (long) 1958732436, (long) 2191808553L, (long) -17235283.83, -5.127662163, 4.220553473, 0.082119034);
+    
+        Probe skeldVent21 = new Probe(0, 0, 0, 0, 0, 0);
+
     }   
 }
 
