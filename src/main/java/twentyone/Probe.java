@@ -9,6 +9,8 @@ public class Probe {
      *  Africa: -148186906.893642 - 6370, -27823158.5715694, 33746.8987977113
      *  South America: -148186906.893642, -27823158.5715694 + 6370, 33746.8987977113
      *  Asia: -148186906.893642, -27823158.5715694 - 6370, 33746.8987977113
+     * 
+     * velocity with a 90 degrees angle from the earths surface
      */
 
     double mass = 50000;

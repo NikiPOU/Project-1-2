@@ -1,7 +1,6 @@
+package twentyone;
 public class PhysicsEngine
 {
-
-
     double velocityX;
     double velocityY;
     double velocityZ;
@@ -51,11 +50,6 @@ public class PhysicsEngine
 
         //we already have based on the formula
 
-        
-    }
-
-    public 
-
-
-
+        return 0;
+    } 
 }
