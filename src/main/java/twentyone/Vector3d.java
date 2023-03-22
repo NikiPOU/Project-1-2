@@ -8,14 +8,14 @@ public class Vector3d implements Vector3dInterface{
     private double y;
     private double z;
 
-    public Vector3d(double x, double y, double z){
+    public Vector3d(double x, double y, double z){ //constructor to intialize the x, y and z coordinates
         this.x=x;
         this.y=y;
         this.z=z;
 
     }
 
-    public Vector3d(Vector2d v, double z){
+    public Vector3d(Vector2d v, double z){ //get the x and y coordinates
         this.x= v.getX();
         this.y= v.getY();
         this.z=z;
@@ -40,12 +40,12 @@ public class Vector3d implements Vector3dInterface{
     }
     public Vector2d getVector2d(){return new Vector2d(x,y);}
 
-    public double dist(Vector3dInterface other){
+    public double dist(Vector3dInterface other){ // distance between 2 cords
         return Math.sqrt(Math.pow((other.getX()-x), 2)+Math.pow((other.getY()-y), 2)+ Math.pow(other.getZ()-z, 2));
 
     }
 
-    public Vector3dInterface mul(double scalar){
+    public Vector3dInterface mul(double scalar){ //
         return new Vector3d(this.getX()*scalar,this.getY()*scalar,this.getZ()*scalar);
     }
 
