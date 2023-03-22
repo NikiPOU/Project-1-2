@@ -1,7 +1,5 @@
 package twentyone;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,7 +12,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 
 //1 unit is 15474 km
@@ -26,8 +25,8 @@ public class SolarSceneController implements Initializable {
     int launchCoords2;
     int launchVelocity2;
 
-    int sunx = 840;
-    int suny = 440;
+    int sunx = 845;
+    int suny = 445;
 
     @FXML
     Label probeCoords;
@@ -56,17 +55,23 @@ public class SolarSceneController implements Initializable {
     @FXML
     Label TimeElapsed;
     @FXML
-    VBox data;
+    ImageView spaceprobe;
 
     int i = 180;
     int days = -1;
     int months = -1;
     int years = 0;
+    double ex;
+    double ey;
+    double spax;
+    double spay;
+    double tx;
+    double ty;
+    double sx;
+    double sy;
+    boolean isPressed = false;
 
     private Timeline timeline;
-
-    int[] xs = {355, 601, 355, 140};
-    int[] ys = {49, 230, 415, 230};
 
     //1 = 2000000
 
@@ -74,11 +79,6 @@ public class SolarSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();        
-
-        data.setLayoutX(25);
-        data.setLayoutY((int)size.getHeight() - 2 * data.getPrefHeight());
-
         probeCoords.setText("Currect probe coords: " + probeCoords2);
         distanceTitan.setText("Distance to Titan: " + distanceTitan2);
         launchCoords.setText("Launch coords: " + launchCoords2);
@@ -92,8 +92,8 @@ public class SolarSceneController implements Initializable {
         //one can add a specific action when the keyframe is reached
         EventHandler<ActionEvent> movement = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
-                double ex = 120*Math.cos(Math.toRadians(i))+sunx;
-                double ey = 120*Math.sin(Math.toRadians(i))+suny;
+                ex = 120*Math.cos(Math.toRadians(i))+sunx;
+                ey = 120*Math.sin(Math.toRadians(i))+suny;
                 double mx = 15*Math.cos(Math.toRadians(12*i))+ex+7;
                 double my = 15*Math.sin(Math.toRadians(12*i))+ey+7;
                 double mex = 59*Math.cos(Math.toRadians(4*i))+sunx;
@@ -104,10 +104,10 @@ public class SolarSceneController implements Initializable {
                 double may = 180*Math.sin(Math.toRadians(0.52*i))+suny;
                 double jx = 419*Math.cos(Math.toRadians(0.08*i))+sunx;
                 double jy = 419*Math.sin(Math.toRadians(0.08*i))+suny;
-                double sx = 700*Math.cos(Math.toRadians(0.034*i))+sunx;
-                double sy = 700*Math.sin(Math.toRadians(0.034*i))+suny;
-                double tx = 40*Math.cos(Math.toRadians(22.64*i))+sx+40;
-                double ty = 40*Math.sin(Math.toRadians(22.64*i))+sy+20;
+                sx = 700*Math.cos(Math.toRadians(0.034*i))+sunx;
+                sy = 700*Math.sin(Math.toRadians(0.034*i))+suny;
+                tx = 40*Math.cos(Math.toRadians(22.64*i))+sx+40;
+                ty = 40*Math.sin(Math.toRadians(22.64*i))+sy+20;
                 earth.setLayoutX(ex);
                 earth.setLayoutY(ey);
                 moon.setLayoutX(mx);
@@ -134,18 +134,70 @@ public class SolarSceneController implements Initializable {
                     }
                 }
                 TimeElapsed.setText("Time Elapsed: " + years + " years, " + months + " months and " + days + " days");
-                probeCoords.setText("Currect probe coords: " + ex + " " + ey);
-                distanceTitan.setText("Distance to Titan: " + Math.sqrt(((tx-ex)*(tx-ex))+((ty-ey)*(ty-ey))));
                 i++;
             }
         };
+        EventHandler<ActionEvent> spaceMovement = new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                double satdis = Math.sqrt(((sx-spax)*(sx-spax))+((sy-spay)*(sy-spay)));
+                double titandis = Math.sqrt(((tx-spax)*(tx-spax))+((ty-spay)*(ty-spay)));
+                if(titandis <= 20){
+                    spax = tx + 2;
+                    spay = ty + 2;
+                    spaceprobe.setLayoutX(spax);
+                    spaceprobe.setLayoutY(spay);
+                } else if(isPressed){
+                    if(satdis > 100){
+                        double dx = sx - spax;
+                        double dy = sy - spay;
+                        double angle = Math.atan2(dy, dx);
+                        spax += 2*Math.cos(angle);
+                        spay += 2*Math.sin(angle);
+                        spaceprobe.setLayoutX(spax);
+                        spaceprobe.setLayoutY(spay);
+                        spaceprobe.setRotate(Math.toDegrees(angle)+90);
+                    } else {
+                        double dx = tx - spax;
+                        double dy = ty - spay;
+                        double angle = Math.atan2(dy, dx);
+                        spax += 2*Math.cos(angle);
+                        spay += 2*Math.sin(angle);
+                        spaceprobe.setLayoutX(spax);
+                        spaceprobe.setLayoutY(spay);
+                        spaceprobe.setRotate(Math.toDegrees(angle)+90);
+                    }
+                } else {
+                    spax = ex+2;
+                    spay = ey+2;
+                    spaceprobe.setLayoutX(spax);
+                    spaceprobe.setLayoutY(spay);
+                }
+                probeCoords.setText("Currect probe coords: " + spax + " " + spay);
+                distanceTitan.setText("Distance to Titan: " + titandis);
+            }
+            
+        };
+
+        
+
          
         KeyFrame keyFrame = new KeyFrame(Duration.millis(100), movement);
+        KeyFrame keyFrame2 = new KeyFrame(Duration.millis(100), spaceMovement);
          
         //add the keyframe to the timeline
         timeline.getKeyFrames().add(keyFrame);
+        timeline.getKeyFrames().add(keyFrame2);
         timeline.play();
     }
+
+    @FXML
+    public void spaceHandler(KeyEvent ke) {
+        if(ke.getCode().equals(KeyCode.BACK_SPACE)){
+            isPressed = true;
+        }
+    };
 
     @FXML
     private void switchToStart() throws IOException {
