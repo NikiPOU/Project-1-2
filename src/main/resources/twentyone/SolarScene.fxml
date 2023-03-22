@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane onKeyPressed="#spaceHandler" prefHeight="508.0" prefWidth="785.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.SolarSceneController">
+<AnchorPane fx:id="root" onKeyPressed="#spaceHandler" prefHeight="508.0" prefWidth="785.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.SolarSceneController">
    <children>
+      <!-- <Group fx:id="dots" autoSizeChildren="false">
+         <children>
+         </children>
+      </Group> -->
       <Button fx:id="secondaryButton" layoutX="14.0" layoutY="14.0" onAction="#switchToStart" style="-fx-background-color: white;" text="Return">
          <font>
             <Font name="System Bold" size="12.0" />
