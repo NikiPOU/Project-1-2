@@ -7,7 +7,7 @@ class mainPhysics{
         double[] sumReturn = {0, 0, 0};
         for (int i = 0; i < theBodies.length; i++){
             if(planetIndex != i){
-                sumReturn = sumvectors(sumReturn ,unreal_engine.getForce(theBodies[planetIndex], theBodies[i]));
+                //sumReturn = sumvectors(sumReturn ,unreal_engine.getForce(theBodies[planetIndex], theBodies[i]));
             }
         }
         sumReturn = multiplyByNeg(sumReturn);
