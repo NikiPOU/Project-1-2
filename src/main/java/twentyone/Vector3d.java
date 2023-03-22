@@ -8,13 +8,13 @@ public class Vector3d implements Vector3dInterface{
     private double y;
     private double z;
 
-    public Vector3d(double x, double y, double z){
+    public Vector3d(double x, double y, double z){ //constructor to intialize the x, y and z coordinates
         this.x=x;
         this.y=y;
         this.z=z;
     }
 
-    public Vector3d(Vector2d v, double z){
+    public Vector3d(Vector2d v, double z){ //get the x and y coordinates
         this.x= v.getX();
         this.y= v.getY();
         this.z=z;
