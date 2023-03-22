@@ -13,4 +13,3 @@ public class EulerSolver {
         return new Vector3d(x,y,z);
     }
 }
-

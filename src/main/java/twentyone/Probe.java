@@ -42,7 +42,4 @@ public class Probe {
         double[] velocity = {velocityX, velocityY, velocityZ};
         return velocity;
     }
-
-
-
 }

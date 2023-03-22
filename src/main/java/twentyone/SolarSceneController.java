@@ -2,7 +2,6 @@ package twentyone;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.animation.KeyFrame;
@@ -11,14 +10,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 //1 unit is 15474 km
@@ -61,10 +56,6 @@ public class SolarSceneController implements Initializable {
     Label TimeElapsed;
     @FXML
     ImageView spaceprobe;
-    @FXML
-    AnchorPane root;
-    @FXML
-    Group dots;
 
     int i = 180;
     int days = -1;
@@ -79,18 +70,13 @@ public class SolarSceneController implements Initializable {
     double sx;
     double sy;
     boolean isPressed = false;
-    ArrayList<Circle> dotList = new ArrayList<>();
 
     private Timeline timeline;
 
     //1 = 2000000
 
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        dots = new Group();
-        root.getChildren().add(dots);
         probeCoords.setText("Currect probe coords: " + probeCoords2);
         distanceTitan.setText("Distance to Titan: " + distanceTitan2);
         launchCoords.setText("Launch coords: " + launchCoords2);
@@ -150,22 +136,20 @@ public class SolarSceneController implements Initializable {
             }
         };
         EventHandler<ActionEvent> spaceMovement = new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent event) {
                 double satdis = Math.sqrt(((sx-spax)*(sx-spax))+((sy-spay)*(sy-spay)));
                 double titandis = Math.sqrt(((tx-spax)*(tx-spax))+((ty-spay)*(ty-spay)));
-                double angle;
                 if(titandis <= 20){
                     spax = tx + 2;
                     spay = ty + 2;
                     spaceprobe.setLayoutX(spax);
                     spaceprobe.setLayoutY(spay);
                 } else if(isPressed){
-                    if(satdis > 40){
+                    if(satdis > 100){
                         double dx = sx - spax;
                         double dy = sy - spay;
-                        angle = Math.atan2(dy, dx);
+                        double angle = Math.atan2(dy, dx);
                         spax += 2*Math.cos(angle);
                         spay += 2*Math.sin(angle);
                         spaceprobe.setLayoutX(spax);
@@ -174,22 +158,13 @@ public class SolarSceneController implements Initializable {
                     } else {
                         double dx = tx - spax;
                         double dy = ty - spay;
-                        angle = Math.atan2(dy, dx);
+                        double angle = Math.atan2(dy, dx);
                         spax += 2*Math.cos(angle);
                         spay += 2*Math.sin(angle);
                         spaceprobe.setLayoutX(spax);
                         spaceprobe.setLayoutY(spay);
                         spaceprobe.setRotate(Math.toDegrees(angle)+90);
                     }
-                    Circle circle = new Circle();
-                    circle.setCenterX(spax+10*Math.sin(angle));
-                    circle.setCenterY(spay+10*Math.cos(angle));
-                    circle.setRadius(2);
-                    circle.setFill(Color.LIME);
-                    circle.setOpacity(0.4);
-                    dotList.add(circle);
-                    dots.getChildren().add(circle);
-                    
                 } else {
                     spax = ex+2;
                     spay = ey+2;
@@ -201,9 +176,6 @@ public class SolarSceneController implements Initializable {
             }
             
         };
-
-        
-
          
         KeyFrame keyFrame = new KeyFrame(Duration.millis(100), movement);
         KeyFrame keyFrame2 = new KeyFrame(Duration.millis(100), spaceMovement);
@@ -218,10 +190,6 @@ public class SolarSceneController implements Initializable {
     public void spaceHandler(KeyEvent ke) {
         if(ke.getCode().equals(KeyCode.BACK_SPACE)){
             isPressed = true;
-        } else if(ke.getCode().equals(KeyCode.R)){
-            spax = ex + 2;
-            spay = ey + 2;
-            isPressed = false;
         }
     };
 

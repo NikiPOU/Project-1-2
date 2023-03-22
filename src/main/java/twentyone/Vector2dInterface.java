@@ -42,7 +42,4 @@ public interface Vector2dInterface {
      * Vector3d(-1.0, 2, -3.0) should print out (-1.0,2.0,-3.0)
      */
     public String toString();
-
-
-
 }
