@@ -1,6 +1,6 @@
 package twentyone;
 
-import javafx.scene.control.Separator;
+
 
 //import java.util.Arrays;
 class Physics_Engine{
@@ -23,19 +23,19 @@ class Physics_Engine{
     }
 
 
-    public CelestialBody3 euler_solver(CelestialBody3 objectWeLookAt, double stepSize){
-        double[] derivative_of_Velocity = multiply_vector_With_Number(objectWeLookAt.getForce(), (1 / objectWeLookAt.getMass()));
+    public CelestialBody3[] euler_solver(CelestialBody3[] objectWeLookAt, int planetIndex,double stepSize){
+        double[] derivative_of_Velocity = multiply_vector_With_Number(sumUpdate(objectWeLookAt, planetIndex), (1 / objectWeLookAt[planetIndex].getMass()));
         double[] newVelocity = new double[3];
         double[] newPosition = new double[3];
         for (int i = 0; i < newVelocity.length; i++) {
-            newVelocity[i] = newVelocity[i] + stepSize * (derivative_of_Velocity[i]);
+            newVelocity[i] = objectWeLookAt[planetIndex].getVelocity()[i] + stepSize * (derivative_of_Velocity[i]);
         }
-        
+    
         for (int i = 0; i < newPosition.length; i++) {
-            newPosition[i] = newPosition[i] + stepSize * (objectWeLookAt.getVelocity()[i]);
+            newPosition[i] = objectWeLookAt[planetIndex].getPosition()[i] + stepSize * (objectWeLookAt[planetIndex].getVelocity()[i]);
         }
-        objectWeLookAt.setNewVelocity(newVelocity);
-        objectWeLookAt.setNewPostion(newPosition);
+        objectWeLookAt[planetIndex].setNewVelocity(newVelocity);
+        objectWeLookAt[planetIndex].setNewPostion(newPosition);
         return objectWeLookAt;
     }
 
@@ -75,7 +75,7 @@ class Physics_Engine{
             bottom[i] = Math.pow(Math.abs(bottom[i]), 3);
         }
         for (int i = 0; i < finalreturn.length; i++) {
-            if(top[i] == 0&& bottom[i] == 0){
+            if(top[i] == 0  && bottom[i] == 0){
                 finalreturn[i] = 0;
             }else{
                 finalreturn[i] = mult*(top[i] / bottom[i]);    
