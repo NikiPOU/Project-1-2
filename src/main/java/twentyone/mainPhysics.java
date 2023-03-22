@@ -50,7 +50,7 @@ class mainPhysics{
         System.out.println(Arrays.toString(physics.getForce(earth, mars)));
         System.out.println("old sum : " + Arrays.toString(sum(physics, bodies, 1)));
         System.out.println("new sum : " + Arrays.toString(physics.sumUpdate(bodies, 1)));
-        bodies = physics.euler_solver(bodies, 1, 2);
+        //bodies = physics.euler_solver(bodies, 1, 2);
         System.out.println("new velocity : " + Arrays.toString(bodies[1].getVelocity()));
         System.out.println("new position : " + Arrays.toString(bodies[1].getPosition()));
     }

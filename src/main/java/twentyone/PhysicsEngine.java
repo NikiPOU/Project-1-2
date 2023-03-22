@@ -34,8 +34,6 @@ public class PhysicsEngine
     {
         double tophalf = xi - xj;
 
-
-
         double bottomhalf = (Math.sqrt(xi * xi)) - (Math.sqrt(xj * xj));
 
         return (tophalf/bottomhalf) * GC;

@@ -4,7 +4,7 @@ package twentyone;
 
 //import java.util.Arrays;
 class Physics_Engine{
-    private final double g = 1;
+    private final double g = 6.6743E-20;
 
     //here are the 
     public double[] getForce(CelestialBody3 theIbody, CelestialBody3 theJbody){
@@ -23,7 +23,7 @@ class Physics_Engine{
     }
 
 
-    public CelestialBody3[] euler_solver(CelestialBody3[] objectWeLookAt, int planetIndex,double stepSize){
+    public CelestialBody3 euler_solver(CelestialBody3[] objectWeLookAt, int planetIndex, double stepSize){
         double[] derivative_of_Velocity = multiply_vector_With_Number(sumUpdate(objectWeLookAt, planetIndex), (1 / objectWeLookAt[planetIndex].getMass()));
         double[] newVelocity = new double[3];
         double[] newPosition = new double[3];
@@ -36,7 +36,7 @@ class Physics_Engine{
         }
         objectWeLookAt[planetIndex].setNewVelocity(newVelocity);
         objectWeLookAt[planetIndex].setNewPostion(newPosition);
-        return objectWeLookAt;
+        return objectWeLookAt[planetIndex];
     }
 
     

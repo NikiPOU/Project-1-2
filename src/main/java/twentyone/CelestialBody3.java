@@ -1,4 +1,7 @@
 package twentyone;
+
+import java.util.Arrays;
+
 class CelestialBody3{
     
     private double[] initialVelocity = new double[3];
@@ -38,6 +41,12 @@ class CelestialBody3{
 
     public double[] getForce(){
         return currentForce;
+    }
+
+    public String toString() {
+        String pos = Arrays.toString(initialPosition);
+        String vel = Arrays.toString(initialVelocity);
+        return "[Celestial body: position: " + pos + ", velocity: " + vel + ", mass: " + mass;
     }
     
 }
