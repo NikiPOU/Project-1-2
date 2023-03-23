@@ -1,7 +1,5 @@
 package twentyone;
 
-import java.util.Arrays;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -20,11 +18,5 @@ public class Main {
         CelestialBody uranus = new CelestialBody("Uranus", 86.813E+24, (long) 1958732435.99338, (long) 2191808553.21893, (long) -17235283.8321992, -5.12766216337626, 4.22055347264457, 0.0821190336403063);
 
         Probe skeldVent21 = new Probe(0, 0, 0, 0, 0, 0);
- 
-        Physics_Engine physics = new Physics_Engine();
-
-        for(int i=0; i<11; i++){
-            System.out.println("sum of vectors: " + Arrays.toString(physics.sum(CelestialBody.getArray(),i)));
-        }
     }
 }
