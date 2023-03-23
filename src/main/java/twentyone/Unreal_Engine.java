@@ -2,7 +2,7 @@ package twentyone;
 class Unreal_Engine{
     private final double gravity = 6.6743 * Math.pow(10, -20);
 
-    public double[] calculateForce(CelestialBody3 _IcelBody, CelestialBody3 _JcelBody){
+    public double[] calculateForce(CelestialBody _IcelBody, CelestialBody _JcelBody){
         //get the vars needed
         double mass_of_Jobject = _JcelBody.getMass();
         double[] finalForce = new double[3];
@@ -38,7 +38,7 @@ class Unreal_Engine{
         return finalForce;
     }
 
-    public double[] sumOf_Forces(CelestialBody3[] theCelBodies, int desiredPlanet){
+    public double[] sumOf_Forces(CelestialBody[] theCelBodies, int desiredPlanet){
         //create the variables
         double[] sumForces = new double[3];
         double[] vector = new double[3];
@@ -60,7 +60,7 @@ class Unreal_Engine{
         
     }
 
-    public CelestialBody3[] Eulers(CelestialBody3[] theCelBodies, int theDesired, double stepSizer){
+    public CelestialBody[] Eulers(CelestialBody[] theCelBodies, int theDesired, double stepSizer){
         //get the values you need bro and set up
 
             //our V' by this I mean first derivative of velocity

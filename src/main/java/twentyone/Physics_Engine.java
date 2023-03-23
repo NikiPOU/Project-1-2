@@ -1,11 +1,6 @@
 package twentyone;
 
 class Physics_Engine{
-<<<<<<< HEAD
-    private final double g = 6.6743 * Math.pow(10, -20);
-=======
->>>>>>> a79e88a081d22e7c7388040e955cb0aa3c93bb3c
-
     private final double g = 6.6743E-20;
 
     /**
@@ -43,10 +38,6 @@ class Physics_Engine{
         return finalreturn;
     }
 
-<<<<<<< HEAD
-    public CelestialBody3[] euler_solver(CelestialBody3[] objectWeLookAt, int planetIndex, double stepSize){
-        double[] derivative_of_Velocity = sumUpdate(objectWeLookAt, planetIndex);
-=======
     /**
      * Used in getForce() for copying our top values (3D vector) to the bottom, used for division.
      * @param position_Ibody
@@ -132,7 +123,6 @@ class Physics_Engine{
 
     public CelestialBody euler_solver(CelestialBody[] objectWeLookAt, int planetIndex, double stepSize){
         double[] derivative_of_Velocity = multiply_vector_With_Number(sum(objectWeLookAt, planetIndex), (1 / objectWeLookAt[planetIndex].getMass()));
->>>>>>> a79e88a081d22e7c7388040e955cb0aa3c93bb3c
         double[] newVelocity = new double[3];
         double[] newPosition = new double[3];
         
@@ -149,7 +139,6 @@ class Physics_Engine{
         objectWeLookAt[planetIndex].setNewPostion(newPosition);
         return objectWeLookAt[planetIndex];
     }
-<<<<<<< HEAD
 
     public void accell(){
         double[] acel = {0,0,0};
@@ -176,7 +165,7 @@ class Physics_Engine{
         return null;
     }
  */   
-    public double[] sumUpdate(CelestialBody3[] theBodies, int planetIndex){
+    public double[] sumUpdate(CelestialBody[] theBodies, int planetIndex){
         double[] sumReturn = {0, 0, 0};
         for (int i = 0; i < theBodies.length; i++){
             if(planetIndex != i){
@@ -187,62 +176,4 @@ class Physics_Engine{
         theBodies[planetIndex].setNewForce(sumReturn);
         return sumReturn;
     }
-
-
-
-    private double[] multiply_vector_With_Number(double[] vector, double number){
-        for (int i = 0; i < vector.length; i++) {
-            vector[i] = number * vector[i];
-        }
-        return vector;
-    }
-
-
-    private double[] subtract(double[] position_Ibody, double[] position_Jbody){
-        double[] finalreturn = new double[3];
-        for(int i = 0; i < position_Ibody.length; i++){
-            finalreturn[i] = position_Ibody[i] - position_Jbody[i];
-        }
-        return finalreturn;
-    }
-
-    private double[] div(double[] top, double[] bottom, double mult){
-        double[] finalreturn = new double[3];
-        double result = 0;
-        for(int i = 0; i < bottom.length; i++){
-            result += bottom[i]*bottom[i];
-        }
-        result = Math.sqrt(result);
-        for (int i = 0; i < finalreturn.length; i++) {
-            if( result == 0){
-                finalreturn[i] = 0;
-            }else{
-                finalreturn[i] = mult*(top[i] / result);    
-            }        
-        }
-        return finalreturn; 
-    }
-
-    private double[] copyArr(double[] tocopy){
-        double[] returnArray = new double[3];
-        for (int i = 0; i < returnArray.length; i++) {
-            returnArray[i] = tocopy[i];
-        }
-        return returnArray;
-        
-    }
-
-
-
-    private double[] sumvectors(double[] vector1, double[] vector2){
-        double[] reVector = new double[3];
-        for (int i = 0; i < vector1.length; i++) {
-            reVector[i] = vector1[i] + vector2[i];
-        }
-        return reVector;
-    }
-
 }
-=======
-}
->>>>>>> a79e88a081d22e7c7388040e955cb0aa3c93bb3c
