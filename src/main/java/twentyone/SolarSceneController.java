@@ -122,7 +122,7 @@ public class SolarSceneController implements Initializable {
         //one can add a specific action when the keyframe is reached
         EventHandler<ActionEvent> movement = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
-                for (int i = 0; i < 100; i++) {
+                for (int i = 0; i < 1; i++) {
                     for (int j = 0; j < bodies.length; j++) {
                         bodies = unreal.Eulers(bodies, j, 3600);
                     }
@@ -141,7 +141,7 @@ public class SolarSceneController implements Initializable {
                         }
                     }
                 }
-                TimeElapsed.setText("Time Elapsed: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");
+                TimeElapsed.setText("Time Elapsed: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");  
                 
                 // physics.sumUpdate(bodies, 3);
                 // physics.euler_solver(bodies, 3, 1);
@@ -172,7 +172,7 @@ public class SolarSceneController implements Initializable {
                 // tx = 40*Math.cos(Math.toRadians(22.64*i))+sx+40;
                 // ty = 40*Math.sin(Math.toRadians(22.64*i))+sy+20;
                 double mx = sunx + 8 + 15*Math.cos(k*0.008) + mops[0]/divider; //8+ 15*Math.cos(i) + 
-                double my = suny + 8 + 15*Math.sin(k*0.008) + mops[1]/divider;//8+ 15*Math.sin(i) +
+                double my = suny + 8 + 15*Math.sin(k*0.008) + mops[1]/divider; //8+ 15*Math.sin(i) +
                 double mex = sunx + meps[0]/divider;
                 double mey = suny + meps[1]/divider;
                 double vx = sunx + veps[0]/divider;
@@ -183,8 +183,8 @@ public class SolarSceneController implements Initializable {
                 double jy = suny + jups[1]/divider;
                 sx = sunx + saps[0]/divider;
                 sy = suny + saps[1]/divider;
-                tx = sunx + tips[0]/divider;
-                ty = suny + tips[1]/divider;
+                tx = sunx + 40 + 23*Math.cos(k*0.0168) + tips[0]/divider;
+                ty = suny + 15 + 23*Math.sin(k*0.0168) + tips[1]/divider;
                 earth.setLayoutX(ex);
                 earth.setLayoutY(ey);
                 moon.setLayoutX(mx);
