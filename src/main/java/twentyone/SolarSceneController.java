@@ -248,7 +248,7 @@ public class SolarSceneController implements Initializable {
                     titanMoment.setText("Moment closest distance to Titan: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");
                     closestTitan = titandis;
                 } else if(titandis < 10){
-                    titanMoment.setText("Moment of impact: " + years + " years, " + months + " months, " + days + " days and " + hours + " hours");
+                    titanMoment.setText("Moment of closest position: " + years + " years, " + months + " months, " + days + " days and " + hours + " hours");
                 }
 
                 Circle circle = new Circle();
