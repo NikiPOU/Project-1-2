@@ -96,6 +96,8 @@ public class SolarSceneController implements Initializable {
     Group path;
     @FXML
     VBox data;
+    @FXML
+    Label closestdistanceTitan;
 
     int seconds = -1;
     int minutes = -1;
@@ -152,7 +154,7 @@ public class SolarSceneController implements Initializable {
         //one can add a specific action when the keyframe is reached
         EventHandler<ActionEvent> movement = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
-                for (int i = 0; i < 30000; i++) {
+                for (int i = 0; i < 25000; i++) {
                     for (int j = 0; j < bodies.length; j++) {
                         bodies = unreal.Eulers(bodies, j, 1);
                     }
@@ -232,32 +234,29 @@ public class SolarSceneController implements Initializable {
                 titan.setLayoutX(tx);
                 titan.setLayoutY(ty);
 
+                double[] spaps = bodies[11].getPosition();
+                probeCoords.setText("Currect probe coords: [x " + spaps[0] + ",y " + spaps[1] + ",z " + spaps[2] + "]");
+
+                double spax = sunx + spaps[0]/divider;
+                double spay = suny + spaps[1]/divider;
                 double titandis = Math.sqrt(((tx-spax)*(tx-spax))+((ty-spay)*(ty-spay)));
-                System.out.println(titandis);
-
-                if(true){
-                    double[] spaps = bodies[11].getPosition();
-                    probeCoords.setText("Currect probe coords: [x " + spaps[0] + ",y " + spaps[1] + ",z " + spaps[2] + "]");
-
-                    double spax = sunx + spaps[0]/divider;
-                    double spay = suny + spaps[1]/divider;
-                    spaceprobe.setLayoutX(spax);
-                    spaceprobe.setLayoutY(spay);
-
-                    Circle circle = new Circle();
-                    circle.setCenterX(spax);
-                    circle.setCenterY(spay);
-                    circle.setRadius(2);
-                    circle.setFill(Color.rgb(r, g, b));
-                    circle.setOpacity(0.4);
-                    dotList.add(circle);
-                    dots.getChildren().add(circle);             
-                }
+                distanceTitan.setText("Distance to Titan: " + titandis);
+                spaceprobe.setLayoutX(spax);
+                spaceprobe.setLayoutY(spay);
                 if (closestTitan > titandis) {
-                    distanceTitan.setText("Distance to Titan: " + titandis);
+                    closestdistanceTitan.setText("Closest distance to Titan: " + titandis);
                     titanMoment.setText("Moment closest distance to Titan: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");
                     closestTitan = titandis;
                 }
+
+                Circle circle = new Circle();
+                circle.setCenterX(spax);
+                circle.setCenterY(spay);
+                circle.setRadius(2);
+                circle.setFill(Color.rgb(r, g, b));
+                circle.setOpacity(0.4);
+                dotList.add(circle);
+                dots.getChildren().add(circle);             
             }
         };
 
@@ -304,6 +303,12 @@ public class SolarSceneController implements Initializable {
         }
     };
 
+    /**
+     * Makes the trails of the planets.
+     * @param index
+     * @param x
+     * @param y
+     */
     public void circlemaker(int index, double x, double y){
         Circle circle = new Circle();
         if(index == 1){
@@ -394,7 +399,7 @@ public class SolarSceneController implements Initializable {
         double[] uravel = {-5.12766216337626, 4.22055347264457, 0.0821190336403063};
         double[] urapos = {(long) 1958732435.99338, (long) 2191808553.21893, (long) -17235283.8321992};
 
-        double[] probevel = {5, 45, 0};
+        double[] probevel = {48, -45, 0};
         double[] probepos = {-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113}; 
 
         launchCoords2 = probepos;
