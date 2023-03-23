@@ -3,6 +3,7 @@ package twentyone;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import javafx.animation.KeyFrame;
@@ -38,6 +39,9 @@ public class SolarSceneController implements Initializable {
     int sunx = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 + 45;
     int suny = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 + 45;
 
+    int r;
+    int g;
+    int b;
     CelestialBody3 sunCB;
     CelestialBody3 mercuryCB;
     CelestialBody3 venusCB;
@@ -89,7 +93,11 @@ public class SolarSceneController implements Initializable {
     @FXML
     Group dots;
     @FXML
+    Group path;
+    @FXML
     VBox data;
+    @FXML
+    Label closestdistanceTitan;
 
     int seconds = -1;
     int minutes = -1;
@@ -109,6 +117,8 @@ public class SolarSceneController implements Initializable {
     boolean isPressed = false;
     ArrayList<Circle> dotList = new ArrayList<>();
 
+    Random rand = new Random();
+
     private Timeline timeline;
 
     int k=0;
@@ -127,10 +137,14 @@ public class SolarSceneController implements Initializable {
         data.setLayoutX(25);
         data.setLayoutY(screenSize.getHeight() - 200);
         dots = new Group();
+        path = new Group();
         root.getChildren().add(dots);
+        root.getChildren().add(path);
         Unreal_Engine unreal = new Unreal_Engine();
         probeCoords.setText("Currect probe coords: " + probeCoords2);
         distanceTitan.setText("Distance to Titan: " + distanceTitan2);
+        launchCoords.setText("Launch coords: " + launchCoords2);
+        launchVelocity.setText("Launch velocity: " + launchVelocity2);
       
         //create a timeline for moving the circle
         timeline = new Timeline();
@@ -140,9 +154,9 @@ public class SolarSceneController implements Initializable {
         //one can add a specific action when the keyframe is reached
         EventHandler<ActionEvent> movement = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
-                for (int i = 0; i < 100; i++) {
+                for (int i = 0; i < 25000; i++) {
                     for (int j = 0; j < bodies.length; j++) {
-                        bodies = unreal.Eulers(bodies, j, 3600);
+                        bodies = unreal.Eulers(bodies, j, 1);
                     }
                     seconds++;
                     if(seconds % 60 == 0){
@@ -179,24 +193,30 @@ public class SolarSceneController implements Initializable {
                 double[] jups = bodies[6].getPosition();
                 double[] saps = bodies[7].getPosition();
                 double[] tips = bodies[8].getPosition();
-
                 ex = sunx + eaps[0]/divider;
                 ey = suny + eaps[1]/divider;
-
+                circlemaker(3, ex, ey);
                 double mx = sunx + 8 + 15*Math.cos(k*0.009) + mops[0]/divider; //8+ 15*Math.cos(i) + 
                 double my = suny + 8 + 15*Math.sin(k*0.009) + mops[1]/divider; //8+ 15*Math.sin(i) +
+                circlemaker(4, mx, my);
                 double mex = sunx + meps[0]/divider;
                 double mey = suny + meps[1]/divider;
+                circlemaker(1, mex, mey);
                 double vx = sunx + veps[0]/divider;
                 double vy = suny + veps[1]/divider;
+                circlemaker(2, vx, vy);
                 double max = sunx + maps[0]/divider;
                 double may = suny + maps[1]/divider;
+                circlemaker(5, max, may);
                 double jx = sunx + jups[0]/divider;
                 double jy = suny + jups[1]/divider;
+                circlemaker(6, jx, jy);
                 sx = sunx + saps[0]/divider;
                 sy = suny + saps[1]/divider;
+                circlemaker(7, sx, sy);
                 tx = sunx + 40 + 23*Math.cos(k*0.0168) + tips[0]/divider;
                 ty = suny + 15 + 23*Math.sin(k*0.0168) + tips[1]/divider;
+                circlemaker(8, tx, ty);
                 earth.setLayoutX(ex);
                 earth.setLayoutY(ey);
                 moon.setLayoutX(mx);
@@ -214,32 +234,29 @@ public class SolarSceneController implements Initializable {
                 titan.setLayoutX(tx);
                 titan.setLayoutY(ty);
 
+                double[] spaps = bodies[11].getPosition();
+                probeCoords.setText("Currect probe coords: [x " + spaps[0] + ",y " + spaps[1] + ",z " + spaps[2] + "]");
+
+                double spax = sunx + spaps[0]/divider;
+                double spay = suny + spaps[1]/divider;
                 double titandis = Math.sqrt(((tx-spax)*(tx-spax))+((ty-spay)*(ty-spay)));
-                System.out.println(titandis);
-
-                if(true){
-                    double[] spaps = bodies[11].getPosition();
-                    probeCoords.setText("Currect probe coords: [x " + spaps[0] + ",y " + spaps[1] + ",z " + spaps[2] + "]");
-
-                    double spax = sunx + spaps[0]/divider;
-                    double spay = suny + spaps[1]/divider;
-                    spaceprobe.setLayoutX(spax);
-                    spaceprobe.setLayoutY(spay);
-
-                    Circle circle = new Circle();
-                    circle.setCenterX(spax);
-                    circle.setCenterY(spay);
-                    circle.setRadius(2);
-                    circle.setFill(Color.LIME);
-                    circle.setOpacity(0.4);
-                    dotList.add(circle);
-                    dots.getChildren().add(circle);             
-                }
+                distanceTitan.setText("Distance to Titan: " + titandis);
+                spaceprobe.setLayoutX(spax);
+                spaceprobe.setLayoutY(spay);
                 if (closestTitan > titandis) {
-                    distanceTitan.setText("Distance to Titan: " + titandis);
+                    closestdistanceTitan.setText("Closest distance to Titan: " + titandis);
                     titanMoment.setText("Moment closest distance to Titan: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");
                     closestTitan = titandis;
                 }
+
+                Circle circle = new Circle();
+                circle.setCenterX(spax);
+                circle.setCenterY(spay);
+                circle.setRadius(2);
+                circle.setFill(Color.rgb(r, g, b));
+                circle.setOpacity(0.4);
+                dotList.add(circle);
+                dots.getChildren().add(circle);             
             }
         };
 
@@ -248,14 +265,18 @@ public class SolarSceneController implements Initializable {
         launchVelocity.setText("Launch velocity: [x " + launchVelocity2[0] + ", y " + launchVelocity2[1] + ", z " + launchVelocity2[2] + "]");
 
         KeyFrame keyFrame = new KeyFrame(Duration.millis(100), movement);
-        //KeyFrame keyFrame2 = new KeyFrame(Duration.millis(100), spaceMovement);
-         
+        r = rand.nextInt(255);
+        g = rand.nextInt(255);
+        b = rand.nextInt(255);
         //add the keyframe to the timeline
         timeline.getKeyFrames().add(keyFrame);
-        //timeline.getKeyFrames().add(keyFrame2);
         timeline.play();
     }
 
+    /**
+     * Checks if there is a used key is pressed and acts accordingly.
+     * @param ke
+     */
     @FXML
     public void spaceHandler(KeyEvent ke) {
         if(ke.getCode().equals(KeyCode.BACK_SPACE)){
@@ -264,14 +285,83 @@ public class SolarSceneController implements Initializable {
             spax = ex + 2;
             spay = ey + 2;
             isPressed = false;
+            r = rand.nextInt(255);
+            g = rand.nextInt(255);
+            b = rand.nextInt(255);
+        } else if(ke.getCode().equals(KeyCode.V)){
+            if(dots.isVisible()){
+                dots.setVisible(false);
+            } else {
+                dots.setVisible(true);
+            }
+        } else if(ke.getCode().equals(KeyCode.P)){
+            if(path.isVisible()){
+                path.setVisible(false);
+            } else {
+                path.setVisible(true);
+            }
         }
     };
 
+    /**
+     * Makes the trails of the planets.
+     * @param index
+     * @param x
+     * @param y
+     */
+    public void circlemaker(int index, double x, double y){
+        Circle circle = new Circle();
+        if(index == 1){
+            circle.setLayoutX(x+5);
+            circle.setLayoutY(y+5);
+            circle.setFill(Color.LIGHTGRAY);
+        } else if(index == 2){
+            circle.setLayoutX(x+10);
+            circle.setLayoutY(y+10);
+            circle.setFill(Color.DARKORANGE);
+        } else if(index == 3){
+            circle.setCenterX(x+10);
+            circle.setCenterY(y+10);
+            circle.setFill(Color.GREEN);
+        } else if(index == 4){
+            circle.setCenterX(x+2);
+            circle.setCenterY(y+2);
+            circle.setFill(Color.WHITE);
+        } else if(index == 5){
+            circle.setLayoutX(x+8);
+            circle.setLayoutY(y+8);
+            circle.setFill(Color.CRIMSON);
+        } else if(index == 6){
+            circle.setLayoutX(x+30);
+            circle.setLayoutY(y+30);
+            circle.setFill(Color.KHAKI);
+        } else if(index == 7){
+            circle.setLayoutX(x+48);
+            circle.setLayoutY(y+24);
+            circle.setFill(Color.MAROON);
+        } else if(index == 8){
+            circle.setLayoutX(x+9);
+            circle.setLayoutY(y+9);
+            circle.setFill(Color.CYAN);
+        }
+        circle.setRadius(1);
+        circle.setOpacity(0.3);
+        path.getChildren().add(circle);
+
+    }
+
+    /**
+     * Switches to the home screen.
+     * @throws IOException
+     */
     @FXML
     private void switchToStart() throws IOException {
         App.setRoot("StartScene");
     }
 
+    /**
+     * Initiates all the planets and the probe. It gives the correct positions, velocities and masses.
+     */
     private void initiateCB(){
         double[] merpos = {(long) 7833268.43923962, (long) 44885949.3703908, (long) 2867693.20054382};
         double[] mervel = {-57.4967480139828, 11.52095127176, 6.21695374334136};
@@ -309,7 +399,7 @@ public class SolarSceneController implements Initializable {
         double[] uravel = {-5.12766216337626, 4.22055347264457, 0.0821190336403063};
         double[] urapos = {(long) 1958732435.99338, (long) 2191808553.21893, (long) -17235283.8321992};
 
-        double[] probevel = {5, 45, 0};
+        double[] probevel = {48, -45, 0};
         double[] probepos = {-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113}; 
 
         launchCoords2 = probepos;
