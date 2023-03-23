@@ -3,7 +3,6 @@ package twentyone;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.animation.KeyFrame;
@@ -33,7 +32,8 @@ public class SolarSceneController implements Initializable {
     int distanceTitan2;
     double[] launchCoords2;
     double[] launchVelocity2;  
-    double closestTitan;
+    double closestTitan = 10E40;
+    String momentTitan;
 
     int sunx = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 + 45;
     int suny = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 + 45;
@@ -60,6 +60,8 @@ public class SolarSceneController implements Initializable {
     Label launchCoords;
     @FXML
     Label launchVelocity;
+    @FXML
+    Label titanMoment;
     @FXML
     ImageView sun;
     @FXML
@@ -213,6 +215,7 @@ public class SolarSceneController implements Initializable {
                 titan.setLayoutY(ty);
 
                 double titandis = Math.sqrt(((tx-spax)*(tx-spax))+((ty-spay)*(ty-spay)));
+                System.out.println(titandis);
 
                 if(true){
                     double[] spaps = bodies[11].getPosition();
@@ -222,7 +225,6 @@ public class SolarSceneController implements Initializable {
                     double spay = suny + spaps[1]/divider;
                     spaceprobe.setLayoutX(spax);
                     spaceprobe.setLayoutY(spay);
-                    System.out.println("Far from Titan: " + spax + " " + spay);
 
                     Circle circle = new Circle();
                     circle.setCenterX(spax);
@@ -233,7 +235,11 @@ public class SolarSceneController implements Initializable {
                     dotList.add(circle);
                     dots.getChildren().add(circle);             
                 }
-                distanceTitan.setText("Distance to Titan: " + titandis);
+                if (closestTitan > titandis) {
+                    distanceTitan.setText("Distance to Titan: " + titandis);
+                    titanMoment.setText("Moment closest distance to Titan: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");
+                    closestTitan = titandis;
+                }
             }
         };
 
