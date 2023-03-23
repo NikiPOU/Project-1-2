@@ -240,13 +240,15 @@ public class SolarSceneController implements Initializable {
                 double spax = sunx + spaps[0]/divider;
                 double spay = suny + spaps[1]/divider;
                 double titandis = Math.sqrt(((tx-spax)*(tx-spax))+((ty-spay)*(ty-spay)));
-                distanceTitan.setText("Distance to Titan: " + titandis);
+                distanceTitan.setText("Distance to Titan: " + titandis*divider + " km");
                 spaceprobe.setLayoutX(spax);
                 spaceprobe.setLayoutY(spay);
                 if (closestTitan > titandis) {
-                    closestdistanceTitan.setText("Closest distance to Titan: " + titandis);
+                    closestdistanceTitan.setText("Closest distance to Titan: " + titandis*divider + " km");
                     titanMoment.setText("Moment closest distance to Titan: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");
                     closestTitan = titandis;
+                } else if(titandis < 10){
+                    titanMoment.setText("Moment of impact: " + years + " years, " + months + " months, " + days + " days and " + hours + " hours");
                 }
 
                 Circle circle = new Circle();
