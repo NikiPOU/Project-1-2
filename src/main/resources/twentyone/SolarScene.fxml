@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.SolarSceneController">
+<AnchorPane fx:id="root" onKeyPressed="#spaceHandler" prefHeight="508.0" prefWidth="785.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.SolarSceneController">
    <children>
-        <Button fx:id="secondaryButton" layoutX="14.0" layoutY="14.0" onAction="#switchToStart" style="-fx-background-color: white;" text="Return">
+      <!-- <Group fx:id="dots" autoSizeChildren="false">
+         <children>
+         </children>
+      </Group> -->
+      <Button fx:id="secondaryButton" layoutX="14.0" layoutY="14.0" onAction="#switchToStart" style="-fx-background-color: white;" text="Return">
          <font>
             <Font name="System Bold" size="12.0" />
-         </font></Button>
+         </font>
+      </Button>
       <ImageView fx:id="milkyway" fitHeight="1080" fitWidth="1920" layoutX="0.0" layoutY="0.0">
          <image>
             <Image url="@MilkyWayGalaxy1.png" />
@@ -24,47 +31,52 @@
             <Image url="@RealisticSun1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="earth" fitHeight="20.0" fitWidth="20.0" layoutX="140.0" layoutY="230.0">
+      <ImageView fx:id="earth" fitHeight="20.0" fitWidth="20.0" layoutX="786.0" layoutY="434.0">
          <image>
             <Image url="@RealisticEarth1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="moon" fitHeight="5.0" fitWidth="5.0" layoutX="201.0" layoutY="209.0">
+      <ImageView fx:id="moon" fitHeight="5.0" fitWidth="5.0" layoutX="786.0" layoutY="434.0">
          <image>
             <Image url="@RealisticMoon1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="mercury" fitHeight="10.0" fitWidth="10.0" layoutX="201.0" layoutY="300.0">
+      <ImageView fx:id="mercury" fitHeight="10.0" fitWidth="10.0" layoutX="848.0" layoutY="462.0">
          <image>
             <Image url="@Mercury.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="venus" fitHeight="19.0" fitWidth="20.0" layoutX="201.0" layoutY="450.0">
+      <ImageView fx:id="venus" fitHeight="19.0" fitWidth="20.0" layoutX="834.0" layoutY="486.0">
          <image>
             <Image url="@Venus.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="mars" fitHeight="16.0" fitWidth="16.0" layoutX="201.0" layoutY="500.0">
+      <ImageView fx:id="mars" fitHeight="16.0" fitWidth="16.0" layoutX="782.0" layoutY="520.0">
          <image>
             <Image url="@Mars.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="jupiter" fitHeight="60.0" fitWidth="60.0" layoutX="201.0" layoutY="600.0">
+      <ImageView fx:id="jupiter" fitHeight="60.0" fitWidth="60.0" layoutX="1122.0" layoutY="548.0">
          <image>
             <Image url="@Jupiter.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="saturn" fitHeight="48.0" fitWidth="96.0" layoutX="201.0" layoutY="800.0">
+      <ImageView fx:id="saturn" fitHeight="48.0" fitWidth="96.0" layoutX="1346.0" layoutY="141.0">
          <image>
             <Image url="@Saturn.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="titan" fitHeight="18.0" fitWidth="18.0" layoutX="201.0" layoutY="860.0">
+      <ImageView fx:id="titan" fitHeight="18.0" fitWidth="18.0" layoutX="1346.0" layoutY="141.0">
          <image>
             <Image url="@Titan.png" />
          </image>
       </ImageView>
-      <VBox fx:id="data" layoutX="27.0" layoutY="960.0" prefHeight="90.0" prefWidth="382.0">
+      <ImageView fx:id="spaceprobe" fitHeight="25.0" fitWidth="20.0" layoutX="100.0" layoutY="100.0" rotate="45.0">
+         <image>
+            <Image url="@Spaceprobe.png" />
+         </image>
+      </ImageView>
+      <VBox fx:id="data" layoutX="14.0" layoutY="832.0" prefHeight="90.0" prefWidth="382.0">
          <children>
             <Label fx:id="TimeElapsed" text="Time Elapsed:" textFill="WHITE">
                <font>

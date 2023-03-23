@@ -53,7 +53,6 @@ public class Vector2d {
             return true;
         }
         return false;
-
     }
 
     public Vector2d mul(double scalar){
@@ -68,12 +67,10 @@ public class Vector2d {
         return new Vector2d(this.x-other.getX(),this.y-other.getY());
     }
 
-
     //@returns this+scalar*other
     public Vector2d addMul(double scalar, Vector2d other){
         Vector2d addVector= other.mul(scalar);
         return this.add(addVector);
-
     }
 
     //the distance from the origin to the vector //length of the vector // Pythagoras Theorem
@@ -86,8 +83,4 @@ public class Vector2d {
     public String toString(){
         return "("+this.getX()+","+this.getY()+")";
     }
-
-
-
-
 }

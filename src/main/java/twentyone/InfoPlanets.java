@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InfoPlanets {
-    //"Sun", "Mercury", "Venus", "Earth", "Moon", "Mars", "Jupiter", "Saturn", "Titan", "Neptune", "Uranus"
+
     static ArrayList<String> str = new ArrayList<String>();
     public static void getInfo(String planet){
         str.add("sun");
@@ -27,7 +27,6 @@ public class InfoPlanets {
                 lines.add(scanner.nextLine());
             }
         } catch (Exception e) {
-            // TODO: handle exception
         }
         if(str.contains(planet)){
             int i = str.indexOf(planet);
@@ -37,9 +36,5 @@ public class InfoPlanets {
             System.out.println("Not a planet");
         }
        
-    }
-    public static void main(String[] args) {
-        String planet = "saturn".toLowerCase();
-        getInfo(planet);
     }
 }

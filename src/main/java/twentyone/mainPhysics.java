@@ -111,7 +111,7 @@ class mainPhysics{
         for (int j = 0; j < 31536000; j++) {
             bodies = supereme.Eulers(bodies, 1, 1);
             //System.out.println("new velocity : " + Arrays.toString(bodies[1].getVelocity()));
-            if(j == 1 || j == (31536000-1))
+            if(j == 1 || j == (31536000))
                 System.out.println("new position : " + Arrays.toString(bodies[1].getPosition()));
         }
         
