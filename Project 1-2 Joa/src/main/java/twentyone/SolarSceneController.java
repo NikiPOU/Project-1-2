@@ -18,9 +18,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
+
+import java.awt.*;
 
 //1 unit is 15474 km
 
@@ -28,16 +31,17 @@ public class SolarSceneController implements Initializable {
 
     int probeCoords2;
     int distanceTitan2;
-    int launchCoords2;
-    int launchVelocity2;
+    double[] launchCoords2;
+    double[] launchVelocity2;  
+    double closestTitan = 10E40;
+    String momentTitan;
+
+    int sunx = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 + 45;
+    int suny = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 + 45;
 
     int r;
     int g;
     int b;
-
-    int sunx = 845;
-    int suny = 445;
-
     CelestialBody3 sunCB;
     CelestialBody3 mercuryCB;
     CelestialBody3 venusCB;
@@ -49,7 +53,8 @@ public class SolarSceneController implements Initializable {
     CelestialBody3 titanCB;
     CelestialBody3 neptuneCB;
     CelestialBody3 uranusCB;
-    CelestialBody3[] bodies = new CelestialBody3[11];
+    CelestialBody3 probe;
+    CelestialBody3[] bodies = new CelestialBody3[12];
 
     @FXML
     Label probeCoords;
@@ -59,6 +64,10 @@ public class SolarSceneController implements Initializable {
     Label launchCoords;
     @FXML
     Label launchVelocity;
+    @FXML
+    Label titanMoment;
+    @FXML
+    ImageView sun;
     @FXML
     ImageView earth;
     @FXML
@@ -85,7 +94,8 @@ public class SolarSceneController implements Initializable {
     Group dots;
     @FXML
     Group path;
-    
+    @FXML
+    VBox data;  
 
     int seconds = -1;
     int minutes = -1;
@@ -117,11 +127,17 @@ public class SolarSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        sun.setLayoutX(sunx - 45);
+        sun.setLayoutY(suny - 45);
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+        data.setLayoutX(25);
+        data.setLayoutY(screenSize.getHeight() - 200);
         dots = new Group();
         path = new Group();
         root.getChildren().add(dots);
         root.getChildren().add(path);
-        Physics_Engine physics = new Physics_Engine();
         Unreal_Engine unreal = new Unreal_Engine();
         probeCoords.setText("Currect probe coords: " + probeCoords2);
         distanceTitan.setText("Distance to Titan: " + distanceTitan2);
@@ -215,74 +231,46 @@ public class SolarSceneController implements Initializable {
                 saturn.setLayoutY(sy);
                 titan.setLayoutX(tx);
                 titan.setLayoutY(ty);
-            }
-        };
-        EventHandler<ActionEvent> spaceMovement = new EventHandler<ActionEvent>() {
 
-            @Override
-            public void handle(ActionEvent event) {
-                double satdis = Math.sqrt(((sx-spax)*(sx-spax))+((sy-spay)*(sy-spay)));
                 double titandis = Math.sqrt(((tx-spax)*(tx-spax))+((ty-spay)*(ty-spay)));
-                double angle;
-                if(titandis <= 20){
-                    spax = tx + 2;
-                    spay = ty + 2;
+                System.out.println(titandis);
+
+                if(true){
+                    double[] spaps = bodies[11].getPosition();
+                    probeCoords.setText("Currect probe coords: [x " + spaps[0] + ",y " + spaps[1] + ",z " + spaps[2] + "]");
+
+                    double spax = sunx + spaps[0]/divider;
+                    double spay = suny + spaps[1]/divider;
                     spaceprobe.setLayoutX(spax);
                     spaceprobe.setLayoutY(spay);
-                } else if(isPressed){
-                    if(satdis > 40){
-                        double dx = sx - spax;
-                        double dy = sy - spay;
-                        angle = Math.atan2(dy, dx);
-                        spax += 0.8*Math.cos(angle);
-                        spay += 0.8*Math.sin(angle);
-                        spaceprobe.setLayoutX(spax);
-                        spaceprobe.setLayoutY(spay);
-                        spaceprobe.setRotate(Math.toDegrees(angle)+90);
-                    } else {
-                        double dx = tx - spax;
-                        double dy = ty - spay;
-                        angle = Math.atan2(dy, dx);
-                        spax += 0.8*Math.cos(angle);
-                        spay += 0.8*Math.sin(angle);
-                        spaceprobe.setLayoutX(spax);
-                        spaceprobe.setLayoutY(spay);
-                        spaceprobe.setRotate(Math.toDegrees(angle)+90);
-                    }
+
                     Circle circle = new Circle();
-                    circle.setCenterX(spax+10*Math.sin(angle));
-                    circle.setCenterY(spay+10*Math.cos(angle));
+                    circle.setCenterX(spax);
+                    circle.setCenterY(spay);
                     circle.setRadius(2);
                     circle.setFill(Color.rgb(r, g, b));
                     circle.setOpacity(0.4);
                     dotList.add(circle);
-                    dots.getChildren().add(circle);
-                    
-                } else {
-                    spax = ex+2;
-                    spay = ey+2;
-                    spaceprobe.setLayoutX(spax);
-                    spaceprobe.setLayoutY(spay);
+                    dots.getChildren().add(circle);             
                 }
-                probeCoords.setText("Currect probe coords: " + spax*divider + " km " + spay*divider + " km");
-                distanceTitan.setText("Distance to Titan: " + titandis*divider + " km");
+                if (closestTitan > titandis) {
+                    distanceTitan.setText("Distance to Titan: " + titandis);
+                    titanMoment.setText("Moment closest distance to Titan: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");
+                    closestTitan = titandis;
+                }
             }
-            
         };
 
-        
-
         initiateCB();
+        launchCoords.setText("Launch coords: [x " + launchCoords2[0] + ", y " + launchCoords2[1] + ", z " + launchCoords2[2] + "]");
+        launchVelocity.setText("Launch velocity: [x " + launchVelocity2[0] + ", y " + launchVelocity2[1] + ", z " + launchVelocity2[2] + "]");
+        
         KeyFrame keyFrame = new KeyFrame(Duration.millis(100), movement);
-        KeyFrame keyFrame2 = new KeyFrame(Duration.millis(100), spaceMovement);
-
         r = rand.nextInt(255);
         g = rand.nextInt(255);
         b = rand.nextInt(255);
-
         //add the keyframe to the timeline
         timeline.getKeyFrames().add(keyFrame);
-        timeline.getKeyFrames().add(keyFrame2);
         timeline.play();
     }
 
@@ -406,6 +394,12 @@ public class SolarSceneController implements Initializable {
         double[] uravel = {-5.12766216337626, 4.22055347264457, 0.0821190336403063};
         double[] urapos = {(long) 1958732435.99338, (long) 2191808553.21893, (long) -17235283.8321992};
 
+        double[] probevel = {5, 45, 0};
+        double[] probepos = {-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113}; 
+
+        launchCoords2 = probepos;
+        launchVelocity2 = probevel;
+
         sunCB = new CelestialBody3(sunvel, sunpos, 1.991E30);
         earthCB = new CelestialBody3(earthvel, earthpos, 5.97219E+24);
         venusCB = new CelestialBody3(venusvel, venuspos, 4.8685E+24);
@@ -417,6 +411,8 @@ public class SolarSceneController implements Initializable {
         titanCB = new CelestialBody3(titvel, titpos, 1.34553E+23);
         neptuneCB = new CelestialBody3(nepvel, neppos, 1.02409E+26);
         uranusCB = new CelestialBody3(uravel, urapos, 86.813E+24);
+        probe = new Probe2(probevel, probepos, 50000);
+
 
         bodies[0] = sunCB;
         bodies[3] = earthCB;
@@ -429,5 +425,6 @@ public class SolarSceneController implements Initializable {
         bodies[8] = titanCB;
         bodies[7] = saturnCB;
         bodies[6] = jupiterCB;
+        bodies[11] = probe;
     }
 }
