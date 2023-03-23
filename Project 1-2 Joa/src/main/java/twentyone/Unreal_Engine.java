@@ -23,19 +23,19 @@ class Unreal_Engine{
 
 
         //calculate difference between vectors
-        for(int i = 0; i<ipositionVector.length; i++){
+        for(int i = 0; i<ipositionVector.length; i++){//O(k) in which k is the length of the array to represent a 3d vector
             finalForce[i] = ipositionVector[i] - jpositionVector[i];
         }
 
 
         //get denominator 
-        for(int i = 0; i<finalForce.length; i++){
+        for(int i = 0; i<finalForce.length; i++){//O(k) in which k is the length of the array to represent a 3d vector
             denominatorResult = denominatorResult + (finalForce[i] * finalForce[i]);
         }
         denominatorResult = Math.pow(Math.sqrt(denominatorResult), 3);
 
         //get final number
-        for(int i = 0; i<finalForce.length; i++){
+        for(int i = 0; i<finalForce.length; i++){//O(k) in which k is the length of the array to represent a 3d vector
             finalForce[i] = multiple * (finalForce[i] / denominatorResult);
         }
 
@@ -43,6 +43,8 @@ class Unreal_Engine{
 
         //return vector
         return finalForce;
+
+        //the final BigO here is O(k) in which k is the length of the array to represent a 3d vector
     }
 
     /**
@@ -57,10 +59,10 @@ class Unreal_Engine{
         double[] vector = new double[3];
 
         //get the force between your desiredPlanet and ith planet and then add it to sumForces which is the total sum
-        for(int i = 0; i<theCelBodies.length; i++){
+        for(int i = 0; i<theCelBodies.length; i++){//O(n) in which n is the amount of celestial bodies
             if(i != desiredPlanet){
-                vector = calculateForce(theCelBodies[desiredPlanet], theCelBodies[i]);
-                for(int j = 0; j<sumForces.length; j++){
+                vector = calculateForce(theCelBodies[desiredPlanet], theCelBodies[i]); //O(k) as stated before
+                for(int j = 0; j<sumForces.length; j++){//O(k) in which k is the length of the array to represent a 3d vector
                     sumForces[j] += vector[j];
                 }
             }
@@ -70,7 +72,7 @@ class Unreal_Engine{
 
         //return the total force
         return sumForces;
-        
+        //the final BigO of this function is O(nk) in which n is the amount of celestial bodies, in which k is the length of the array to represent a 3d vector
     }
 
     /**
@@ -84,7 +86,7 @@ class Unreal_Engine{
         //get the values you need bro and set up
 
             //our V' by this I mean first derivative of velocity
-        double[] derivativeOfVelo = sumOf_Forces(theCelBodies, theDesired); // no need to divide by Mi
+        double[] derivativeOfVelo = sumOf_Forces(theCelBodies, theDesired); // no need to divide by Mi ... as stated before O(nk)
         
             //our Vn and Xn
         double[] velocityOfDesiredPlanet = theCelBodies[theDesired].getVelocity();
@@ -97,7 +99,7 @@ class Unreal_Engine{
 
         //get Xn+1 which is for position 
             //we have to do Xn+1 = Xn + h(Vn)
-        for(int i = 0; i < newPositionOfDesiredPlanet.length; i++){
+        for(int i = 0; i < newPositionOfDesiredPlanet.length; i++){//O(k) in which k is the length of the array to represent a 3d vector
             newPositionOfDesiredPlanet[i] = positionOfDesiredPlante[i] + (stepSizer*(velocityOfDesiredPlanet[i]));
         }
 
@@ -105,7 +107,7 @@ class Unreal_Engine{
 
         //get Vn+1 which is for velocity
             //we have to do Vn+1 = Vn + h(V'n)
-        for(int i = 0; i < newVelocityOfDesiredPlanet.length; i++){
+        for(int i = 0; i < newVelocityOfDesiredPlanet.length; i++){//O(k) in which k is the length of the array to represent a 3d vector
             newVelocityOfDesiredPlanet[i] = velocityOfDesiredPlanet[i] - (stepSizer * (derivativeOfVelo[i]));
         }
 
@@ -116,7 +118,7 @@ class Unreal_Engine{
         theCelBodies[theDesired].setNewVelocity(newVelocityOfDesiredPlanet);
         
         return theCelBodies;
-
+        //we take largest BigO in this function so it's O(nk)
     }
 
 }

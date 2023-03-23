@@ -175,94 +175,30 @@ public class SolarSceneController implements Initializable {
                 double[] jups = bodies[6].getPosition();
                 double[] saps = bodies[7].getPosition();
                 double[] tips = bodies[8].getPosition();
-                // ex = 120*Math.cos(Math.toRadians(i))+sunx;
-                // ey = 120*Math.sin(Math.toRadians(i))+suny;
                 ex = sunx + eaps[0]/divider;
                 ey = suny + eaps[1]/divider;
-                Circle circle = new Circle();
-                circle.setCenterX(ex+10);
-                circle.setCenterY(ey+10);
-                circle.setRadius(1);
-                circle.setFill(Color.GREEN);
-                circle.setOpacity(0.3);
-                path.getChildren().add(circle);
-                // double mx = 15*Math.cos(Math.toRadians(12*i))+ex+7;
-                // double my = 15*Math.sin(Math.toRadians(12*i))+ey+7;
-                // double mex = 59*Math.cos(Math.toRadians(4*i))+sunx;
-                // double mey = 59*Math.sin(Math.toRadians(4*i))+suny;
-                // double vx = 80*Math.cos(Math.toRadians(1.7*i))+sunx;
-                // double vy = 80*Math.sin(Math.toRadians(1.7*i))+suny;
-                // double max = 180*Math.cos(Math.toRadians(0.52*i))+sunx;
-                // double may = 180*Math.sin(Math.toRadians(0.52*i))+suny;
-                // double jx = 419*Math.cos(Math.toRadians(0.08*i))+sunx;
-                // double jy = 419*Math.sin(Math.toRadians(0.08*i))+suny;
-                // sx = 700*Math.cos(Math.toRadians(0.034*i))+sunx;
-                // sy = 700*Math.sin(Math.toRadians(0.034*i))+suny;
-                // tx = 40*Math.cos(Math.toRadians(22.64*i))+sx+40;
-                // ty = 40*Math.sin(Math.toRadians(22.64*i))+sy+20;
+                circlemaker(3, ex, ey);
                 double mx = sunx + 8 + 15*Math.cos(k*0.009) + mops[0]/divider; //8+ 15*Math.cos(i) + 
                 double my = suny + 8 + 15*Math.sin(k*0.009) + mops[1]/divider; //8+ 15*Math.sin(i) +
-                Circle circle1 = new Circle();
-                circle1.setCenterX(mx+2);
-                circle1.setCenterY(my+2);
-                circle1.setRadius(1);
-                circle1.setFill(Color.WHITE);
-                circle1.setOpacity(0.3);
-                path.getChildren().add(circle1);
+                circlemaker(4, mx, my);
                 double mex = sunx + meps[0]/divider;
                 double mey = suny + meps[1]/divider;
-                Circle circle2 = new Circle();
-                circle2.setCenterX(mex+5);
-                circle2.setCenterY(mey+5);
-                circle2.setRadius(1);
-                circle2.setFill(Color.LIGHTGRAY);
-                circle2.setOpacity(0.3);
-                path.getChildren().add(circle2);
+                circlemaker(1, mex, mey);
                 double vx = sunx + veps[0]/divider;
                 double vy = suny + veps[1]/divider;
-                Circle circle3 = new Circle();
-                circle3.setCenterX(vx+10);
-                circle3.setCenterY(vy+10);
-                circle3.setRadius(1);
-                circle3.setFill(Color.DARKORANGE);
-                circle3.setOpacity(0.3);
-                path.getChildren().add(circle3);
+                circlemaker(2, vx, vy);
                 double max = sunx + maps[0]/divider;
                 double may = suny + maps[1]/divider;
-                Circle circle4 = new Circle();
-                circle4.setCenterX(max+8);
-                circle4.setCenterY(may+8);
-                circle4.setRadius(1);
-                circle4.setFill(Color.CRIMSON);
-                circle4.setOpacity(0.3);
-                path.getChildren().add(circle4);
+                circlemaker(5, max, may);
                 double jx = sunx + jups[0]/divider;
                 double jy = suny + jups[1]/divider;
-                Circle circle5 = new Circle();
-                circle5.setCenterX(jx+30);
-                circle5.setCenterY(jy+30);
-                circle5.setRadius(1);
-                circle5.setFill(Color.KHAKI);
-                circle5.setOpacity(0.3);
-                path.getChildren().add(circle5);
+                circlemaker(6, jx, jy);
                 sx = sunx + saps[0]/divider;
                 sy = suny + saps[1]/divider;
-                Circle circle6 = new Circle();
-                circle6.setCenterX(sx+48);
-                circle6.setCenterY(sy+24);
-                circle6.setRadius(1);
-                circle6.setFill(Color.MAROON);
-                circle6.setOpacity(0.3);
-                path.getChildren().add(circle6);
+                circlemaker(7, sx, sy);
                 tx = sunx + 40 + 23*Math.cos(k*0.0168) + tips[0]/divider;
                 ty = suny + 15 + 23*Math.sin(k*0.0168) + tips[1]/divider;
-                Circle circle7 = new Circle();
-                circle7.setCenterX(tx+9);
-                circle7.setCenterY(ty+9);
-                circle7.setRadius(1);
-                circle7.setFill(Color.CYAN);
-                circle7.setOpacity(0.3);
-                path.getChildren().add(circle7);
+                circlemaker(8, tx, ty);
                 earth.setLayoutX(ex);
                 earth.setLayoutY(ey);
                 moon.setLayoutX(mx);
@@ -298,8 +234,8 @@ public class SolarSceneController implements Initializable {
                         double dx = sx - spax;
                         double dy = sy - spay;
                         angle = Math.atan2(dy, dx);
-                        spax += 2*Math.cos(angle);
-                        spay += 2*Math.sin(angle);
+                        spax += 0.8*Math.cos(angle);
+                        spay += 0.8*Math.sin(angle);
                         spaceprobe.setLayoutX(spax);
                         spaceprobe.setLayoutY(spay);
                         spaceprobe.setRotate(Math.toDegrees(angle)+90);
@@ -307,8 +243,8 @@ public class SolarSceneController implements Initializable {
                         double dx = tx - spax;
                         double dy = ty - spay;
                         angle = Math.atan2(dy, dx);
-                        spax += 2*Math.cos(angle);
-                        spay += 2*Math.sin(angle);
+                        spax += 0.8*Math.cos(angle);
+                        spay += 0.8*Math.sin(angle);
                         spaceprobe.setLayoutX(spax);
                         spaceprobe.setLayoutY(spay);
                         spaceprobe.setRotate(Math.toDegrees(angle)+90);
@@ -328,8 +264,8 @@ public class SolarSceneController implements Initializable {
                     spaceprobe.setLayoutX(spax);
                     spaceprobe.setLayoutY(spay);
                 }
-                probeCoords.setText("Currect probe coords: " + spax + " " + spay);
-                distanceTitan.setText("Distance to Titan: " + titandis);
+                probeCoords.setText("Currect probe coords: " + spax*divider + " km " + spay*divider + " km");
+                distanceTitan.setText("Distance to Titan: " + titandis*divider + " km");
             }
             
         };
@@ -379,6 +315,47 @@ public class SolarSceneController implements Initializable {
             }
         }
     };
+
+    public void circlemaker(int index, double x, double y){
+        Circle circle = new Circle();
+        if(index == 1){
+            circle.setLayoutX(x+5);
+            circle.setLayoutY(y+5);
+            circle.setFill(Color.LIGHTGRAY);
+        } else if(index == 2){
+            circle.setLayoutX(x+10);
+            circle.setLayoutY(y+10);
+            circle.setFill(Color.DARKORANGE);
+        } else if(index == 3){
+            circle.setCenterX(x+10);
+            circle.setCenterY(y+10);
+            circle.setFill(Color.GREEN);
+        } else if(index == 4){
+            circle.setCenterX(x+2);
+            circle.setCenterY(y+2);
+            circle.setFill(Color.WHITE);
+        } else if(index == 5){
+            circle.setLayoutX(x+8);
+            circle.setLayoutY(y+8);
+            circle.setFill(Color.CRIMSON);
+        } else if(index == 6){
+            circle.setLayoutX(x+30);
+            circle.setLayoutY(y+30);
+            circle.setFill(Color.KHAKI);
+        } else if(index == 7){
+            circle.setLayoutX(x+48);
+            circle.setLayoutY(y+24);
+            circle.setFill(Color.MAROON);
+        } else if(index == 8){
+            circle.setLayoutX(x+9);
+            circle.setLayoutY(y+9);
+            circle.setFill(Color.CYAN);
+        }
+        circle.setRadius(1);
+        circle.setOpacity(0.3);
+        path.getChildren().add(circle);
+
+    }
 
     /**
      * Switches to the home screen.
