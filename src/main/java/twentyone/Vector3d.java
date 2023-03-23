@@ -8,14 +8,13 @@ public class Vector3d implements Vector3dInterface{
     private double y;
     private double z;
 
-    public Vector3d(double x, double y, double z){
+    public Vector3d(double x, double y, double z){ //constructor to intialize the x, y and z coordinates
         this.x=x;
         this.y=y;
         this.z=z;
-
     }
 
-    public Vector3d(Vector2d v, double z){
+    public Vector3d(Vector2d v, double z){ //get the x and y coordinates
         this.x= v.getX();
         this.y= v.getY();
         this.z=z;
@@ -42,7 +41,6 @@ public class Vector3d implements Vector3dInterface{
 
     public double dist(Vector3dInterface other){
         return Math.sqrt(Math.pow((other.getX()-x), 2)+Math.pow((other.getY()-y), 2)+ Math.pow(other.getZ()-z, 2));
-
     }
 
     public Vector3dInterface mul(double scalar){
@@ -60,28 +58,18 @@ public class Vector3d implements Vector3dInterface{
     public Vector3dInterface addMul(double scalar, Vector3dInterface other){
         Vector3dInterface addVector= other.mul(scalar);
         return this.add(addVector);
-
     }
 
     public double norm(){
-        return   Math.sqrt(Math.pow(this.getX(),2)+Math.pow(this.getY(),2)+Math.pow(this.getZ(),2));
+        return Math.sqrt(Math.pow(this.getX(),2)+Math.pow(this.getY(),2)+Math.pow(this.getZ(),2));
     }
 
 
     public Vector3d clone(){
-
         return new Vector3d(this.x,this.y,this.z);
     }
 
     public String toString(){
         return (x+", "+y+", "+z);
-
     }
-
-
-
-
-
-
-
 }
