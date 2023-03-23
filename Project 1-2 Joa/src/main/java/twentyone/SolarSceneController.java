@@ -31,6 +31,8 @@ public class SolarSceneController implements Initializable {
     int launchCoords2;
     int launchVelocity2;
 
+    double furthestdistance = 10E40;
+
     int r;
     int g;
     int b;
@@ -85,6 +87,8 @@ public class SolarSceneController implements Initializable {
     Group dots;
     @FXML
     Group path;
+    @FXML
+    Label closestdistance;
     
 
     int seconds = -1;
@@ -121,7 +125,6 @@ public class SolarSceneController implements Initializable {
         path = new Group();
         root.getChildren().add(dots);
         root.getChildren().add(path);
-        Physics_Engine physics = new Physics_Engine();
         Unreal_Engine unreal = new Unreal_Engine();
         probeCoords.setText("Currect probe coords: " + probeCoords2);
         distanceTitan.setText("Distance to Titan: " + distanceTitan2);
@@ -266,6 +269,10 @@ public class SolarSceneController implements Initializable {
                 }
                 probeCoords.setText("Currect probe coords: " + spax*divider + " km " + spay*divider + " km");
                 distanceTitan.setText("Distance to Titan: " + titandis*divider + " km");
+                if(furthestdistance > titandis){
+                    furthestdistance = titandis;
+                    closestdistance.setText("Moment closest distance to Titan: " + years + " years, " + months + " months and " + days + " days");
+                }
             }
             
         };
@@ -316,6 +323,12 @@ public class SolarSceneController implements Initializable {
         }
     };
 
+    /**
+     * Makes the trails of the planets.
+     * @param index
+     * @param x
+     * @param y
+     */
     public void circlemaker(int index, double x, double y){
         Circle circle = new Circle();
         if(index == 1){
