@@ -124,7 +124,7 @@ public class SolarSceneController implements Initializable {
 
     int k=0;
 
-5    @Override
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
         sun.setLayoutX(sunx - 45);
         sun.setLayoutY(suny - 45);
