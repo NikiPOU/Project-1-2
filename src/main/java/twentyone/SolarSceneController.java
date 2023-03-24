@@ -102,12 +102,12 @@ public class SolarSceneController implements Initializable {
     @FXML
     Label closestdistanceTitan;
 
-    int seconds = -1;
-    int minutes = -1;
-    int hours = -1;
-    int days = -1;
-    int months = -1;
-    int years = 0;
+    double seconds = 0;
+    double minutes = 0;
+    double hours = 0;
+    double days = 0;
+    double months = 0;
+    double years = 0;
     int divider = 2100000;
     double ex;
     double ey;
@@ -157,12 +157,14 @@ public class SolarSceneController implements Initializable {
         //one can add a specific action when the keyframe is reached
         EventHandler<ActionEvent> movement = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
+                double stepsize = 1;
                 for (int i = 0; i < 25000; i++) {
                     for (int j = 0; j < bodies.length; j++) {
-                        bodies = unreal.Eulers(bodies, j, 1);
+                        bodies = unreal.Eulers(bodies, j, stepsize);
                     }
-                    seconds++;
-                    if(seconds % 60 == 0){
+                    seconds += stepsize;
+                    // System.out.println(seconds);
+                    if(seconds >= 60){
                         minutes++;
                         seconds = 0;
                         if(minutes % 60 == 0){
