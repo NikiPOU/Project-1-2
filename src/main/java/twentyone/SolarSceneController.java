@@ -36,6 +36,8 @@ public class SolarSceneController implements Initializable {
     double closestTitan = 10E40;
     String momentTitan;
 
+    double[] firstprobepos;
+
     int sunx = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 + 45;
     int suny = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 + 45;
 
@@ -55,6 +57,8 @@ public class SolarSceneController implements Initializable {
     CelestialBody3 uranusCB;
     CelestialBody3 probe;
     CelestialBody3[] bodies = new CelestialBody3[12];
+
+    int TimeStamp = 48;
 
     @FXML
     Label probeCoords;
@@ -166,6 +170,10 @@ public class SolarSceneController implements Initializable {
                             hours++;
                             k++;
                             minutes = 0;
+                            if(k == TimeStamp){
+                                System.out.println("Position of the probe: x: " + bodies[11].getPosition()[0] + " y: " + bodies[11].getPosition()[1] + " z: " + bodies[11].getPosition()[2]);
+                                System.out.println("Time Stamp: " + k + " hours");
+                            }
                             if(hours % 24 == 0){
                                 days++;
                                 hours = 0;
