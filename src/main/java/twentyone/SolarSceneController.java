@@ -28,6 +28,7 @@ import java.awt.*;
 //1 unit is 15474 km
 
 public class SolarSceneController implements Initializable {
+    int TimeStamp = 0;
 
     int probeCoords2;
     int distanceTitan2;
@@ -57,8 +58,6 @@ public class SolarSceneController implements Initializable {
     CelestialBody3 uranusCB;
     CelestialBody3 probe;
     CelestialBody3[] bodies = new CelestialBody3[12];
-
-    int TimeStamp = 48;
 
     @FXML
     Label probeCoords;
@@ -171,8 +170,9 @@ public class SolarSceneController implements Initializable {
                             k++;
                             minutes = 0;
                             if(k == TimeStamp){
-                                System.out.println("Position of the probe: x: " + bodies[11].getPosition()[0] + " y: " + bodies[11].getPosition()[1] + " z: " + bodies[11].getPosition()[2]);
                                 System.out.println("Time Stamp: " + k + " hours");
+                                System.out.println("Position of the probe: x: " + bodies[11].getPosition()[0] + " y: " + bodies[11].getPosition()[1] + " z: " + bodies[11].getPosition()[2]);
+                                System.out.println("Distance Traveled: x: " + (bodies[11].getPosition()[0]-firstprobepos[0]) + " km y: " + (bodies[11].getPosition()[1]-firstprobepos[1]) + " km z: " + (bodies[11].getPosition()[2]-firstprobepos[2]) + " km");
                             }
                             if(hours % 24 == 0){
                                 days++;
@@ -411,6 +411,8 @@ public class SolarSceneController implements Initializable {
 
         double[] probevel = {48, -45, 0};
         double[] probepos = {-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113}; 
+
+        firstprobepos = probepos;
 
         launchCoords2 = probepos;
         launchVelocity2 = probevel;
