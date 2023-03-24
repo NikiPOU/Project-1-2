@@ -28,7 +28,7 @@ import java.awt.*;
 //1 unit is 15474 km
 
 public class SolarSceneController implements Initializable {
-    int TimeStamp = 0;
+    int TimeStamp = 27;
 
     int probeCoords2;
     int distanceTitan2;
@@ -175,6 +175,7 @@ public class SolarSceneController implements Initializable {
                                 System.out.println("Time Stamp: " + k + " hours");
                                 System.out.println("Position of the probe: x: " + bodies[11].getPosition()[0] + " y: " + bodies[11].getPosition()[1] + " z: " + bodies[11].getPosition()[2]);
                                 System.out.println("Distance Traveled: x: " + (bodies[11].getPosition()[0]-firstprobepos[0]) + " km y: " + (bodies[11].getPosition()[1]-firstprobepos[1]) + " km z: " + (bodies[11].getPosition()[2]-firstprobepos[2]) + " km");
+                                System.out.println("Total distance: " + Math.sqrt(Math.pow(bodies[11].getPosition()[0]-firstprobepos[0], 2)+Math.pow(bodies[11].getPosition()[1]-firstprobepos[1], 2)+Math.pow(bodies[11].getPosition()[2]-firstprobepos[2], 2))+ " km");
                             }
                             if(hours % 24 == 0){
                                 days++;
