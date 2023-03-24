@@ -25,8 +25,6 @@ import javafx.util.Duration;
 
 import java.awt.*;
 
-//1 unit is 15474 km
-
 public class SolarSceneController implements Initializable {
     int TimeStamp = 27;
 
@@ -126,11 +124,7 @@ public class SolarSceneController implements Initializable {
 
     int k=0;
 
-    //1 = 2000000
-
-
-
-    @Override
+5    @Override
     public void initialize(URL location, ResourceBundle resources) {
         sun.setLayoutX(sunx - 45);
         sun.setLayoutY(suny - 45);
