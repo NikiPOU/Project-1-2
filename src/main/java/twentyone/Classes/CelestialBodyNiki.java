@@ -1,4 +1,4 @@
-package twentyone;
+package twentyone.Classes;
 
 import java.util.ArrayList;
 

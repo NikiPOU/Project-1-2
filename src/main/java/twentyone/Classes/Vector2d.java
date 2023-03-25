@@ -1,4 +1,4 @@
-package twentyone;
+package twentyone.Classes;
 
 public class Vector2d {
 

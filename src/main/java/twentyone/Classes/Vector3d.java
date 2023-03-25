@@ -1,4 +1,4 @@
-package twentyone;
+package twentyone.Classes;
 
 import twentyone.Interfaces.Vector3dInterface;
 

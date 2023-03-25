@@ -1,4 +1,4 @@
-package twentyone;
+package twentyone.Classes;
 
 public class Unreal_Engine{
     private final double gravity = 6.6743 * Math.pow(10, -20);

@@ -1,4 +1,4 @@
-package twentyone;
+package twentyone.Classes;
 public class Probe extends CelestialBody{
      /*
      * Potential launching positions (x, y, z):

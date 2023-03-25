@@ -23,9 +23,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import twentyone.App;
-import twentyone.CelestialBody;
-import twentyone.Probe;
-import twentyone.Unreal_Engine;
+import twentyone.Classes.CelestialBody;
+import twentyone.Classes.Probe;
+import twentyone.Classes.Unreal_Engine;
 
 import java.awt.*;
 
