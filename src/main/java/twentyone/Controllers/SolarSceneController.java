@@ -30,6 +30,11 @@ import twentyone.Classes.Unreal_Engine;
 import java.awt.*;
 
 public class SolarSceneController implements Initializable {
+    final double stepsize = 10;
+    final int eulerLoops = 7500;
+    final double[] initialPosProbe = {-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113};
+    final double[] initialVelProbe = {48, -45, 0};
+    //in hours  
     int TimeStamp = 27;
 
     int probeCoords2;
@@ -38,39 +43,36 @@ public class SolarSceneController implements Initializable {
     double[] launchVelocity2;  
     double closestTitan = 10E40;
     String momentTitan;
-
     double[] firstprobepos;
-
     int sunx = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 + 45;
     int suny = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 + 45;
+    CelestialBody[] bodies = new CelestialBody[12];
 
     int r;
     int g;
     int b;
-    CelestialBody sunCB;
-    CelestialBody mercuryCB;
-    CelestialBody venusCB;
-    CelestialBody earthCB;
-    CelestialBody moonCB;
-    CelestialBody marsCB;
-    CelestialBody jupiterCB;
-    CelestialBody saturnCB;
-    CelestialBody titanCB;
-    CelestialBody neptuneCB;
-    CelestialBody uranusCB;
-    CelestialBody probe;
-    CelestialBody[] bodies = new CelestialBody[12];
+    int seconds = 0;
+    int minutes = 0;
+    int hours = 0;
+    int days = 0;
+    int months = 0;
+    int years = 0;
+    int divider = 2100000;
+    double ex;
+    double ey;
+    double spax;
+    double spay;
+    double tx;
+    double ty;
+    double sx;
+    double sy;
+    ArrayList<Circle> dotList = new ArrayList<>();
+    Random rand = new Random();
+    private Timeline timeline;
+    int k=0;
 
     @FXML
-    Label probeCoords;
-    @FXML
-    Label distanceTitan;
-    @FXML
-    Label launchCoords;
-    @FXML
-    Label launchVelocity;
-    @FXML
-    Label titanMoment;
+    AnchorPane root;
     @FXML
     ImageView sun;
     @FXML
@@ -90,198 +92,67 @@ public class SolarSceneController implements Initializable {
     @FXML
     ImageView titan;
     @FXML
-    Label TimeElapsed;
-    @FXML
     ImageView spaceprobe;
     @FXML
-    AnchorPane root;
+    VBox data;
+    @FXML
+    Label TimeElapsed;
+    @FXML
+    Label closestdistanceTitan;
+    @FXML
+    Label probeCoords;
+    @FXML
+    Label distanceTitan;
+    @FXML
+    Label titanMoment;
+    @FXML
+    Label launchCoords;
+    @FXML
+    Label launchVelocity;
     @FXML
     Group dots;
     @FXML
     Group path;
-    @FXML
-    VBox data;
-    @FXML
-    Label closestdistanceTitan;
-
-    double seconds = 0;
-    double minutes = 0;
-    double hours = 0;
-    double days = 0;
-    double months = 0;
-    double years = 0;
-    int divider = 2100000;
-    double ex;
-    double ey;
-    double spax;
-    double spay;
-    double tx;
-    double ty;
-    double sx;
-    double sy;
-    boolean isPressed = false;
-    ArrayList<Circle> dotList = new ArrayList<>();
-
-    Random rand = new Random();
-
-    private Timeline timeline;
-
-    int k=0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //Setup basic attributes
         sun.setLayoutX(sunx - 45);
         sun.setLayoutY(suny - 45);
-
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
         data.setLayoutX(25);
-        data.setLayoutY(screenSize.getHeight() - 200);
+        data.setLayoutY(Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 200);
         dots = new Group();
         path = new Group();
         root.getChildren().add(dots);
         root.getChildren().add(path);
-        Unreal_Engine unreal = new Unreal_Engine();
-        probeCoords.setText("Currect probe coords: " + probeCoords2);
-        distanceTitan.setText("Distance to Titan: " + distanceTitan2);
-        launchCoords.setText("Launch coords: " + launchCoords2);
-        launchVelocity.setText("Launch velocity: " + launchVelocity2);
+        r = rand.nextInt(255);
+        g = rand.nextInt(255);
+        b = rand.nextInt(255);
       
         //create a timeline for moving the circle
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setAutoReverse(false);
 
-        //one can add a specific action when the keyframe is reached
-        EventHandler<ActionEvent> movement = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent t) {
-                double stepsize = 10;
-                for (int i = 0; i < 5000; i++) {
-                    for (int j = 0; j < bodies.length; j++) {
-                        bodies = unreal.Eulers(bodies, j, stepsize);
-                    }
-                    seconds += stepsize;
-                    // System.out.println(seconds);
-                    if(seconds >= 60){
-                        minutes++;
-                        seconds = 0;
-                        if(minutes % 60 == 0){
-                            hours++;
-                            k++;
-                            minutes = 0;
-                            if(k == TimeStamp){
-                                System.out.println("Time Stamp: " + k + " hours");
-                                System.out.println("Position of the probe: x: " + bodies[11].getPosition()[0] + " y: " + bodies[11].getPosition()[1] + " z: " + bodies[11].getPosition()[2]);
-                                System.out.println("Distance Traveled: x: " + (bodies[11].getPosition()[0]-firstprobepos[0]) + " km y: " + (bodies[11].getPosition()[1]-firstprobepos[1]) + " km z: " + (bodies[11].getPosition()[2]-firstprobepos[2]) + " km");
-                                System.out.println("Total distance: " + Math.sqrt(Math.pow(bodies[11].getPosition()[0]-firstprobepos[0], 2)+Math.pow(bodies[11].getPosition()[1]-firstprobepos[1], 2)+Math.pow(bodies[11].getPosition()[2]-firstprobepos[2], 2))+ " km");
-                            }
-                            if(hours % 24 == 0){
-                                days++;
-                                hours = 0;
-                                if(days % 30 == 0){
-                                    months++;
-                                    days = 0;
-                                    if(months/12 == 1){
-                                        months = 0;
-                                        years++;
-                                }
-                            }
-                        }
-                    }
-                    }
-                }
-                TimeElapsed.setText("Time Elapsed: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");  
-                
-                // physics.sumUpdate(bodies, 3);
-                // physics.euler_solver(bodies, 3, 1);
-                double[] meps = bodies[1].getPosition();
-                double[] veps = bodies[2].getPosition();
-                double[] eaps = bodies[3].getPosition();
-                double[] mops = bodies[4].getPosition();
-                double[] maps = bodies[5].getPosition();
-                double[] jups = bodies[6].getPosition();
-                double[] saps = bodies[7].getPosition();
-                double[] tips = bodies[8].getPosition();
-                ex = sunx + eaps[0]/divider;
-                ey = suny + eaps[1]/divider;
-                circlemaker(3, ex, ey);
-                double mx = sunx + 8 + 15*Math.cos(k*0.009) + mops[0]/divider; //8+ 15*Math.cos(i) + 
-                double my = suny + 8 + 15*Math.sin(k*0.009) + mops[1]/divider; //8+ 15*Math.sin(i) +
-                circlemaker(4, mx, my);
-                double mex = sunx + meps[0]/divider;
-                double mey = suny + meps[1]/divider;
-                circlemaker(1, mex, mey);
-                double vx = sunx + veps[0]/divider;
-                double vy = suny + veps[1]/divider;
-                circlemaker(2, vx, vy);
-                double max = sunx + maps[0]/divider;
-                double may = suny + maps[1]/divider;
-                circlemaker(5, max, may);
-                double jx = sunx + jups[0]/divider;
-                double jy = suny + jups[1]/divider;
-                circlemaker(6, jx, jy);
-                sx = sunx + saps[0]/divider;
-                sy = suny + saps[1]/divider;
-                circlemaker(7, sx, sy);
-                tx = sunx + 40 + 23*Math.cos(k*0.0168) + tips[0]/divider;
-                ty = suny + 15 + 23*Math.sin(k*0.0168) + tips[1]/divider;
-                circlemaker(8, tx, ty);
-                earth.setLayoutX(ex);
-                earth.setLayoutY(ey);
-                moon.setLayoutX(mx);
-                moon.setLayoutY(my);
-                mercury.setLayoutX(mex);
-                mercury.setLayoutY(mey);
-                venus.setLayoutX(vx);
-                venus.setLayoutY(vy);
-                mars.setLayoutX(max);
-                mars.setLayoutY(may);
-                jupiter.setLayoutX(jx);
-                jupiter.setLayoutY(jy);
-                saturn.setLayoutX(sx);
-                saturn.setLayoutY(sy);
-                titan.setLayoutX(tx);
-                titan.setLayoutY(ty);
+        //one can add a specific action when the keyframe is reached (you can find class movement below)
+        EventHandler<ActionEvent> movement = new Movement();
 
-                double[] spaps = bodies[11].getPosition();
-                probeCoords.setText("Currect probe coords: [x " + spaps[0] + ",y " + spaps[1] + ",z " + spaps[2] + "]");
-
-                double spax = sunx + spaps[0]/divider;
-                double spay = suny + spaps[1]/divider;
-                double titandis = Math.sqrt(((tx-spax)*(tx-spax))+((ty-spay)*(ty-spay)));
-                distanceTitan.setText("Distance to Titan: " + titandis*divider + " km");
-                spaceprobe.setLayoutX(spax);
-                spaceprobe.setLayoutY(spay);
-                if (closestTitan > titandis) {
-                    closestdistanceTitan.setText("Closest distance to Titan: " + titandis*divider + " km");
-                    titanMoment.setText("Moment closest distance to Titan: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");
-                    closestTitan = titandis;
-                } else if(titandis < 10){
-                    titanMoment.setText("Moment of closest position: " + years + " years, " + months + " months, " + days + " days and " + hours + " hours");
-                }
-
-                Circle circle = new Circle();
-                circle.setCenterX(spax);
-                circle.setCenterY(spay);
-                circle.setRadius(2);
-                circle.setFill(Color.rgb(r, g, b));
-                circle.setOpacity(0.4);
-                dotList.add(circle);
-                dots.getChildren().add(circle);             
-            }
-        };
-
+        //Create all celestial bodies and the probe
         initiateCB();
-        launchCoords.setText("Launch coords: [x " + launchCoords2[0] + ", y " + launchCoords2[1] + ", z " + launchCoords2[2] + "]");
-        launchVelocity.setText("Launch velocity: [x " + launchVelocity2[0] + ", y " + launchVelocity2[1] + ", z " + launchVelocity2[2] + "]");
 
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(500), movement);
-        r = rand.nextInt(255);
-        g = rand.nextInt(255);
-        b = rand.nextInt(255);
         //add the keyframe to the timeline
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(300), movement);
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
+    }
+
+    /**
+     * Switches to the home screen.
+     * @throws IOException
+     */
+    @FXML
+    private void switchToStart() throws IOException {
+        App.setRoot("fxml/StartScene");
     }
 
     /**
@@ -290,12 +161,9 @@ public class SolarSceneController implements Initializable {
      */
     @FXML
     public void spaceHandler(KeyEvent ke) {
-        if(ke.getCode().equals(KeyCode.BACK_SPACE)){
-            isPressed = true;
-        } else if(ke.getCode().equals(KeyCode.R)){
+        if(ke.getCode().equals(KeyCode.R)){
             spax = ex + 2;
             spay = ey + 2;
-            isPressed = false;
             r = rand.nextInt(255);
             g = rand.nextInt(255);
             b = rand.nextInt(255);
@@ -315,85 +183,26 @@ public class SolarSceneController implements Initializable {
     };
 
     /**
-     * Makes the trails of the planets.
-     * @param index
-     * @param x
-     * @param y
-     */
-    public void circlemaker(int index, double x, double y){
-        Circle circle = new Circle();
-        if(index == 1){
-            circle.setLayoutX(x+5);
-            circle.setLayoutY(y+5);
-            circle.setFill(Color.LIGHTGRAY);
-        } else if(index == 2){
-            circle.setLayoutX(x+10);
-            circle.setLayoutY(y+10);
-            circle.setFill(Color.DARKORANGE);
-        } else if(index == 3){
-            circle.setCenterX(x+10);
-            circle.setCenterY(y+10);
-            circle.setFill(Color.GREEN);
-        } else if(index == 4){
-            circle.setCenterX(x+2);
-            circle.setCenterY(y+2);
-            circle.setFill(Color.WHITE);
-        } else if(index == 5){
-            circle.setLayoutX(x+8);
-            circle.setLayoutY(y+8);
-            circle.setFill(Color.CRIMSON);
-        } else if(index == 6){
-            circle.setLayoutX(x+30);
-            circle.setLayoutY(y+30);
-            circle.setFill(Color.KHAKI);
-        } else if(index == 7){
-            circle.setLayoutX(x+48);
-            circle.setLayoutY(y+24);
-            circle.setFill(Color.MAROON);
-        } else if(index == 8){
-            circle.setLayoutX(x+9);
-            circle.setLayoutY(y+9);
-            circle.setFill(Color.CYAN);
-        }
-        circle.setRadius(1);
-        circle.setOpacity(0.3);
-        path.getChildren().add(circle);
-
-    }
-
-    /**
-     * Switches to the home screen.
-     * @throws IOException
-     */
-    @FXML
-    private void switchToStart() throws IOException {
-        App.setRoot("StartScene");
-    }
-
-    /**
      * Initiates all the planets and the probe. It gives the correct positions, velocities and masses.
      */
     private void initiateCB(){
+        double[] sunvel = {0, 0, 0};
+        double[] sunpos = {0, 0, 0};
+
         double[] merpos = {(long) 7833268.43923962, (long) 44885949.3703908, (long) 2867693.20054382};
         double[] mervel = {-57.4967480139828, 11.52095127176, 6.21695374334136};
 
         double[] venusvel = {-34.0236737066136, -8.96521274688838, 1.84061735279188};
         double[] venuspos = {(long) -28216773.9426889, (long) 103994008.541512, (long) 3012326.64296788};
-
-        double[] sunvel = {0, 0, 0};
-        double[] sunpos = {0, 0, 0};
         
-
         double[] earthvel = {5.05251577575409, -29.3926687625899,  0.00170974277401292};
         double[] earthpos = {(long) -148186906.893642, (long) -27823158.5715694, (long) 33746.8987977113};
-
 
         double[] moonvel = {4.34032634654904, -30.0480834180741, -0.0116103535014229};
         double[] moonpos = {(long) -148458048.395164, (long) -27524868.1841142, (long) 70233.6499287411};
 
         double[] marsvel = {-17.6954469224752, -13.4635253412947, 0.152331928200531};
         double[] marspos = {(long) -159116303.422552, (long) 189235671.561057, (long) 7870476.08522969};
-
 
         double[] jupivel = {-4.71443059866156, 12.8555096964427, 0.0522118126939208};
         double[] jupipos = {(long) 692722875.928222, (long) 258560760.813524, (long) -16570817.7105996};
@@ -410,39 +219,190 @@ public class SolarSceneController implements Initializable {
         double[] uravel = {-5.12766216337626, 4.22055347264457, 0.0821190336403063};
         double[] urapos = {(long) 1958732435.99338, (long) 2191808553.21893, (long) -17235283.8321992};
 
-        double[] probevel = {48, -45, 0};
-        double[] probepos = {-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113}; 
+        double[] probevel = initialVelProbe;
+        double[] probepos = initialPosProbe;
 
         firstprobepos = probepos;
+        launchCoords.setText("Launch coords: [x " + probepos[0] + ", y " + probepos[1] + ", z " + probepos[2] + "]");
+        launchVelocity.setText("Launch velocity: [x " + probevel[0] + ", y " + probevel[1] + ", z " + probevel[2] + "]");
 
-        launchCoords2 = probepos;
-        launchVelocity2 = probevel;
+        bodies[0] = new CelestialBody(sunvel, sunpos, 1.991E30);
+        bodies[1] = new CelestialBody(mervel, merpos, 3.302E+23);
+        bodies[2] = new CelestialBody(venusvel, venuspos, 4.8685E+24);
+        bodies[3] = new CelestialBody(earthvel, earthpos, 5.97219E+24);
+        bodies[4] = new CelestialBody(moonvel, moonpos, 7.3491E22);
+        bodies[5] = new CelestialBody(marsvel, marspos, 6.4171E+23);
+        bodies[6] = new CelestialBody(jupivel, jupipos, 1.89819E+27);
+        bodies[7] = new CelestialBody(satuvel, satupos, 5.6834E+26);
+        bodies[8] = new CelestialBody(titvel, titpos, 1.34553E+23);
+        bodies[9] = new CelestialBody(nepvel, neppos, 1.02409E+26);
+        bodies[10] = new CelestialBody(uravel, urapos, 86.813E+24);
+        bodies[11] = new Probe(probevel, probepos);
+    }
 
-        sunCB = new CelestialBody(sunvel, sunpos, 1.991E30);
-        earthCB = new CelestialBody(earthvel, earthpos, 5.97219E+24);
-        venusCB = new CelestialBody(venusvel, venuspos, 4.8685E+24);
-        mercuryCB = new CelestialBody(mervel, merpos, 3.302E+23);
-        moonCB = new CelestialBody(moonvel, moonpos, 7.3491E22);
-        marsCB = new CelestialBody(marsvel, marspos, 6.4171E+23);
-        jupiterCB = new CelestialBody(jupivel, jupipos, 1.89819E+27);
-        saturnCB = new CelestialBody(satuvel, satupos, 5.6834E+26);
-        titanCB = new CelestialBody(titvel, titpos, 1.34553E+23);
-        neptuneCB = new CelestialBody(nepvel, neppos, 1.02409E+26);
-        uranusCB = new CelestialBody(uravel, urapos, 86.813E+24);
-        probe = new Probe(probevel, probepos);
+    public class Movement implements EventHandler<ActionEvent>{
 
+        /**
+         * Calculates the movement of all the celestial bodies and the probe 
+         */
+        @Override
+        public void handle(ActionEvent event) {
+            Unreal_Engine unreal = new Unreal_Engine();
 
-        bodies[0] = sunCB;
-        bodies[3] = earthCB;
-        bodies[2] = venusCB;
-        bodies[5] = marsCB;
-        bodies[9] = uranusCB;
-        bodies[10] = neptuneCB;
-        bodies[1] = mercuryCB;
-        bodies[4] = moonCB;
-        bodies[8] = titanCB;
-        bodies[7] = saturnCB;
-        bodies[6] = jupiterCB;
-        bodies[11] = probe;
+            //Run the Euler's method to get the next position and velocity of all celestial bodies + probe
+            for (int i = 0; i < eulerLoops; i++) {
+                for (int j = 0; j < bodies.length; j++) {
+                    bodies = unreal.Eulers(bodies, j, stepsize);
+                }
+
+                //Keep track of the time
+                seconds += stepsize;
+                if(seconds >= 60){
+                    minutes++;
+                    seconds = 0;
+                    if(minutes % 60 == 0){
+                        hours++;
+                        k++;
+                        minutes = 0;
+                        if(k == TimeStamp){
+                            System.out.println("Time Stamp: " + k + " hours");
+                            System.out.println("Position of the probe: x: " + bodies[11].getPosition()[0] + " y: " + bodies[11].getPosition()[1] + " z: " + bodies[11].getPosition()[2]);
+                            System.out.println("Distance Traveled: x: " + (bodies[11].getPosition()[0]-firstprobepos[0]) + " km y: " + (bodies[11].getPosition()[1]-firstprobepos[1]) + " km z: " + (bodies[11].getPosition()[2]-firstprobepos[2]) + " km");
+                            System.out.println("Total distance: " + Math.sqrt(Math.pow(bodies[11].getPosition()[0]-firstprobepos[0], 2)+Math.pow(bodies[11].getPosition()[1]-firstprobepos[1], 2)+Math.pow(bodies[11].getPosition()[2]-firstprobepos[2], 2))+ " km");
+                        }
+                        if(hours % 24 == 0){
+                            days++;
+                            hours = 0;
+                            if(days % 30 == 0){
+                                months++;
+                                days = 0;
+                                if(months/12 == 1){
+                                    months = 0;
+                                    years++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            TimeElapsed.setText("Time Elapsed: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");  
+
+            //Get and set the GUI coords and paths of the celestial bodies
+            ex = sunx + bodies[3].getPosition()[0]/divider;
+            ey = suny + bodies[3].getPosition()[1]/divider;
+            circlemaker(3, ex, ey);
+            getGUIcoords(earth, ex, ey);
+            double mx = sunx + 8 + 15*Math.cos(k*0.009) + bodies[4].getPosition()[0]/divider;
+            double my = suny + 8 + 15*Math.sin(k*0.009) + bodies[4].getPosition()[1]/divider;
+            circlemaker(4, mx, my);
+            getGUIcoords(moon, mx, my);
+            double mex = sunx + bodies[1].getPosition()[0]/divider;
+            double mey = suny + bodies[1].getPosition()[1]/divider;
+            circlemaker(1, mex, mey);
+            getGUIcoords(mercury, mex, mey);
+            double vx = sunx + bodies[2].getPosition()[0]/divider;
+            double vy = suny + bodies[2].getPosition()[1]/divider;
+            circlemaker(2, vx, vy);
+            getGUIcoords(venus, vx, vy);
+            double max = sunx + bodies[5].getPosition()[0]/divider;
+            double may = suny + bodies[5].getPosition()[1]/divider;
+            circlemaker(5, max, may);
+            getGUIcoords(mars, max, may);
+            double jx = sunx + bodies[6].getPosition()[0]/divider;
+            double jy = suny + bodies[6].getPosition()[1]/divider;
+            circlemaker(6, jx, jy);
+            getGUIcoords(jupiter, jx, jy);
+            sx = sunx + bodies[7].getPosition()[0]/divider;
+            sy = suny + bodies[7].getPosition()[1]/divider;
+            circlemaker(7, sx, sy);
+            getGUIcoords(saturn, sx, sy);
+            tx = sunx + 40 + 23*Math.cos(k*0.0168) + bodies[8].getPosition()[0]/divider;
+            ty = suny + 15 + 23*Math.sin(k*0.0168) + bodies[8].getPosition()[1]/divider;
+            circlemaker(8, tx, ty);
+            getGUIcoords(titan, tx, ty);
+
+            //Get and set the probes GUI coords and adapt the texts based on it and its distance to Titan
+            double[] spaps = bodies[11].getPosition();
+            probeCoords.setText("Currect probe coords: [x " + spaps[0] + ",y " + spaps[1] + ",z " + spaps[2] + "]");
+            double spax = sunx + spaps[0]/divider;
+            double spay = suny + spaps[1]/divider;
+            double titandis = Math.sqrt(((tx-spax)*(tx-spax))+((ty-spay)*(ty-spay)));
+            distanceTitan.setText("Distance to Titan: " + titandis*divider + " km");
+            spaceprobe.setLayoutX(spax);
+            spaceprobe.setLayoutY(spay-20);
+            if (closestTitan > titandis) {
+                closestdistanceTitan.setText("Closest distance to Titan: " + titandis*divider + " km");
+                titanMoment.setText("Moment closest distance to Titan: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");
+                closestTitan = titandis;
+            }
+
+            //Draw the path of the probe
+            Circle circle = new Circle();
+            circle.setCenterX(spax);
+            circle.setCenterY(spay);
+            circle.setRadius(2);
+            circle.setFill(Color.rgb(r, g, b));
+            circle.setOpacity(0.4);
+            dotList.add(circle);
+            dots.getChildren().add(circle);             
+        }
+
+        /**
+         * Makes the trails of the planets.
+         * @param index
+         * @param x
+         * @param y
+         */
+        private void circlemaker(int index, double x, double y){
+            Circle circle = new Circle();
+            if(index == 1){
+                circle.setLayoutX(x+5);
+                circle.setLayoutY(y+5);
+                circle.setFill(Color.LIGHTGRAY);
+            } else if(index == 2){
+                circle.setLayoutX(x+10);
+                circle.setLayoutY(y+10);
+                circle.setFill(Color.DARKORANGE);
+            } else if(index == 3){
+                circle.setCenterX(x+10);
+                circle.setCenterY(y+10);
+                circle.setFill(Color.GREEN);
+            } else if(index == 4){
+                circle.setCenterX(x+2);
+                circle.setCenterY(y+2);
+                circle.setFill(Color.WHITE);
+            } else if(index == 5){
+                circle.setLayoutX(x+8);
+                circle.setLayoutY(y+8);
+                circle.setFill(Color.CRIMSON);
+            } else if(index == 6){
+                circle.setLayoutX(x+30);
+                circle.setLayoutY(y+30);
+                circle.setFill(Color.KHAKI);
+            } else if(index == 7){
+                circle.setLayoutX(x+48);
+                circle.setLayoutY(y+24);
+                circle.setFill(Color.MAROON);
+            } else if(index == 8){
+                circle.setLayoutX(x+9);
+                circle.setLayoutY(y+9);
+                circle.setFill(Color.CYAN);
+            }
+            circle.setRadius(1);
+            circle.setOpacity(0.3);
+            path.getChildren().add(circle);
+
+        }
+
+        /**
+         * Get the x and y GUI coords of a celestial body
+         * @param i the image of the celestial body
+         * @param x the GUI x coord
+         * @param y the GUI y coord
+         */
+        private void getGUIcoords(ImageView i, double x, double y) {
+            i.setLayoutX(x);
+            i.setLayoutY(y);
+        }
     }
 }

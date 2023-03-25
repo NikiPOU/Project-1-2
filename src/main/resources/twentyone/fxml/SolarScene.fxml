@@ -10,15 +10,6 @@
 
 <AnchorPane fx:id="root" onKeyPressed="#spaceHandler" prefHeight="508.0" prefWidth="785.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.Controllers.SolarSceneController">
    <children>
-      <!-- <Group fx:id="dots" autoSizeChildren="false">
-         <children>
-         </children>
-      </Group> -->
-      <Button fx:id="secondaryButton" layoutX="14.0" layoutY="14.0" onAction="#switchToStart" style="-fx-background-color: white;" text="Return">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
       <ImageView fx:id="milkyway" fitHeight="1080" fitWidth="1920" layoutX="0.0" layoutY="0.0">
          <image>
             <Image url="@../Images/MilkyWayGalaxy.png" />
@@ -113,5 +104,10 @@
             </Label>
          </children>
       </VBox>
+      <Button fx:id="secondaryButton" layoutX="14.0" layoutY="14.0" onAction="#switchToStart" style="-fx-background-color: black;" text="Return" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
