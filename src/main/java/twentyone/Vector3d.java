@@ -1,5 +1,7 @@
 package twentyone;
 
+import twentyone.Interfaces.Vector3dInterface;
+
 //package core;
 
 public class Vector3d implements Vector3dInterface{

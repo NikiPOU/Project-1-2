@@ -1,7 +1,6 @@
 package twentyone;
-
-public class Probe {
-    /*
+public class Probe extends CelestialBody{
+     /*
      * Potential launching positions (x, y, z):
      *  north pole: -148186906.893642, -27823158.5715694, 33746.8987977113 + 6370
      *  south pole: -148186906.893642, -27823158.5715694, 33746.8987977113 - 6370
@@ -12,34 +11,10 @@ public class Probe {
      * 
      * velocity with a 90 degrees angle from the earths surface
      */
-
-    double mass = 50000;
-
-    long positionX;
-    long positionY;
-    long positionZ;
-
-    double velocityX;
-    double velocityY;
-    double velocityZ;
     
-
-    Probe (long positionX, long positionY, long positionZ, double d, double e, double f) {
-        this.positionX = positionX;
-        this.positionY = positionY;
-        this.positionZ = positionZ;
-        this.velocityX = d;
-        this.velocityY = e;
-        this.velocityZ = f; 
+    public Probe(double[] velocity, double[] position){
+        super(velocity, position, 50000);
     }
 
-    public long[] getPosition() {
-        long[] position = {positionX, positionY, positionZ};
-        return position;
-    }
-
-    public double[] getVelocity() {
-        double[] velocity = {velocityX, velocityY, velocityZ};
-        return velocity;
-    }
+    //this is just to make life ez. we will add the engine stuff later
 }

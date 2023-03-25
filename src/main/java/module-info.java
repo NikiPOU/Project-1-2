@@ -5,4 +5,8 @@ module twentyone {
 
     opens twentyone to javafx.fxml;
     exports twentyone;
+    opens twentyone.Controllers to javafx.fxml;
+    exports twentyone.Controllers;
+    opens twentyone.Interfaces to javafx.fxml;
+    exports twentyone.Interfaces;
 }

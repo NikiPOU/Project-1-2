@@ -1,4 +1,4 @@
-package twentyone;
+package twentyone.Controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,6 +22,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
+import twentyone.App;
+import twentyone.CelestialBody;
+import twentyone.Probe;
+import twentyone.Unreal_Engine;
 
 import java.awt.*;
 
@@ -43,19 +47,19 @@ public class SolarSceneController implements Initializable {
     int r;
     int g;
     int b;
-    CelestialBody3 sunCB;
-    CelestialBody3 mercuryCB;
-    CelestialBody3 venusCB;
-    CelestialBody3 earthCB;
-    CelestialBody3 moonCB;
-    CelestialBody3 marsCB;
-    CelestialBody3 jupiterCB;
-    CelestialBody3 saturnCB;
-    CelestialBody3 titanCB;
-    CelestialBody3 neptuneCB;
-    CelestialBody3 uranusCB;
-    CelestialBody3 probe;
-    CelestialBody3[] bodies = new CelestialBody3[12];
+    CelestialBody sunCB;
+    CelestialBody mercuryCB;
+    CelestialBody venusCB;
+    CelestialBody earthCB;
+    CelestialBody moonCB;
+    CelestialBody marsCB;
+    CelestialBody jupiterCB;
+    CelestialBody saturnCB;
+    CelestialBody titanCB;
+    CelestialBody neptuneCB;
+    CelestialBody uranusCB;
+    CelestialBody probe;
+    CelestialBody[] bodies = new CelestialBody[12];
 
     @FXML
     Label probeCoords;
@@ -151,8 +155,8 @@ public class SolarSceneController implements Initializable {
         //one can add a specific action when the keyframe is reached
         EventHandler<ActionEvent> movement = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
-                double stepsize = 1;
-                for (int i = 0; i < 25000; i++) {
+                double stepsize = 10;
+                for (int i = 0; i < 5000; i++) {
                     for (int j = 0; j < bodies.length; j++) {
                         bodies = unreal.Eulers(bodies, j, stepsize);
                     }
@@ -271,7 +275,7 @@ public class SolarSceneController implements Initializable {
         launchCoords.setText("Launch coords: [x " + launchCoords2[0] + ", y " + launchCoords2[1] + ", z " + launchCoords2[2] + "]");
         launchVelocity.setText("Launch velocity: [x " + launchVelocity2[0] + ", y " + launchVelocity2[1] + ", z " + launchVelocity2[2] + "]");
 
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(100), movement);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(500), movement);
         r = rand.nextInt(255);
         g = rand.nextInt(255);
         b = rand.nextInt(255);
@@ -414,18 +418,18 @@ public class SolarSceneController implements Initializable {
         launchCoords2 = probepos;
         launchVelocity2 = probevel;
 
-        sunCB = new CelestialBody3(sunvel, sunpos, 1.991E30);
-        earthCB = new CelestialBody3(earthvel, earthpos, 5.97219E+24);
-        venusCB = new CelestialBody3(venusvel, venuspos, 4.8685E+24);
-        mercuryCB = new CelestialBody3(mervel, merpos, 3.302E+23);
-        moonCB = new CelestialBody3(moonvel, moonpos, 7.3491E22);
-        marsCB = new CelestialBody3(marsvel, marspos, 6.4171E+23);
-        jupiterCB = new CelestialBody3(jupivel, jupipos, 1.89819E+27);
-        saturnCB = new CelestialBody3(satuvel, satupos, 5.6834E+26);
-        titanCB = new CelestialBody3(titvel, titpos, 1.34553E+23);
-        neptuneCB = new CelestialBody3(nepvel, neppos, 1.02409E+26);
-        uranusCB = new CelestialBody3(uravel, urapos, 86.813E+24);
-        probe = new Probe2(probevel, probepos, 50000);
+        sunCB = new CelestialBody(sunvel, sunpos, 1.991E30);
+        earthCB = new CelestialBody(earthvel, earthpos, 5.97219E+24);
+        venusCB = new CelestialBody(venusvel, venuspos, 4.8685E+24);
+        mercuryCB = new CelestialBody(mervel, merpos, 3.302E+23);
+        moonCB = new CelestialBody(moonvel, moonpos, 7.3491E22);
+        marsCB = new CelestialBody(marsvel, marspos, 6.4171E+23);
+        jupiterCB = new CelestialBody(jupivel, jupipos, 1.89819E+27);
+        saturnCB = new CelestialBody(satuvel, satupos, 5.6834E+26);
+        titanCB = new CelestialBody(titvel, titpos, 1.34553E+23);
+        neptuneCB = new CelestialBody(nepvel, neppos, 1.02409E+26);
+        uranusCB = new CelestialBody(uravel, urapos, 86.813E+24);
+        probe = new Probe(probevel, probepos);
 
 
         bodies[0] = sunCB;
