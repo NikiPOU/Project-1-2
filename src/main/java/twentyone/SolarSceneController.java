@@ -25,9 +25,8 @@ import javafx.util.Duration;
 
 import java.awt.*;
 
-//1 unit is 15474 km
-
 public class SolarSceneController implements Initializable {
+    int TimeStamp = 27;
 
     int probeCoords2;
     int distanceTitan2;
@@ -35,6 +34,8 @@ public class SolarSceneController implements Initializable {
     double[] launchVelocity2;  
     double closestTitan = 10E40;
     String momentTitan;
+
+    double[] firstprobepos;
 
     int sunx = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 + 45;
     int suny = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 + 45;
@@ -99,12 +100,12 @@ public class SolarSceneController implements Initializable {
     @FXML
     Label closestdistanceTitan;
 
-    int seconds = -1;
-    int minutes = -1;
-    int hours = -1;
-    int days = -1;
-    int months = -1;
-    int years = 0;
+    double seconds = 0;
+    double minutes = 0;
+    double hours = 0;
+    double days = 0;
+    double months = 0;
+    double years = 0;
     int divider = 2100000;
     double ex;
     double ey;
@@ -122,10 +123,6 @@ public class SolarSceneController implements Initializable {
     private Timeline timeline;
 
     int k=0;
-
-    //1 = 2000000
-
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -154,18 +151,26 @@ public class SolarSceneController implements Initializable {
         //one can add a specific action when the keyframe is reached
         EventHandler<ActionEvent> movement = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
+                double stepsize = 1;
                 for (int i = 0; i < 25000; i++) {
                     for (int j = 0; j < bodies.length; j++) {
-                        bodies = unreal.Eulers(bodies, j, 1);
+                        bodies = unreal.Eulers(bodies, j, stepsize);
                     }
-                    seconds++;
-                    if(seconds % 60 == 0){
+                    seconds += stepsize;
+                    // System.out.println(seconds);
+                    if(seconds >= 60){
                         minutes++;
                         seconds = 0;
                         if(minutes % 60 == 0){
                             hours++;
                             k++;
                             minutes = 0;
+                            if(k == TimeStamp){
+                                System.out.println("Time Stamp: " + k + " hours");
+                                System.out.println("Position of the probe: x: " + bodies[11].getPosition()[0] + " y: " + bodies[11].getPosition()[1] + " z: " + bodies[11].getPosition()[2]);
+                                System.out.println("Distance Traveled: x: " + (bodies[11].getPosition()[0]-firstprobepos[0]) + " km y: " + (bodies[11].getPosition()[1]-firstprobepos[1]) + " km z: " + (bodies[11].getPosition()[2]-firstprobepos[2]) + " km");
+                                System.out.println("Total distance: " + Math.sqrt(Math.pow(bodies[11].getPosition()[0]-firstprobepos[0], 2)+Math.pow(bodies[11].getPosition()[1]-firstprobepos[1], 2)+Math.pow(bodies[11].getPosition()[2]-firstprobepos[2], 2))+ " km");
+                            }
                             if(hours % 24 == 0){
                                 days++;
                                 hours = 0;
@@ -403,6 +408,8 @@ public class SolarSceneController implements Initializable {
 
         double[] probevel = {48, -45, 0};
         double[] probepos = {-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113}; 
+
+        firstprobepos = probepos;
 
         launchCoords2 = probepos;
         launchVelocity2 = probevel;
