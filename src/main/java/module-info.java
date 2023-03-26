@@ -1,6 +1,7 @@
 module twentyone {
     requires transitive javafx.controls;
     requires javafx.fxml;
+    requires javafx.media;
     requires java.desktop;
 
     opens twentyone to javafx.fxml;

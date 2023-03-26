@@ -20,6 +20,8 @@ public class App extends Application {
         scene = new Scene(loadFXML("fxml/StartScene"));
         stage.setMaximized(true);
         stage.setScene(scene);
+        stage.setTitle("Titanic Space Odyssey"); 
+    
         stage.show();
     }
 

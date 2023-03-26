@@ -1,5 +1,6 @@
 package twentyone.Controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;  
+import javafx.scene.media.MediaPlayer;  
+import javafx.scene.media.MediaView; 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
@@ -116,6 +120,7 @@ public class SolarSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        addMusic();
         //Setup basic attributes
         sun.setLayoutX(sunx - 45);
         sun.setLayoutY(suny - 45);
@@ -404,5 +409,12 @@ public class SolarSceneController implements Initializable {
             i.setLayoutX(x);
             i.setLayoutY(y);
         }
+    }
+
+    public void addMusic() {
+        String path = "src\\main\\resources\\twentyone\\Music\\StarWars.mp3";  
+        Media media = new Media(new File(path).toURI().toString());          
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);  
     }
 }
