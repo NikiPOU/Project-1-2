@@ -22,7 +22,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;  
 import javafx.scene.media.MediaPlayer;  
-import javafx.scene.media.MediaView; 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
@@ -120,7 +119,6 @@ public class SolarSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        addMusic();
         //Setup basic attributes
         sun.setLayoutX(sunx - 45);
         sun.setLayoutY(suny - 45);
@@ -149,6 +147,7 @@ public class SolarSceneController implements Initializable {
         KeyFrame keyFrame = new KeyFrame(Duration.millis(300), movement);
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
+        addMusic();
     }
 
     /**
