@@ -1,8 +1,13 @@
 package twentyone.Controllers;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -116,6 +121,8 @@ public class SolarSceneController implements Initializable {
     Group dots;
     @FXML
     Group path;
+
+    int mercuryCoords = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -295,35 +302,46 @@ public class SolarSceneController implements Initializable {
             ex = sunx + bodies[3].getPosition()[0]/divider;
             ey = suny + bodies[3].getPosition()[1]/divider;
             circlemaker(3, ex, ey);
-            getGUIcoords(earth, ex, ey);
+            setGUIcoords(earth, ex, ey);
             double mx = sunx + 8 + 15*Math.cos(k*0.009) + bodies[4].getPosition()[0]/divider;
             double my = suny + 8 + 15*Math.sin(k*0.009) + bodies[4].getPosition()[1]/divider;
             circlemaker(4, mx, my);
-            getGUIcoords(moon, mx, my);
-            double mex = sunx + bodies[1].getPosition()[0]/divider;
-            double mey = suny + bodies[1].getPosition()[1]/divider;
+            setGUIcoords(moon, mx, my);
+            //double mex = sunx + bodies[1].getPosition()[0]/divider;
+            //double mey = suny + bodies[1].getPosition()[1]/divider;
+            String coords = "100 100";
+            try {
+                coords = Files.readAllLines(Paths.get("src\\main\\resources\\twentyone\\mercuryCoords.txt")).get(mercuryCoords);
+                mercuryCoords = (mercuryCoords + 1) % 98;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String[] looseCoords = coords.split(" ", 2);
+            int mex = Integer.parseInt(looseCoords[0]);
+            int mey = Integer.parseInt(looseCoords[1]);
             circlemaker(1, mex, mey);
-            getGUIcoords(mercury, mex, mey);
+            setGUIcoords(mercury, mex, mey);
+            //writeToFile("", (int) mex, (int) mey);
             double vx = sunx + bodies[2].getPosition()[0]/divider;
             double vy = suny + bodies[2].getPosition()[1]/divider;
             circlemaker(2, vx, vy);
-            getGUIcoords(venus, vx, vy);
+            setGUIcoords(venus, vx, vy);
             double max = sunx + bodies[5].getPosition()[0]/divider;
             double may = suny + bodies[5].getPosition()[1]/divider;
             circlemaker(5, max, may);
-            getGUIcoords(mars, max, may);
+            setGUIcoords(mars, max, may);
             double jx = sunx + bodies[6].getPosition()[0]/divider;
             double jy = suny + bodies[6].getPosition()[1]/divider;
             circlemaker(6, jx, jy);
-            getGUIcoords(jupiter, jx, jy);
+            setGUIcoords(jupiter, jx, jy);
             sx = sunx + bodies[7].getPosition()[0]/divider;
             sy = suny + bodies[7].getPosition()[1]/divider;
             circlemaker(7, sx, sy);
-            getGUIcoords(saturn, sx, sy);
+            setGUIcoords(saturn, sx, sy);
             tx = sunx + 40 + 23*Math.cos(k*0.0168) + bodies[8].getPosition()[0]/divider;
             ty = suny + 15 + 23*Math.sin(k*0.0168) + bodies[8].getPosition()[1]/divider;
             circlemaker(8, tx, ty);
-            getGUIcoords(titan, tx, ty);
+            setGUIcoords(titan, tx, ty);
 
             //Get and set the probes GUI coords and adapt the texts based on it and its distance to Titan
             double[] spaps = bodies[11].getPosition();
@@ -404,7 +422,7 @@ public class SolarSceneController implements Initializable {
          * @param x the GUI x coord
          * @param y the GUI y coord
          */
-        private void getGUIcoords(ImageView i, double x, double y) {
+        private void setGUIcoords(ImageView i, double x, double y) {
             i.setLayoutX(x);
             i.setLayoutY(y);
         }
@@ -415,5 +433,17 @@ public class SolarSceneController implements Initializable {
         Media media = new Media(new File(path).toURI().toString());          
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);  
+    }
+
+    public static void writeToFile(String filePath, int x, int y) {
+        try(FileWriter fw = new FileWriter("src\\main\\resources\\twentyone\\mercuryCoords.txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw))
+        {
+            out.println(x + " " + y);
+
+        } catch (IOException e) {
+            System.out.println("file not found");
+        }
     }
 }
