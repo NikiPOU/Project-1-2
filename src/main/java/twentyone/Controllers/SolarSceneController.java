@@ -1,16 +1,17 @@
 package twentyone.Controllers;
 
+import java.awt.Toolkit;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -25,8 +26,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;  
-import javafx.scene.media.MediaPlayer;  
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
@@ -34,8 +35,6 @@ import twentyone.App;
 import twentyone.Classes.CelestialBody;
 import twentyone.Classes.Probe;
 import twentyone.Classes.Unreal_Engine;
-
-import java.awt.*;
 
 public class SolarSceneController implements Initializable {
     final double stepsize = 10;
@@ -121,8 +120,6 @@ public class SolarSceneController implements Initializable {
     Group dots;
     @FXML
     Group path;
-
-    int mercuryCoords = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -296,6 +293,7 @@ public class SolarSceneController implements Initializable {
                     }
                 }
             }
+
             TimeElapsed.setText("Time Elapsed: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");  
 
             //Get and set the GUI coords and paths of the celestial bodies
@@ -307,21 +305,10 @@ public class SolarSceneController implements Initializable {
             double my = suny + 8 + 15*Math.sin(k*0.009) + bodies[4].getPosition()[1]/divider;
             circlemaker(4, mx, my);
             setGUIcoords(moon, mx, my);
-            //double mex = sunx + bodies[1].getPosition()[0]/divider;
-            //double mey = suny + bodies[1].getPosition()[1]/divider;
-            String coords = "100 100";
-            try {
-                coords = Files.readAllLines(Paths.get("src\\main\\resources\\twentyone\\mercuryCoords.txt")).get(mercuryCoords);
-                mercuryCoords = (mercuryCoords + 1) % 98;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            String[] looseCoords = coords.split(" ", 2);
-            int mex = Integer.parseInt(looseCoords[0]);
-            int mey = Integer.parseInt(looseCoords[1]);
+            double mex = sunx + bodies[1].getPosition()[0]/divider;
+            double mey = suny + bodies[1].getPosition()[1]/divider;
             circlemaker(1, mex, mey);
             setGUIcoords(mercury, mex, mey);
-            //writeToFile("", (int) mex, (int) mey);
             double vx = sunx + bodies[2].getPosition()[0]/divider;
             double vy = suny + bodies[2].getPosition()[1]/divider;
             circlemaker(2, vx, vy);
@@ -366,7 +353,7 @@ public class SolarSceneController implements Initializable {
             circle.setFill(Color.rgb(r, g, b));
             circle.setOpacity(0.4);
             dotList.add(circle);
-            dots.getChildren().add(circle);             
+            dots.getChildren().add(circle);
         }
 
         /**
@@ -413,7 +400,6 @@ public class SolarSceneController implements Initializable {
             circle.setRadius(1);
             circle.setOpacity(0.3);
             path.getChildren().add(circle);
-
         }
 
         /**
@@ -436,7 +422,7 @@ public class SolarSceneController implements Initializable {
     }
 
     public static void writeToFile(String filePath, int x, int y) {
-        try(FileWriter fw = new FileWriter("src\\main\\resources\\twentyone\\mercuryCoords.txt", true);
+        try(FileWriter fw = new FileWriter("src\\main\\resources\\twentyone\\venusCoords.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw))
         {
@@ -445,5 +431,26 @@ public class SolarSceneController implements Initializable {
         } catch (IOException e) {
             System.out.println("file not found");
         }
+    }
+
+    public static int[][] readFromFile(int index, String s) {
+        int[][] coords = new int[index][2];
+        try {
+            File file = new File("src\\main\\resources\\twentyone\\" + s);
+            Scanner sc = new Scanner(file);
+            int i = 0;
+            while (sc.hasNextLine()) {
+              String str = sc.nextLine();
+              String[] split = str.split(" ");
+              coords[i][0] = Integer.parseInt(split[0]);
+              coords[i][1] = Integer.parseInt(split[1]);
+              i++;
+            }
+            sc.close();
+          } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+          }
+          return coords;
     }
 }
