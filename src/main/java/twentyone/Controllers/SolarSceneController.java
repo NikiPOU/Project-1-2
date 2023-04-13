@@ -1,6 +1,6 @@
 package twentyone.Controllers;
 
-import java.awt.Toolkit;
+//import java.awt.Toolkit;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -51,8 +51,11 @@ public class SolarSceneController implements Initializable {
     double closestTitan = 10E40;
     String momentTitan;
     double[] firstprobepos;
-    int sunx = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 + 45;
-    int suny = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 + 45;
+    //int sunx = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 + 45;
+    //int suny = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 + 45;
+    int sunx = (int) 600;
+    int suny = (int) 300;
+
     CelestialBody[] bodies = new CelestialBody[12];
 
     int r;
@@ -127,7 +130,7 @@ public class SolarSceneController implements Initializable {
         sun.setLayoutX(sunx - 45);
         sun.setLayoutY(suny - 45);
         data.setLayoutX(25);
-        data.setLayoutY(Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 200);
+        //data.setLayoutY(Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 200);
         dots = new Group();
         path = new Group();
         root.getChildren().add(dots);
