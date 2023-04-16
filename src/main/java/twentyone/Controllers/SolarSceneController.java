@@ -1,6 +1,6 @@
 package twentyone.Controllers;
 
-//import java.awt.Toolkit;
+import java.awt.Toolkit;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,6 +32,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import twentyone.App;
+import twentyone.Classes.AdamsBashforth;
 import twentyone.Classes.CelestialBody;
 import twentyone.Classes.Probe;
 import twentyone.Classes.Unreal_Engine;
@@ -51,10 +52,8 @@ public class SolarSceneController implements Initializable {
     double closestTitan = 10E40;
     String momentTitan;
     double[] firstprobepos;
-    //int sunx = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 + 45;
-    //int suny = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 + 45;
-    int sunx = (int) 600;
-    int suny = (int) 300;
+    int sunx = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 + 45;
+    int suny = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 + 45;
 
     CelestialBody[] bodies = new CelestialBody[12];
 
@@ -130,7 +129,7 @@ public class SolarSceneController implements Initializable {
         sun.setLayoutX(sunx - 45);
         sun.setLayoutY(suny - 45);
         data.setLayoutX(25);
-        //data.setLayoutY(Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 200);
+        data.setLayoutY(Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 200);
         dots = new Group();
         path = new Group();
         root.getChildren().add(dots);
@@ -258,12 +257,14 @@ public class SolarSceneController implements Initializable {
          */
         @Override
         public void handle(ActionEvent event) {
-            Unreal_Engine unreal = new Unreal_Engine();
+            //Unreal_Engine unreal = new Unreal_Engine();
+            AdamsBashforth a = new AdamsBashforth();
 
             //Run the Euler's method to get the next position and velocity of all celestial bodies + probe
             for (int i = 0; i < eulerLoops; i++) {
                 for (int j = 0; j < bodies.length; j++) {
-                    bodies = unreal.Eulers(bodies, j, stepsize);
+                    //bodies = unreal.Eulers(bodies, j, stepsize);
+                    bodies = a.adams(bodies, j, stepsize);
                 }
 
                 //Keep track of the time
@@ -424,6 +425,7 @@ public class SolarSceneController implements Initializable {
         mediaPlayer.setAutoPlay(true);  
     }
 
+    //Unused method
     public static void writeToFile(String filePath, int x, int y) {
         try(FileWriter fw = new FileWriter("src\\main\\resources\\twentyone\\venusCoords.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
@@ -436,6 +438,7 @@ public class SolarSceneController implements Initializable {
         }
     }
 
+    //Unused method
     public static int[][] readFromFile(int index, String s) {
         int[][] coords = new int[index][2];
         try {
