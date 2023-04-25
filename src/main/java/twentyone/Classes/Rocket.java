@@ -16,16 +16,12 @@ public class engineSimu extends CelestialBody{
         Vector3d derivVelo = imLazy.sumOf_Forces(testing, 11); //1 is a random number just not to get error, it represents probe in array
         Vector3d newVelocityOfDesiredPlanet = new Vector3d(0,0, 0);
 
-        for(int i = 0; i < newVelocityOfDesiredPlanet.length; i++){//O(k) in which k is the length of the array to represent a 3d vector
-            newVelocityOfDesiredPlanet[i] = firstVelo[i] - (stepSizer * (derivVelo[i]));
-        }
+        newVelocityOfDesiredPlanet = firstVelo.sub(derivVelo.mul(stepSizer));
 
         //ez right now lets see we should have all we need to do m(Vn+1  -  Vn) to get impulse
         Vector3d impulse_vector = new Vector3d(0, 0, 0);
 
-        for(int i = 0; i < impulse_vector.length; i++){//O(k) in which k is the length of the array to represent a 3d vector
-            impulse_vector[i] = super.getMass()*(newVelocityOfDesiredPlanet[i] - firstVelo[i]);
-        }
+        impulse_vector = (newVelocityOfDesiredPlanet.sub(firstVelo)).mul(super.getMass());
         return impulse_vector;
     }
 
@@ -34,9 +30,9 @@ public class engineSimu extends CelestialBody{
         Vector3d force = imLazy.sumOf_Forces(testobago, 11);
         Vector3d impulse = calculateImpulse(testobago, gun);
         Vector3d finalforce = new Vector3d(0, 0, 0);
-        for(int i = 0; i < finalforce.length; i++){//O(k) in which k is the length of the array to represent a 3d vector
-            finalforce[i] = force[i] + impulse[i];
-        }
+
+        finalforce = force.add(impulse);//O(k) in which k is the length of the array to represent a 3d vector
+
         super.setNewForce(finalforce);
     }
     

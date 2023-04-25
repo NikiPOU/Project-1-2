@@ -5,6 +5,7 @@ public class CelestialBody{
     private Vector3d velocity = new Vector3d(0.0, 0.0, 0.0);
     private Vector3d position = new Vector3d(0.0, 0.0, 0.0);
     private double mass;
+    private Vector3d currentForce = new Vector3d(0,0,0);
 
     public CelestialBody(Vector3d velocity, Vector3d position, double mass){
         this.velocity = velocity;
@@ -20,6 +21,10 @@ public class CelestialBody{
         this.position = newPosition;
     }
 
+    public void setNewForce(Vector3d newForce){
+        this.currentForce = newForce;
+    }
+
     public Vector3d getVelocity(){
         return velocity;
     }
@@ -30,6 +35,10 @@ public class CelestialBody{
 
     public double getMass(){
         return mass;
+    }
+
+    public Vector3d getForce(){
+        return currentForce;
     }
 
     public String toString() {
