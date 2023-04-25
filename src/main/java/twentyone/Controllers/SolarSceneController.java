@@ -34,10 +34,9 @@ import javafx.util.Duration;
 import twentyone.App;
 import twentyone.Classes.AdamsBashforth;
 import twentyone.Classes.CelestialBody;
-import twentyone.Classes.Probe;
-import twentyone.Classes.Unreal_Engine;
+import twentyone.Classes.Euler;
 import twentyone.Classes.Vector3d;
-import twentyone.Classes.engineSimu;
+import twentyone.Classes.Rocket;
 
 public class SolarSceneController implements Initializable {
     final double stepsize = 10;
@@ -249,7 +248,7 @@ public class SolarSceneController implements Initializable {
         bodies[8] = new CelestialBody(titvel, titpos, 1.34553E+23);
         bodies[9] = new CelestialBody(nepvel, neppos, 1.02409E+26);
         bodies[10] = new CelestialBody(uravel, urapos, 86.813E+24);
-        bodies[11] = new engineSimu(probevel, probepos);
+        bodies[11] = new Rocket(probevel, probepos);
     }
 
     public class Movement implements EventHandler<ActionEvent>{
