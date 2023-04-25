@@ -8,9 +8,9 @@ public interface Vector3dInterface {
     public void setY(double y);
     public double getZ();
     public void setZ(double z);
-    public Vector3dInterface add(Vector3dInterface other);
-    public Vector3dInterface sub(Vector3dInterface other);
-    public Vector3dInterface mul(double scalar);
+    //public Vector3dInterface add(Vector3dInterface other);
+    //public Vector3dInterface sub(Vector3dInterface other);
+    //public Vector3dInterface mul(double scalar);
 
     /**
      * Scalar x vector multiplication, followed by an addition
@@ -28,14 +28,14 @@ public interface Vector3dInterface {
      * ahb should now contain the result of this mathematical operation:
      *       a+h*b
      */
-    public Vector3dInterface addMul(double scalar, Vector3dInterface other);
+    //public Vector3dInterface addMul(double scalar, Vector3dInterface other);
 
     /**
      * @return the Euclidean norm of a vector
      */
     public double norm();
 
-    public double dist(Vector3dInterface other);
+    //public double dist(Vector3dInterface other);
 
     /**
      * @return A string in this format:

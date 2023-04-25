@@ -12,7 +12,7 @@ public class Probe extends CelestialBody{
      * velocity with a 90 degrees angle from the earths surface
      */
     
-    public Probe(double[] velocity, double[] position){
+    public Probe(Vector3d velocity, Vector3d position){
         super(velocity, position, 50000);
     }
 

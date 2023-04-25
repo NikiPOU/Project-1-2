@@ -41,24 +41,28 @@ public class Vector3d implements Vector3dInterface{
     }
     public Vector2d getVector2d(){return new Vector2d(x,y);}
 
-    public double dist(Vector3dInterface other){
+    public double dist(Vector3d other){
         return Math.sqrt(Math.pow((other.getX()-x), 2)+Math.pow((other.getY()-y), 2)+ Math.pow(other.getZ()-z, 2));
     }
 
-    public Vector3dInterface mul(double scalar){
+    public Vector3d mul(double scalar){
         return new Vector3d(this.getX()*scalar,this.getY()*scalar,this.getZ()*scalar);
     }
 
-    public Vector3dInterface add(Vector3dInterface other){
+    public Vector3d mulVector(Vector3d other){
+        return new Vector3d(this.getX()*other.getX(),this.getY()*other.getY(),this.getZ()*other.getZ());
+    }
+
+    public Vector3d add(Vector3d other){
         return new Vector3d(this.x+other.getX(),this.y+other.getY(),this.z+other.getZ());
     }
 
-    public Vector3dInterface sub(Vector3dInterface other){
+    public Vector3d sub(Vector3d other){
         return new Vector3d(this.x-other.getX(),this.y-other.getY(),this.z-other.getZ());
     }
 
-    public Vector3dInterface addMul(double scalar, Vector3dInterface other){
-        Vector3dInterface addVector= other.mul(scalar);
+    public Vector3d addMul(double scalar, Vector3d other){
+        Vector3d addVector= other.mul(scalar);
         return this.add(addVector);
     }
 
