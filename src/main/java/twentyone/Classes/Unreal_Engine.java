@@ -4,7 +4,7 @@ public class Unreal_Engine extends Solver{
 
     public CelestialBody[] Eulers(CelestialBody[] theCelBodies, int theDesired, double stepSizer){
         //get the values you need bro and set up
-//hello
+
             //our V' by this I mean first derivative of velocity
         Vector3d derivativeOfVelo = sumOf_Forces(theCelBodies, theDesired); // no need to divide by Mi
         
