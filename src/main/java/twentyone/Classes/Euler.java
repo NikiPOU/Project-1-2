@@ -1,6 +1,6 @@
 package twentyone.Classes;
 
-public class Unreal_Engine extends Solver{
+public class Euler extends Solver{
 
     public CelestialBody[] Eulers(CelestialBody[] theCelBodies, int theDesired, double stepSizer){
         //get the values you need bro and set up

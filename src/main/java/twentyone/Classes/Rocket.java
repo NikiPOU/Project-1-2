@@ -1,10 +1,21 @@
 package twentyone.Classes;
 
 
-public class engineSimu extends CelestialBody{
+public class Rocket extends CelestialBody{
+    /*
+     * Potential launching positions (x, y, z):
+     *  north pole: -148186906.893642, -27823158.5715694, 33746.8987977113 + 6370
+     *  south pole: -148186906.893642, -27823158.5715694, 33746.8987977113 - 6370
+     *  pacific ocean: -148186906.893642 + 6370, -27823158.5715694, 33746.8987977113
+     *  Africa: -148186906.893642 - 6370, -27823158.5715694, 33746.8987977113
+     *  South America: -148186906.893642, -27823158.5715694 + 6370, 33746.8987977113
+     *  Asia: -148186906.893642, -27823158.5715694 - 6370, 33746.8987977113
+     * 
+     * velocity with a 90 degrees angle from the earths surface
+     */
     private Vector3d currentForce = new Vector3d(0, 0, 0);
-    private Unreal_Engine imLazy = new Unreal_Engine();
-    public engineSimu(Vector3d initialVelocity, Vector3d initialPosition){
+    private Euler imLazy = new Euler();
+    public Rocket(Vector3d initialVelocity, Vector3d initialPosition){
         super(initialVelocity, initialPosition, 50000);
     }
    

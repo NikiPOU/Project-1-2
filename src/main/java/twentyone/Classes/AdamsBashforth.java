@@ -36,7 +36,7 @@ public class AdamsBashforth extends Solver {
         //For the first run Vn+1 and Xn+1 do not exist yet, so the Euler solver is used to calculate them. After that
         //they are the last calculated velocity and position saved in the array with all celestial bodies
         if (oldVelocity[bodyIndex].getX() == 0.0) {
-            Unreal_Engine engine = new Unreal_Engine();
+            Euler engine = new Euler();
             velocity1 = engine.Eulers(allBodies, bodyIndex, stepsize)[bodyIndex].getVelocity();
             position1 = engine.Eulers(allBodies, bodyIndex, stepsize)[bodyIndex].getPosition();
         }
