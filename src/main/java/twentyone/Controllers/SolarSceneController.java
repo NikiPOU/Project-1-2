@@ -41,6 +41,7 @@ import twentyone.Classes.Rocket;
 public class SolarSceneController implements Initializable {
     final double stepsize = 10;
     final int eulerLoops = 7500;
+    final Euler unreal = new Euler();
     final Vector3d initialPosProbe = new Vector3d(-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113);
     final Vector3d initialVelProbe = new Vector3d(48, -45, 0);
     //in hours  
@@ -264,8 +265,8 @@ public class SolarSceneController implements Initializable {
             //Run the Euler's method to get the next position and velocity of all celestial bodies + probe
             for (int i = 0; i < eulerLoops; i++) {
                 for (int j = 0; j < bodies.length; j++) {
-                    //bodies = unreal.Eulers(bodies, j, stepsize);
-                    bodies = a.adams(bodies, j, stepsize);
+                    bodies = unreal.Eulers(bodies, j, stepsize);
+                    //bodies = a.adams(bodies, j, stepsize);
                 }
 
                 //Keep track of the time

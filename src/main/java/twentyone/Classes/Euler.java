@@ -23,7 +23,7 @@ public class Euler extends Solver{
 
         //get Vn+1 which is for velocity
             //we have to do Vn+1 = Vn + h(V'n)
-        newVelocityOfDesiredPlanet = velocityOfDesiredPlanet.sub(derivativeOfVelo.mul(stepSizer));
+        newVelocityOfDesiredPlanet = velocityOfDesiredPlanet.add(derivativeOfVelo.mul(stepSizer));
 
         //update the celestial body you are predicting
         theCelBodies[theDesired].setNewPostion(newPositionOfDesiredPlanet);
