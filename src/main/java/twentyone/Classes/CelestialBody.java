@@ -44,7 +44,6 @@ public class CelestialBody{
     public String toString() {
         String pos = position.toString();
         String vel = velocity.toString();
-        return "[Celestial body: position: " + pos + ", velocity: " + vel + ", mass: " + mass;
+        return "[Celestial body: [position: " + pos + "], [velocity: " + vel + "], [mass: " + mass + "]]";
     }
-    
 }
