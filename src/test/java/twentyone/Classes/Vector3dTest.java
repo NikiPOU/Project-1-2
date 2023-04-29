@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 /*
  * Generate a testfile of a class by going inside the class and click right mouse button -> click source action ... -> click generate tests
  * Don't forget to set everything to public otherwise jacoco won't find them
+ * run in terminal: 'mvn verify' to update the jacoco report
  */
 public class Vector3dTest {
     public Vector3d a = new Vector3d(1, 2, 3);
@@ -85,6 +86,11 @@ public class Vector3dTest {
     public void testSub() {
         Vector3d res = b.sub(a);
         assertTrue(res.equals(new Vector3d(3, 3, 3)));
+    }
 
+    @Test
+    public void testToString() {
+        String res = a.toString();
+        assertTrue(res.equals("1.0, 2.0, 3.0"));
     }
 }
