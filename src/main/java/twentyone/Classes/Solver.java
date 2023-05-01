@@ -3,6 +3,10 @@ package twentyone.Classes;
 public abstract class Solver {
     //gravitational constant
     private final double G = 6.6743E-20;
+
+    public Solver() {
+    }
+
     /**
      * Unreal_Engine method to calculate force.
      * @param iCelBody
