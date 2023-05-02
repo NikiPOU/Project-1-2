@@ -10,6 +10,9 @@ public class CelestialBodyTest {
 
     @Test
     public void testGetForce() {
+        CelestialBody earth = new CelestialBody(new Vector3d(5, -29,  0.001),
+        new Vector3d((long) -148186906.893642, (long) -27823158.5715694, (long) 33746.8987977113), 5.97219E+24);
+        
         Vector3d res = earth.getForce();
         assertTrue(res.equals(new Vector3d(0, 0, 0)));
     }
