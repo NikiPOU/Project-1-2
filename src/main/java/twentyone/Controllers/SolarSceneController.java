@@ -155,7 +155,7 @@ public class SolarSceneController implements Initializable {
         KeyFrame keyFrame = new KeyFrame(Duration.millis(300), movement);
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
-        addMusic();
+        //addMusic();
     }
 
     /**

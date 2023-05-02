@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.Controllers.StartSceneController">
+<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.Controllers.StartSceneController">
    <children>
       <Label text="A Titanic Space Odyssey!" textFill="WHITE">
          <font>

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" onKeyPressed="#spaceHandler" prefHeight="508.0" prefWidth="785.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.Controllers.SolarSceneController">
+<AnchorPane fx:id="root" onKeyPressed="#spaceHandler" prefHeight="508.0" prefWidth="785.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.Controllers.SolarSceneController">
    <children>
       <ImageView fx:id="milkyway" fitHeight="1080" fitWidth="1920" layoutX="0.0" layoutY="0.0">
          <image>
