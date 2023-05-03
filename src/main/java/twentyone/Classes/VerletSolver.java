@@ -4,7 +4,7 @@ public class VerletSolver extends Solver
 {
 
 
-    public CelestialBody[] verlet(CelestialBody[] allBodies, int bodyIndex, double stepsize) // to be changed with the celestial body class (CelestialBody[] ..)
+    public CelestialBody[] verlet(CelestialBody[] allBodies, int bodyIndex, double stepsize) 
     {
         
         //take values from the rest of the program (CelestialBody)
@@ -20,7 +20,7 @@ public class VerletSolver extends Solver
         //Dividing by the mass already happens inside sumOf_Forces
         Vector3d prevA = sumOf_Forces(allBodies, bodyIndex); //computing the acceleration
 
-    
+
         //double time = 0.0;
         
         double dt = stepsize; //time step determining time passed between each iteration
