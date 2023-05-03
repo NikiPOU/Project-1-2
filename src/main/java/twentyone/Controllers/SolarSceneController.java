@@ -297,7 +297,7 @@ public class SolarSceneController implements Initializable {
                     }
                 }
             }
-
+            
             TimeElapsed.setText("Time Elapsed: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");  
 
             //Get and set the GUI coords and paths of the celestial bodies

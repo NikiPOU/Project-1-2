@@ -24,6 +24,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("fxml/StartScene"));
         stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         Rectangle2D bounds = Screen.getPrimary().getBounds();
         width = bounds.getWidth();
         height = bounds.getHeight();
