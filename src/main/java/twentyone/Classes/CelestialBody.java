@@ -1,52 +1,49 @@
 package twentyone.Classes;
 
-import java.util.Arrays;
-
 public class CelestialBody{
     
-    private double[] initialVelocity = new double[3];
-    private double[] initialPosition = new double[3];
+    private Vector3d velocity = new Vector3d(0.0, 0.0, 0.0);
+    private Vector3d position = new Vector3d(0.0, 0.0, 0.0);
     private double mass;
-    private double[] currentForce = new double[3];
+    private Vector3d currentForce = new Vector3d(0,0,0);
 
-    public CelestialBody(double[] initialVelocity, double[] initialPosition, double mass){
-        this.initialVelocity = initialVelocity;
-        this.initialPosition = initialPosition;
+    public CelestialBody(Vector3d velocity, Vector3d position, double mass){
+        this.velocity = velocity;
+        this.position = position;
         this.mass = mass;
     }
 
-    public void setNewVelocity(double[] newVelocity){
-        this.initialVelocity = newVelocity;
+    public void setNewVelocity(Vector3d newVelocity){
+        this.velocity = newVelocity;
     }
 
-    public void setNewPostion(double[] newPosition) {
-        this.initialPosition = newPosition;
+    public void setNewPostion(Vector3d newPosition) {
+        this.position = newPosition;
     }
 
-    public void setNewForce(double[] newForce){
+    public void setNewForce(Vector3d newForce){
         this.currentForce = newForce;
     }
 
-    public double[] getVelocity(){
-        return initialVelocity;
+    public Vector3d getVelocity(){
+        return velocity;
     }
 
-    public double[] getPosition(){
-        return initialPosition;
+    public Vector3d getPosition(){
+        return position;
     }
 
     public double getMass(){
         return mass;
     }
 
-    public double[] getForce(){
+    public Vector3d getForce(){
         return currentForce;
     }
 
     public String toString() {
-        String pos = Arrays.toString(initialPosition);
-        String vel = Arrays.toString(initialVelocity);
-        return "[Celestial body: position: " + pos + ", velocity: " + vel + ", mass: " + mass;
+        String pos = position.toString();
+        String vel = velocity.toString();
+        return "[Celestial body: [position: " + pos + "], [velocity: " + vel + "], [mass: " + mass + "]]";
     }
-    
 }

@@ -32,33 +32,43 @@ public class Vector3d implements Vector3dInterface{
         this.z = z;
     }
 
-    public double getX(){ return x; }
+    public double getX(){ 
+        return x; 
+    }
+
     public double getY(){
         return y;
     }
     public double getZ(){
         return z;
     }
-    public Vector2d getVector2d(){return new Vector2d(x,y);}
+    
+    public Vector2d getVector2d(){
+        return new Vector2d(x,y);
+    }
 
-    public double dist(Vector3dInterface other){
+    public double dist(Vector3d other){
         return Math.sqrt(Math.pow((other.getX()-x), 2)+Math.pow((other.getY()-y), 2)+ Math.pow(other.getZ()-z, 2));
     }
 
-    public Vector3dInterface mul(double scalar){
+    public Vector3d mul(double scalar){
         return new Vector3d(this.getX()*scalar,this.getY()*scalar,this.getZ()*scalar);
     }
 
-    public Vector3dInterface add(Vector3dInterface other){
+    public Vector3d mulVector(Vector3d other){
+        return new Vector3d(this.getX()*other.getX(),this.getY()*other.getY(),this.getZ()*other.getZ());
+    }
+
+    public Vector3d add(Vector3d other){
         return new Vector3d(this.x+other.getX(),this.y+other.getY(),this.z+other.getZ());
     }
 
-    public Vector3dInterface sub(Vector3dInterface other){
+    public Vector3d sub(Vector3d other){
         return new Vector3d(this.x-other.getX(),this.y-other.getY(),this.z-other.getZ());
     }
 
-    public Vector3dInterface addMul(double scalar, Vector3dInterface other){
-        Vector3dInterface addVector= other.mul(scalar);
+    public Vector3d addMul(double scalar, Vector3d other){
+        Vector3d addVector= other.mul(scalar);
         return this.add(addVector);
     }
 
@@ -69,6 +79,24 @@ public class Vector3d implements Vector3dInterface{
 
     public Vector3d clone(){
         return new Vector3d(this.x,this.y,this.z);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Vector3d other = (Vector3d) obj;
+        if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
+            return false;
+        if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
+            return false;
+        if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
+            return false;
+        return true;
     }
 
     public String toString(){

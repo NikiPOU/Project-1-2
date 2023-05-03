@@ -34,24 +34,27 @@ import javafx.util.Duration;
 import twentyone.App;
 import twentyone.Classes.AdamsBashforth;
 import twentyone.Classes.CelestialBody;
-import twentyone.Classes.Probe;
-import twentyone.Classes.Unreal_Engine;
+import twentyone.Classes.Euler;
+import twentyone.Classes.Vector3d;
+import twentyone.Classes.VerletSolver;
+import twentyone.Classes.Rocket;
 
 public class SolarSceneController implements Initializable {
     final double stepsize = 10;
     final int eulerLoops = 7500;
-    final double[] initialPosProbe = {-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113};
-    final double[] initialVelProbe = {48, -45, 0};
+    final Euler unreal = new Euler();
+    final Vector3d initialPosProbe = new Vector3d(-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113);
+    final Vector3d initialVelProbe = new Vector3d(48, -45, 0);
     //in hours  
     int TimeStamp = 27;
 
     int probeCoords2;
     int distanceTitan2;
-    double[] launchCoords2;
-    double[] launchVelocity2;  
+    Vector3d launchCoords2;
+    Vector3d launchVelocity2;  
     double closestTitan = 10E40;
     String momentTitan;
-    double[] firstprobepos;
+    Vector3d firstprobepos;
     int sunx = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 + 45;
     int suny = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 + 45;
 
@@ -153,7 +156,7 @@ public class SolarSceneController implements Initializable {
         KeyFrame keyFrame = new KeyFrame(Duration.millis(300), movement);
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
-        addMusic();
+        //addMusic();
     }
 
     /**
@@ -196,45 +199,45 @@ public class SolarSceneController implements Initializable {
      * Initiates all the planets and the probe. It gives the correct positions, velocities and masses.
      */
     private void initiateCB(){
-        double[] sunvel = {0, 0, 0};
-        double[] sunpos = {0, 0, 0};
+        Vector3d sunvel = new Vector3d(0,0,0);
+        Vector3d sunpos = new Vector3d(0,0,0);
 
-        double[] merpos = {(long) 7833268.43923962, (long) 44885949.3703908, (long) 2867693.20054382};
-        double[] mervel = {-57.4967480139828, 11.52095127176, 6.21695374334136};
+        Vector3d merpos = new Vector3d((long) 7833268.43923962, (long) 44885949.3703908, (long) 2867693.20054382);
+        Vector3d mervel = new Vector3d(-57.4967480139828, 11.52095127176, 6.21695374334136);
 
-        double[] venusvel = {-34.0236737066136, -8.96521274688838, 1.84061735279188};
-        double[] venuspos = {(long) -28216773.9426889, (long) 103994008.541512, (long) 3012326.64296788};
+        Vector3d venusvel = new Vector3d(-34.0236737066136, -8.96521274688838, 1.84061735279188);
+        Vector3d venuspos = new Vector3d((long) -28216773.9426889, (long) 103994008.541512, (long) 3012326.64296788);
         
-        double[] earthvel = {5.05251577575409, -29.3926687625899,  0.00170974277401292};
-        double[] earthpos = {(long) -148186906.893642, (long) -27823158.5715694, (long) 33746.8987977113};
+        Vector3d earthvel = new Vector3d(5.05251577575409, -29.3926687625899,  0.00170974277401292);
+        Vector3d earthpos = new Vector3d((long) -148186906.893642, (long) -27823158.5715694, (long) 33746.8987977113);
 
-        double[] moonvel = {4.34032634654904, -30.0480834180741, -0.0116103535014229};
-        double[] moonpos = {(long) -148458048.395164, (long) -27524868.1841142, (long) 70233.6499287411};
+        Vector3d moonvel = new Vector3d(4.34032634654904, -30.0480834180741, -0.0116103535014229);
+        Vector3d moonpos = new Vector3d((long) -148458048.395164, (long) -27524868.1841142, (long) 70233.6499287411);
 
-        double[] marsvel = {-17.6954469224752, -13.4635253412947, 0.152331928200531};
-        double[] marspos = {(long) -159116303.422552, (long) 189235671.561057, (long) 7870476.08522969};
+        Vector3d marsvel = new Vector3d(-17.6954469224752, -13.4635253412947, 0.152331928200531);
+        Vector3d marspos = new Vector3d((long) -159116303.422552, (long) 189235671.561057, (long) 7870476.08522969);
 
-        double[] jupivel = {-4.71443059866156, 12.8555096964427, 0.0522118126939208};
-        double[] jupipos = {(long) 692722875.928222, (long) 258560760.813524, (long) -16570817.7105996};
+        Vector3d jupivel = new Vector3d(-4.71443059866156, 12.8555096964427, 0.0522118126939208);
+        Vector3d jupipos = new Vector3d((long) 692722875.928222, (long) 258560760.813524, (long) -16570817.7105996);
 
-        double[] satuvel = {4.46781341335014, 8.23989540475628,  -0.320745376969732};
-        double[] satupos = {(long) 1253801723.95465, (long) -760453007.810989, (long) -36697431.1565206};
+        Vector3d satuvel = new Vector3d(4.46781341335014, 8.23989540475628,  -0.320745376969732);
+        Vector3d satupos = new Vector3d((long) 1253801723.95465, (long) -760453007.810989, (long) -36697431.1565206);
 
-        double[] titvel = {8.99593229549645, 11.1085713608453, -2.25130986174761};
-        double[] titpos = {(long) 1254501624.95946, (long) -761340299.067828, (long) -36309613.8378104};
+        Vector3d titvel = new Vector3d(8.99593229549645, 11.1085713608453, -2.25130986174761);
+        Vector3d titpos = new Vector3d((long) 1254501624.95946, (long) -761340299.067828, (long) -36309613.8378104);
 
-        double[] nepvel = {0.447991656952326, 5.44610697514907, -0.122638125365954};
-        double[] neppos = {(long) 4454487339.09447, (long) -397895128.763904, (long) -94464151.3421107};
+        Vector3d nepvel = new Vector3d(0.447991656952326, 5.44610697514907, -0.122638125365954);
+        Vector3d neppos = new Vector3d((long) 4454487339.09447, (long) -397895128.763904, (long) -94464151.3421107);
 
-        double[] uravel = {-5.12766216337626, 4.22055347264457, 0.0821190336403063};
-        double[] urapos = {(long) 1958732435.99338, (long) 2191808553.21893, (long) -17235283.8321992};
+        Vector3d uravel = new Vector3d(-5.12766216337626, 4.22055347264457, 0.0821190336403063);
+        Vector3d urapos = new Vector3d((long) 1958732435.99338, (long) 2191808553.21893, (long) -17235283.8321992);
 
-        double[] probevel = initialVelProbe;
-        double[] probepos = initialPosProbe;
+        Vector3d probevel = initialVelProbe;
+        Vector3d probepos = initialPosProbe;
 
-        firstprobepos = probepos;
-        launchCoords.setText("Launch coords: [x " + probepos[0] + ", y " + probepos[1] + ", z " + probepos[2] + "]");
-        launchVelocity.setText("Launch velocity: [x " + probevel[0] + ", y " + probevel[1] + ", z " + probevel[2] + "]");
+        firstprobepos = initialPosProbe;
+        launchCoords.setText("Launch coords: [x " + probepos.getX() + ", y " + probepos.getY() + ", z " + probepos.getZ() + "]");
+        launchVelocity.setText("Launch velocity: [x " + probevel.getX() + ", y " + probevel.getY() + ", z " + probevel.getZ() + "]");
 
         bodies[0] = new CelestialBody(sunvel, sunpos, 1.991E30);
         bodies[1] = new CelestialBody(mervel, merpos, 3.302E+23);
@@ -247,7 +250,7 @@ public class SolarSceneController implements Initializable {
         bodies[8] = new CelestialBody(titvel, titpos, 1.34553E+23);
         bodies[9] = new CelestialBody(nepvel, neppos, 1.02409E+26);
         bodies[10] = new CelestialBody(uravel, urapos, 86.813E+24);
-        bodies[11] = new Probe(probevel, probepos);
+        bodies[11] = new Rocket(probevel, probepos);
     }
 
     public class Movement implements EventHandler<ActionEvent>{
@@ -258,13 +261,15 @@ public class SolarSceneController implements Initializable {
         @Override
         public void handle(ActionEvent event) {
             //Unreal_Engine unreal = new Unreal_Engine();
-            AdamsBashforth a = new AdamsBashforth();
+            //AdamsBashforth a = new AdamsBashforth();
+            VerletSolver v = new VerletSolver();
 
             //Run the Euler's method to get the next position and velocity of all celestial bodies + probe
             for (int i = 0; i < eulerLoops; i++) {
                 for (int j = 0; j < bodies.length; j++) {
                     //bodies = unreal.Eulers(bodies, j, stepsize);
-                    bodies = a.adams(bodies, j, stepsize);
+                    //bodies = a.adams(bodies, j, stepsize);
+                    bodies = v.verlet(bodies, j, stepsize);
                 }
 
                 //Keep track of the time
@@ -278,9 +283,9 @@ public class SolarSceneController implements Initializable {
                         minutes = 0;
                         if(k == TimeStamp){
                             System.out.println("Time Stamp: " + k + " hours");
-                            System.out.println("Position of the probe: x: " + bodies[11].getPosition()[0] + " y: " + bodies[11].getPosition()[1] + " z: " + bodies[11].getPosition()[2]);
-                            System.out.println("Distance Traveled: x: " + (bodies[11].getPosition()[0]-firstprobepos[0]) + " km y: " + (bodies[11].getPosition()[1]-firstprobepos[1]) + " km z: " + (bodies[11].getPosition()[2]-firstprobepos[2]) + " km");
-                            System.out.println("Total distance: " + Math.sqrt(Math.pow(bodies[11].getPosition()[0]-firstprobepos[0], 2)+Math.pow(bodies[11].getPosition()[1]-firstprobepos[1], 2)+Math.pow(bodies[11].getPosition()[2]-firstprobepos[2], 2))+ " km");
+                            System.out.println("Position of the probe: x: " + bodies[11].getPosition().getX() + " y: " + bodies[11].getPosition().getY() + " z: " + bodies[11].getPosition().getZ());
+                            System.out.println("Distance Traveled: x: " + (bodies[11].getPosition().getX() - firstprobepos.getX() + " km y: " + (bodies[11].getPosition().getY()-firstprobepos.getY()) + " km z: " + (bodies[11].getPosition().getZ()-firstprobepos.getZ()) + " km"));
+                            System.out.println("Total distance: " + Math.sqrt(Math.pow(bodies[11].getPosition().getX()-firstprobepos.getX(), 2)+Math.pow(bodies[11].getPosition().getY()-firstprobepos.getY(), 2)+Math.pow(bodies[11].getPosition().getZ()-firstprobepos.getZ(), 2))+ " km");
                         }
                         if(hours % 24 == 0){
                             days++;
@@ -301,44 +306,44 @@ public class SolarSceneController implements Initializable {
             TimeElapsed.setText("Time Elapsed: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");  
 
             //Get and set the GUI coords and paths of the celestial bodies
-            ex = sunx + bodies[3].getPosition()[0]/divider;
-            ey = suny + bodies[3].getPosition()[1]/divider;
+            ex = sunx + bodies[3].getPosition().getX()/divider;
+            ey = suny + bodies[3].getPosition().getY()/divider;
             circlemaker(3, ex, ey);
             setGUIcoords(earth, ex, ey);
-            double mx = sunx + 8 + 15*Math.cos(k*0.009) + bodies[4].getPosition()[0]/divider;
-            double my = suny + 8 + 15*Math.sin(k*0.009) + bodies[4].getPosition()[1]/divider;
+            double mx = sunx + 8 + 15*Math.cos(k*0.009) + bodies[4].getPosition().getX()/divider;
+            double my = suny + 8 + 15*Math.sin(k*0.009) + bodies[4].getPosition().getY()/divider;
             circlemaker(4, mx, my);
             setGUIcoords(moon, mx, my);
-            double mex = sunx + bodies[1].getPosition()[0]/divider;
-            double mey = suny + bodies[1].getPosition()[1]/divider;
+            double mex = sunx + bodies[1].getPosition().getX()/divider;
+            double mey = suny + bodies[1].getPosition().getY()/divider;
             circlemaker(1, mex, mey);
             setGUIcoords(mercury, mex, mey);
-            double vx = sunx + bodies[2].getPosition()[0]/divider;
-            double vy = suny + bodies[2].getPosition()[1]/divider;
+            double vx = sunx + bodies[2].getPosition().getX()/divider;
+            double vy = suny + bodies[2].getPosition().getY()/divider;
             circlemaker(2, vx, vy);
             setGUIcoords(venus, vx, vy);
-            double max = sunx + bodies[5].getPosition()[0]/divider;
-            double may = suny + bodies[5].getPosition()[1]/divider;
+            double max = sunx + bodies[5].getPosition().getX()/divider;
+            double may = suny + bodies[5].getPosition().getY()/divider;
             circlemaker(5, max, may);
             setGUIcoords(mars, max, may);
-            double jx = sunx + bodies[6].getPosition()[0]/divider;
-            double jy = suny + bodies[6].getPosition()[1]/divider;
+            double jx = sunx + bodies[6].getPosition().getX()/divider;
+            double jy = suny + bodies[6].getPosition().getY()/divider;
             circlemaker(6, jx, jy);
             setGUIcoords(jupiter, jx, jy);
-            sx = sunx + bodies[7].getPosition()[0]/divider;
-            sy = suny + bodies[7].getPosition()[1]/divider;
+            sx = sunx + bodies[7].getPosition().getX()/divider;
+            sy = suny + bodies[7].getPosition().getY()/divider;
             circlemaker(7, sx, sy);
             setGUIcoords(saturn, sx, sy);
-            tx = sunx + 40 + 23*Math.cos(k*0.0168) + bodies[8].getPosition()[0]/divider;
-            ty = suny + 15 + 23*Math.sin(k*0.0168) + bodies[8].getPosition()[1]/divider;
+            tx = sunx + 40 + 23*Math.cos(k*0.0168) + bodies[8].getPosition().getX()/divider;
+            ty = suny + 15 + 23*Math.sin(k*0.0168) + bodies[8].getPosition().getY()/divider;
             circlemaker(8, tx, ty);
             setGUIcoords(titan, tx, ty);
 
             //Get and set the probes GUI coords and adapt the texts based on it and its distance to Titan
-            double[] spaps = bodies[11].getPosition();
-            probeCoords.setText("Currect probe coords: [x " + spaps[0] + ",y " + spaps[1] + ",z " + spaps[2] + "]");
-            double spax = sunx + spaps[0]/divider;
-            double spay = suny + spaps[1]/divider;
+            Vector3d spaps = bodies[11].getPosition();
+            probeCoords.setText("Currect probe coords: [x " + spaps.getX() + ",y " + spaps.getY() + ",z " + spaps.getZ() + "]");
+            double spax = sunx + spaps.getX()/divider;
+            double spay = suny + spaps.getY()/divider;
             double titandis = Math.sqrt(((tx-spax)*(tx-spax))+((ty-spay)*(ty-spay)));
             distanceTitan.setText("Distance to Titan: " + titandis*divider + " km");
             spaceprobe.setLayoutX(spax);
@@ -426,8 +431,8 @@ public class SolarSceneController implements Initializable {
     }
 
     //Unused method
-    public static void writeToFile(String filePath, int x, int y) {
-        try(FileWriter fw = new FileWriter("src\\main\\resources\\twentyone\\venusCoords.txt", true);
+    public static void writeToFile(double x, double y) {
+        try(FileWriter fw = new FileWriter("src\\main\\resources\\twentyone\\step1.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw))
         {

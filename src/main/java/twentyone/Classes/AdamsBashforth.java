@@ -3,83 +3,11 @@ package twentyone.Classes;
 /**
  * Calculation of the celestial bodies coordinates using an Adams-Bashforth solver.
  */
-public class AdamsBashforth {
-    //gravitational constant
-    private final double G = 6.6743E-20;
-
+public class AdamsBashforth extends Solver {
     //Placeholder for the old velocity, used because Adams-Bashforth is a two-step method 
     //(using both the last velocity and the one before that)
-    private double[][] oldVelocity = new double[12][3];
-
-    /**
-     * Unreal_Engine method to calculate force.
-     * @param _IcelBody
-     * @param _JcelBody
-     * @return
-     */
-    public double[] calculateForce(CelestialBody _IcelBody, CelestialBody _JcelBody){
-        //get the vars needed
-        double mass_of_Jobject = _JcelBody.getMass();
-        double[] finalForce = new double[3];
-        double[] ipositionVector = _IcelBody.getPosition();
-        double[] jpositionVector = _JcelBody.getPosition();
-        double denominatorResult = 0;
-
-
-        //multiply G with Mj
-        double multiple = mass_of_Jobject * G; // no need to multiply by Mi
-
-
-        //calculate difference between vectors
-        for(int i = 0; i<ipositionVector.length; i++){
-            finalForce[i] = ipositionVector[i] - jpositionVector[i];
-        }
-
-
-        //get denominator 
-        for(int i = 0; i<finalForce.length; i++){
-            denominatorResult = denominatorResult + (finalForce[i] * finalForce[i]);
-        }
-        denominatorResult = Math.pow(Math.sqrt(denominatorResult), 3);
-
-        //get final number
-        for(int i = 0; i<finalForce.length; i++){
-            finalForce[i] = multiple * (finalForce[i] / denominatorResult);
-        }
-
-        //return vector
-        return finalForce;
-    }
-
-    /**
-     * Unreal_Engine method to sum all forces (multiplied by -1 at the end).
-     * @param theCelBodies
-     * @param desiredPlanet
-     * @return
-     */
-    public double[] sumOf_Forces(CelestialBody[] theCelBodies, int desiredPlanet){
-        //create the variables
-        double[] sumForces = new double[3];
-        double[] vector = new double[3];
-
-        //get the force between your desiredPlanet and ith planet and then add it to sumForces which is the total sum
-        for(int i = 0; i<theCelBodies.length; i++){
-            if(i != desiredPlanet){
-                vector = calculateForce(theCelBodies[desiredPlanet], theCelBodies[i]);
-                for(int j = 0; j<sumForces.length; j++){
-                    sumForces[j] += vector[j];
-                }
-            }
-        }
-
-        //if there is a problem with the values multiply sumForces by -1 here
-        for (int i = 0; i < 3; i++) {
-            sumForces[i] = -sumForces[i];
-        }
-        //return the total force
-        return sumForces;
-        
-    }
+    private Vector3d[] oldVelocity = {new Vector3d(0,0, 0), new Vector3d(0,0, 0), new Vector3d(0,0, 0), new Vector3d(0,0, 0),
+        new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0)};
 
     /**
      * Adams-Bashforth differential equation solver for the position and velocity of a celestial body. It uses the 
@@ -90,24 +18,25 @@ public class AdamsBashforth {
      * @return the updated array of all celestial bodies.
      */
     public CelestialBody[] adams(CelestialBody[] allBodies, int bodyIndex, double stepsize) {
-        //The derivative of velocity is the sum of all forces since a = V' and a = F/m (/m happens inside sumOf_Forces)
-        double[] velocity0Derivative = sumOf_Forces(allBodies, bodyIndex); 
 
-        double[] velocity0 = new double[3];
+        //The derivative of velocity is the sum of all forces since a = V' and a = F/m (/m happens inside sumOf_Forces)
+        Vector3d velocity0Derivative = sumOf_Forces(allBodies, bodyIndex);
+
+        Vector3d velocity0 = new Vector3d(0,0,0);
         //For the first run Vn is the initial velocity that is given, after that it is the velocity saved in the placeholder
-        if (oldVelocity[bodyIndex][0] == 0.0) {
+        if (oldVelocity[bodyIndex].getX() == 0.0) {
             velocity0 = allBodies[bodyIndex].getVelocity();
         }
         else {
             velocity0 = oldVelocity[bodyIndex];
         }
 
-        double[] velocity1 = new double[3];
-        double[] position1 = new double[3];
+        Vector3d velocity1 = new Vector3d(0,0,0);
+        Vector3d position1 = new Vector3d(0,0,0);
         //For the first run Vn+1 and Xn+1 do not exist yet, so the Euler solver is used to calculate them. After that
         //they are the last calculated velocity and position saved in the array with all celestial bodies
-        if (oldVelocity[bodyIndex][0] == 0.0) {
-            Unreal_Engine engine = new Unreal_Engine();
+        if (oldVelocity[bodyIndex].getX() == 0.0) {
+            Euler engine = new Euler();
             velocity1 = engine.Eulers(allBodies, bodyIndex, stepsize)[bodyIndex].getVelocity();
             position1 = engine.Eulers(allBodies, bodyIndex, stepsize)[bodyIndex].getPosition();
         }
@@ -117,21 +46,17 @@ public class AdamsBashforth {
         }
         
         //Now that the velocity is updated, the Vn+1' can be calculated the same way as Vn'
-        double[] velocity1Derivative = sumOf_Forces(allBodies, bodyIndex); 
+        Vector3d velocity1Derivative = sumOf_Forces(allBodies, bodyIndex); 
         //The old velocity is now Vn+1 instead of Vn
         oldVelocity[bodyIndex] = velocity1;
         
-        double[] position2 = new double[3];
+        Vector3d position2 = new Vector3d(0, 0,0);
         //for the position, the formula is Xn+2 = Xn+1 + 3/2 * h * Vn+1 - 1/2 * h * Vn (since V = X')
-        for(int i = 0; i < 3; i++){
-            position2[i] = position1[i] + (3/2*stepsize*velocity1[i]) - (1/2 * stepsize * velocity0[i]);
-        }
+        position2 = position1.add(velocity1.mul(3/2*stepsize).sub(velocity0.mul(1/2*stepsize)));
 
-        double[] velocity2 = new double[3];
+        Vector3d velocity2 = new Vector3d(0, 0,0);
         //for the velocity, the formula is Vn+2 = Vn+1 + 3/2 * h * Vn+1' - 1/2 * h * Vn'
-        for(int i = 0; i < 3; i++){
-            velocity2[i] = velocity1[i] + (3/2 * stepsize * velocity1Derivative[i]) - (1/2 * stepsize * velocity0Derivative[i]);
-        }
+        velocity2 = velocity1.add(velocity1Derivative.mul(3/2*stepsize).sub(velocity0Derivative.mul(1/2*stepsize)));
 
         //Updates the velocity and position of the given celestial body in the array of celestial bodies
         allBodies[bodyIndex].setNewPostion(position2);

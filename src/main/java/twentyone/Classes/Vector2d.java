@@ -47,14 +47,6 @@ public class Vector2d {
         return false;
     }
 
-
-    public boolean doesntEqual(Vector2d a, double tolerance) {
-        if (Math.sqrt(Math.pow((x - a.getX()), 2) + Math.pow((y - a.getY()), 2)) > tolerance) {
-            return true;
-        }
-        return false;
-    }
-
     public Vector2d mul(double scalar){
         return new Vector2d(this.getX()*scalar,this.getY()*scalar);
     }
