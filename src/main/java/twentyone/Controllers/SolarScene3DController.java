@@ -286,7 +286,7 @@ public class SolarScene3DController implements Initializable {
         bodies[8] = new CelestialBody(titvel, titpos, 1.34553E+23);
         bodies[9] = new CelestialBody(nepvel, neppos, 1.02409E+26);
         bodies[10] = new CelestialBody(uravel, urapos, 86.813E+24);
-        bodies[11] = new Rocket(probevel, probepos);
+        bodies[11] = new Rocket(probepos);
     }
 
     /**

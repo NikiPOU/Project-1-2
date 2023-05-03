@@ -1,8 +1,14 @@
 package twentyone.Classes;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public abstract class Solver {
     //gravitational constant
     private final double G = 6.6743E-20;
+    ArrayList<Vector3d> impulses = new ArrayList<>();
 
     public Solver() {
     }
@@ -64,4 +70,27 @@ public abstract class Solver {
         //return the total force
         return sumForces;  
     }
+
+    public Vector3d getImpulse() {
+        if (impulses.size() == 0) {
+            try {
+                File file = new File("src\\main\\resources\\twentyone\\data.txt");
+                Scanner sc = new Scanner(file);
+                while (sc.hasNextLine()) {
+                  String str = sc.nextLine();
+                  String[] split = str.split(" ");
+                  Vector3d impulse = new Vector3d(Double.parseDouble(split[0]), Double.parseDouble(split[1]), Double.parseDouble(split[2]));
+    
+                  impulses.add(impulse);
+                }
+                sc.close();
+              } catch (FileNotFoundException e) {
+                System.out.println("Data file was removed");
+                e.printStackTrace();
+              }
+        }
+
+        return impulses.remove(0);
+    }
+
 }

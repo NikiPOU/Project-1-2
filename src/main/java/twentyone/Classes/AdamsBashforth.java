@@ -37,8 +37,8 @@ public class AdamsBashforth extends Solver {
         //they are the last calculated velocity and position saved in the array with all celestial bodies
         if (oldVelocity[bodyIndex].getX() == 0.0) {
             Euler engine = new Euler();
-            velocity1 = engine.Eulers(allBodies, bodyIndex, stepsize)[bodyIndex].getVelocity();
-            position1 = engine.Eulers(allBodies, bodyIndex, stepsize)[bodyIndex].getPosition();
+            velocity1 = engine.Eulers(allBodies, bodyIndex, stepsize, false)[bodyIndex].getVelocity();
+            position1 = engine.Eulers(allBodies, bodyIndex, stepsize, false)[bodyIndex].getPosition();
         }
         else {
             velocity1 = allBodies[bodyIndex].getVelocity();

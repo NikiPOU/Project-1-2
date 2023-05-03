@@ -15,8 +15,9 @@ public class Rocket extends CelestialBody{
      */
     private Vector3d currentForce = new Vector3d(0, 0, 0);
     private Euler imLazy = new Euler();
-    public Rocket(Vector3d initialVelocity, Vector3d initialPosition){
-        super(initialVelocity, initialPosition, 50000);
+    
+    public Rocket(Vector3d initialPosition){
+        super(new Vector3d(0,0,0), initialPosition, 50000);
     }
    
     public Vector3d calculateImpulse(CelestialBody[] testing, double stepSizer){

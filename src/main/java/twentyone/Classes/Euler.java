@@ -2,16 +2,11 @@ package twentyone.Classes;
 
 public class Euler extends Solver{
 
-    public CelestialBody[] Eulers(CelestialBody[] theCelBodies, int theDesired, double stepSizer){
+    public CelestialBody[] Eulers(CelestialBody[] theCelBodies, int theDesired, double stepSizer, boolean impulse){
         //get the values you need bro and set up
 
             //our V' by this I mean first derivative of velocity
         Vector3d derivativeOfVelo = sumOf_Forces(theCelBodies, theDesired); // no need to divide by Mi
-        
-        if(theDesired == 11){ //this makes the engine run every time we call eulers
-            ((Rocket) theCelBodies[11]).finalCombinedForce(theCelBodies, stepSizer);
-            derivativeOfVelo = theCelBodies[11].getForce().mul((1/theCelBodies[11].getMass()));
-        }
 
             //our Vn and Xn
         Vector3d velocityOfDesiredPlanet = theCelBodies[theDesired].getVelocity();
@@ -32,6 +27,10 @@ public class Euler extends Solver{
 
         //update the celestial body you are predicting
         theCelBodies[theDesired].setNewPostion(newPositionOfDesiredPlanet);
+        if (impulse && theDesired==11) {
+           newVelocityOfDesiredPlanet = newVelocityOfDesiredPlanet.add(getImpulse().mul(1/theCelBodies[11].getMass()));
+        }
+
         theCelBodies[theDesired].setNewVelocity(newVelocityOfDesiredPlanet);
         
         return theCelBodies;

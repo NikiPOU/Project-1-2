@@ -43,8 +43,7 @@ public class SolarSceneController implements Initializable {
     final double stepsize = 10;
     final int eulerLoops = 7500;
     final Euler unreal = new Euler();
-    final Vector3d initialPosProbe = new Vector3d(-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113);
-    final Vector3d initialVelProbe = new Vector3d(48, -45, 0);
+    final Vector3d initialPosProbe = new Vector3d(-148186906.893642, -27823158.5715694 + 6370, 33746.8987977113);
     //in hours  
     int TimeStamp = 27;
 
@@ -82,6 +81,7 @@ public class SolarSceneController implements Initializable {
     Random rand = new Random();
     private Timeline timeline;
     int k=0;
+    int totalSec;
 
     @FXML
     AnchorPane root;
@@ -232,12 +232,11 @@ public class SolarSceneController implements Initializable {
         Vector3d uravel = new Vector3d(-5.12766216337626, 4.22055347264457, 0.0821190336403063);
         Vector3d urapos = new Vector3d((long) 1958732435.99338, (long) 2191808553.21893, (long) -17235283.8321992);
 
-        Vector3d probevel = initialVelProbe;
         Vector3d probepos = initialPosProbe;
 
         firstprobepos = initialPosProbe;
         launchCoords.setText("Launch coords: [x " + probepos.getX() + ", y " + probepos.getY() + ", z " + probepos.getZ() + "]");
-        launchVelocity.setText("Launch velocity: [x " + probevel.getX() + ", y " + probevel.getY() + ", z " + probevel.getZ() + "]");
+        launchVelocity.setText("Launch velocity: [x " + 0 + ", y " + 0 + ", z " + 0 + "]");
 
         bodies[0] = new CelestialBody(sunvel, sunpos, 1.991E30);
         bodies[1] = new CelestialBody(mervel, merpos, 3.302E+23);
@@ -250,7 +249,7 @@ public class SolarSceneController implements Initializable {
         bodies[8] = new CelestialBody(titvel, titpos, 1.34553E+23);
         bodies[9] = new CelestialBody(nepvel, neppos, 1.02409E+26);
         bodies[10] = new CelestialBody(uravel, urapos, 86.813E+24);
-        bodies[11] = new Rocket(probevel, probepos);
+        bodies[11] = new Rocket(probepos);
     }
 
     public class Movement implements EventHandler<ActionEvent>{
@@ -260,20 +259,27 @@ public class SolarSceneController implements Initializable {
          */
         @Override
         public void handle(ActionEvent event) {
-            //Unreal_Engine unreal = new Unreal_Engine();
+            Euler e = new Euler();
+            boolean impulse = false;
             //AdamsBashforth a = new AdamsBashforth();
-            VerletSolver v = new VerletSolver();
+            //VerletSolver v = new VerletSolver();
+            double distRocketTitan = bodies[11].getPosition().dist(bodies[8].getPosition());
+            if (totalSec == 0 || totalSec == eulerLoops*stepsize*20 || totalSec == eulerLoops*stepsize*100 || distRocketTitan < 2e6) {
+                impulse = true;
+            }
 
             //Run the Euler's method to get the next position and velocity of all celestial bodies + probe
             for (int i = 0; i < eulerLoops; i++) {
                 for (int j = 0; j < bodies.length; j++) {
-                    //bodies = unreal.Eulers(bodies, j, stepsize);
+                    bodies = e.Eulers(bodies, j, stepsize, impulse);
                     //bodies = a.adams(bodies, j, stepsize);
-                    bodies = v.verlet(bodies, j, stepsize);
+                    //bodies = v.verlet(bodies, j, stepsize);
                 }
+                impulse = false;
 
                 //Keep track of the time
                 seconds += stepsize;
+                totalSec += stepsize;
                 if(seconds >= 60){
                     minutes++;
                     seconds = 0;
