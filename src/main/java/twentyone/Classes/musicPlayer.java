@@ -86,10 +86,27 @@ public class musicPlayer {
         return fileName;
     }
 
+    /**
+     * Fades the music until you cannot hear it anymore.
+     */
     public void fadeOut(){
         Timeline timeline = new Timeline(
-            new KeyFrame(Duration.seconds(10), new KeyValue(MP.volumeProperty(), 0)));
+            new KeyFrame(Duration.seconds(5), new KeyValue(MP.volumeProperty(), 0)));
         timeline.play();
+    }
+
+    /**
+     * Speeds up the music 0.5 speed.
+     */
+    public void speedUp(){
+        MP.setRate(MP.getRate() + 0.5);
+    }
+
+    /**
+     * Slows down the music 0.5 speed.
+     */
+    public void speedDown(){
+        MP.setRate(MP.getRate() - 0.5);
     }
 
 }

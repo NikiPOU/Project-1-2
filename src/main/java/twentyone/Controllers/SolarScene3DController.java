@@ -83,6 +83,7 @@ public class SolarScene3DController implements Initializable {
     ArrayList<Circle> dotList = new ArrayList<>();
     Random rand = new Random();
     int k=0;
+    private musicPlayer MP;
 
     @FXML
     private Scene scene;
@@ -192,7 +193,7 @@ public class SolarScene3DController implements Initializable {
         KeyFrame keyFrame = new KeyFrame(Duration.millis(300), movement);
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
-        musicPlayer MP = new musicPlayer("StarWars.mp3");
+        MP = new musicPlayer("Interstellar.mp3");
         MP.run();
     }
 
@@ -213,14 +214,18 @@ public class SolarScene3DController implements Initializable {
         } else if(ke.getCode().equals(KeyCode.PERIOD)){
             if(eulerLoops == 5000){
                 eulerLoops = 10000;
+                MP.speedUp();
             } else if(eulerLoops == 10000){
                 eulerLoops = 20000;
+                MP.speedUp();
             } else {}
         } else if(ke.getCode().equals(KeyCode.COMMA)){
             if(eulerLoops == 20000){
                 eulerLoops = 10000;
+                MP.speedDown();
             } else if(eulerLoops == 10000){
                 eulerLoops = 5000;
+                MP.speedDown();
             } else {}
         }
     }
@@ -290,6 +295,7 @@ public class SolarScene3DController implements Initializable {
      */
     @FXML
     public void onReturnButton() throws IOException{
+        MP.fadeOut();
         App.setRoot("fxml/StartScene");
     }
     
