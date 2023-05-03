@@ -39,6 +39,7 @@ import twentyone.Classes.AdamsBashforth;
 import twentyone.Classes.CelestialBody;
 import twentyone.Classes.Rocket;
 import twentyone.Classes.Vector3d;
+import twentyone.Classes.musicPlayer;
 
 public class SolarScene3DController implements Initializable {
 
@@ -48,14 +49,14 @@ public class SolarScene3DController implements Initializable {
     private Timeline timeline;
     CelestialBody[] bodies = new CelestialBody[12];
     final double stepsize = 10;
-    final int eulerLoops = 7500;
+    int eulerLoops = 5000;
     final Vector3d initialPosProbe = new Vector3d(-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113);
     final Vector3d initialVelProbe = new Vector3d(48, -45, 0);
     Vector3d firstprobepos;
     
     double closestTitan = 10E40;
 
-    int TimeStamp = 27;
+    int TimeStamp = -1;
 
     int r;
     int g;
@@ -191,22 +192,36 @@ public class SolarScene3DController implements Initializable {
         KeyFrame keyFrame = new KeyFrame(Duration.millis(300), movement);
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
+        musicPlayer MP = new musicPlayer("StarWars.mp3");
+        MP.run();
     }
 
     /**
-     * When a key gets pressed, only "w", "a", "s" and "d"
+     * When a key gets pressed, only "w", "a", "s", "d", "." and ","
      * @param ke
      */
     @FXML
     public void keyPress(KeyEvent ke) {
         if(ke.getCode().equals(KeyCode.W)){
             pGroup.setTranslateY(pGroup.getTranslateY() - 100);
-        } else if(ke.getCode() == KeyCode.S){
+        } else if(ke.getCode().equals(KeyCode.S)){
             pGroup.setTranslateY(pGroup.getTranslateY() + 100);
-        } else if(ke.getCode() == KeyCode.A){
+        } else if(ke.getCode().equals(KeyCode.A)){
             pGroup.setTranslateX(pGroup.getTranslateX() - 100);
-        } else if(ke.getCode() == KeyCode.D){
+        } else if(ke.getCode().equals(KeyCode.D)){
             pGroup.setTranslateX(pGroup.getTranslateX() + 100);
+        } else if(ke.getCode().equals(KeyCode.PERIOD)){
+            if(eulerLoops == 5000){
+                eulerLoops = 10000;
+            } else if(eulerLoops == 10000){
+                eulerLoops = 20000;
+            } else {}
+        } else if(ke.getCode().equals(KeyCode.COMMA)){
+            if(eulerLoops == 20000){
+                eulerLoops = 10000;
+            } else if(eulerLoops == 10000){
+                eulerLoops = 5000;
+            } else {}
         }
     }
 
@@ -269,6 +284,10 @@ public class SolarScene3DController implements Initializable {
         bodies[11] = new Rocket(probevel, probepos);
     }
 
+    /**
+     * Returns to the start screen when pressed.
+     * @throws IOException
+     */
     @FXML
     public void onReturnButton() throws IOException{
         App.setRoot("fxml/StartScene");
@@ -450,13 +469,6 @@ public class SolarScene3DController implements Initializable {
             g.setTranslateY(y*0.2);
             g.setTranslateZ(z);
         }
-    }
-
-    public void addMusic() {
-        String path = "src\\main\\resources\\twentyone\\Music\\StarWars.mp3";  
-        Media media = new Media(new File(path).toURI().toString());          
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);  
     }
 
     //Unused method
