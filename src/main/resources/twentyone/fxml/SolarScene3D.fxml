@@ -5,6 +5,9 @@
 <?import javafx.scene.PerspectiveCamera?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Sphere?>
@@ -17,6 +20,28 @@
       <PerspectiveCamera fx:id="pCamera" />
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: BLACK;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
+            <MenuBar style="-fx-background-color: BLACK;">
+               <menus>
+                  <Menu mnemonicParsing="false" text="Exit">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#onExit" text="Exit" />
+                        <MenuItem mnemonicParsing="false" text="Cancel" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Focus">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#sunFocus" text="Sun" />
+                        <MenuItem mnemonicParsing="false" onAction="#mercuryFocus" text="Mercury" />
+                        <MenuItem mnemonicParsing="false" onAction="#venusFocus" text="Venus" />
+                        <MenuItem mnemonicParsing="false" onAction="#earthFocus" text="Earth" />
+                        <MenuItem mnemonicParsing="false" onAction="#marsFocus" text="Mars" />
+                        <MenuItem mnemonicParsing="false" onAction="#jupiterFocus" text="Jupiter" />
+                        <MenuItem mnemonicParsing="false" onAction="#saturnFocus" text="Saturn" />
+                        <MenuItem mnemonicParsing="false" onAction="#probeFocus" text="Probe" />
+                    </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
             <Button mnemonicParsing="false" onAction="#onReturnButton" style="-fx-background-color: BLACK;" text="Return" textFill="WHITE">
                <font>
                   <Font size="18.0" />

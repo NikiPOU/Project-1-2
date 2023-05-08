@@ -26,8 +26,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Circle;
@@ -43,9 +41,6 @@ import twentyone.Classes.musicPlayer;
 
 public class SolarScene3DController implements Initializable {
 
-    private double sunx;
-    private double suny;
-    private double sunz;
     private Timeline timeline;
     CelestialBody[] bodies = new CelestialBody[12];
     final double stepsize = 10;
@@ -53,6 +48,10 @@ public class SolarScene3DController implements Initializable {
     final Vector3d initialPosProbe = new Vector3d(-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113);
     final Vector3d initialVelProbe = new Vector3d(48, -45, 0);
     Vector3d firstprobepos;
+    CelestialBody selectedPlanet;
+    // CelestialBody decoyBody;
+    boolean focused;
+    boolean resetCheck;
     
     double closestTitan = 10E40;
 
@@ -68,18 +67,15 @@ public class SolarScene3DController implements Initializable {
     int months = 0;
     int years = 0;
     int divider = 2100000;
-    double ex;
-    double ey;
-    double ez;
-    double spax;
-    double spay;
-    double spaz;
-    double tx;
-    double ty;
-    double tz;
-    double sx;
-    double sy;
-    double sz;
+    double[] sunPos = new double[3];
+    double[] merPos = new double[3];
+    double[] venPos = new double[3];
+    double[] earPos = new double[3];
+    double[] mooPos = new double[3];
+    double[] marPos = new double[3];
+    double[] jupPos = new double[3];
+    double[] satPos = new double[3];
+    double[] titPos = new double[3];
     ArrayList<Circle> dotList = new ArrayList<>();
     Random rand = new Random();
     int k=0;
@@ -143,18 +139,24 @@ public class SolarScene3DController implements Initializable {
     @FXML
     private Label closestdistanceTitan;
 
+    /**
+     * Starts when the scene is started.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        sunx = (App.width)/2;
-        suny = (App.height)/2;
-        sunz = 0;
-        // sun.setTranslateX(sunx);
-        // sun.setTranslateY(suny);
-        // earth.setTranslateX(sunx-100);
-        // earth.setTranslateY(suny);
-        pGroup.setTranslateX(sunx);
-        pGroup.setTranslateY(suny); 
-        pGroup.setTranslateZ(sunz);
+        sunPos[0] = (App.width)/2;
+        sunPos[1] = (App.height)/2;
+        sunPos[2] = 0;
+        focused = false;
+        resetCheck = false;
+        // decoyBody = new CelestialBody(initialPosProbe, firstprobepos, 0);
+        // sun.setTranslateX(sunPos[0]);
+        // sun.setTranslateY(sunPos[1]);
+        // earth.setTranslateX(sunPos[0]-100);
+        // earth.setTranslateY(sunPos[1]);
+        pGroup.setTranslateX(sunPos[0]);
+        pGroup.setTranslateY(sunPos[1]); 
+        pGroup.setTranslateZ(sunPos[2]);
         // pGroup.setRotationAxis(new Point3D(10, 0, 0));
         // pGroup.setRotate(45);
         launchCoords.sceneProperty().addListener((Observable, oldScene, newScene) -> {
@@ -166,11 +168,16 @@ public class SolarScene3DController implements Initializable {
                 pCamera.setFarClip(6000);
                 pCamera.setNearClip(0.01);
                 pCamera.setTranslateZ(-400);
-                pCamera.setTranslateX(sunx);
-                pCamera.setTranslateY(suny);
+                pCamera.setTranslateX(sunPos[0]);
+                pCamera.setTranslateY(sunPos[1]);
                 // pGroup.getChildren().add(pCamera);
                 Stage stage = (Stage) launchCoords.getScene().getWindow();
                 stage.addEventHandler(ScrollEvent.SCROLL, event -> {
+                    if(!selectedPlanet.equals(bodies[0])){
+                        resetCheck = true;
+                        focused = false;
+                        selectedPlanet = bodies[0];
+                    }
                     double delta = event.getDeltaY();
                     pGroup.setTranslateZ(pGroup.getTranslateZ() + delta);
                 });
@@ -190,6 +197,7 @@ public class SolarScene3DController implements Initializable {
         timeline.setAutoReverse(false);
         EventHandler<ActionEvent> movement = new Movement();
         initiateCB();
+        selectedPlanet = bodies[0];
         KeyFrame keyFrame = new KeyFrame(Duration.millis(300), movement);
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
@@ -197,12 +205,52 @@ public class SolarScene3DController implements Initializable {
         MP.run();
     }
 
+    public void setCameraPos(double x, double y, double z){
+        pGroup.setTranslateX(x);
+        pGroup.setTranslateY(y);
+        pGroup.setTranslateZ(z);
+        System.out.println(pGroup.getTranslateX() + " " + pGroup.getTranslateY() + " " + pGroup.getTranslateZ());
+    }
+
+    public void focusCamera(CelestialBody planet){
+        if(planet.equals(bodies[0])){
+            focused = false;
+            setCameraPos(sunPos[0], sunPos[1], sunPos[2]);
+        } else if(planet.equals(bodies[1])){
+            focused = true;
+            setCameraPos(sunPos[0] - mercury.getTranslateX(), sunPos[1] - mercury.getTranslateY(), -200);
+        } else if(planet.equals(bodies[2])){
+            focused = true;
+            setCameraPos(sunPos[0] - venus.getTranslateX(), sunPos[1] - venus.getTranslateY(), -200);
+        } else if(planet.equals(bodies[3])){
+            focused = true;
+            setCameraPos(sunPos[0] - earth.getTranslateX(), sunPos[1] - earth.getTranslateY(), -200);
+        } else if(planet.equals(bodies[5])){
+            focused = true;
+            setCameraPos(sunPos[0] - mars.getTranslateX(), sunPos[1] - mars.getTranslateY(), -200);
+        } else if(planet.equals(bodies[6])){
+            focused = true;
+            setCameraPos(sunPos[0] - jupiter.getTranslateX(), sunPos[1] - jupiter.getTranslateY(), -200);
+        } else if(planet.equals(bodies[7])){
+            focused = true;
+            setCameraPos(sunPos[0] - saturn.getTranslateX(), sunPos[1] - saturn.getTranslateY(), -200);
+        } else if(planet.equals(bodies[11])){
+            focused = true;
+            
+        } else {setCameraPos(sunPos[0], sunPos[1], sunPos[2]);}
+    }
+
     /**
-     * When a key gets pressed, only "w", "a", "s", "d", "." and ","
+     * When a key gets pressed, only "w", "a", "s", "d", "r", "." and ","
      * @param ke
      */
     @FXML
     public void keyPress(KeyEvent ke) {
+        if(focused){
+            focused = false;
+            resetCheck = true;
+            selectedPlanet = bodies[0];
+        }
         if(ke.getCode().equals(KeyCode.W)){
             pGroup.setTranslateY(pGroup.getTranslateY() - 100);
         } else if(ke.getCode().equals(KeyCode.S)){
@@ -211,6 +259,10 @@ public class SolarScene3DController implements Initializable {
             pGroup.setTranslateX(pGroup.getTranslateX() - 100);
         } else if(ke.getCode().equals(KeyCode.D)){
             pGroup.setTranslateX(pGroup.getTranslateX() + 100);
+        } else if(ke.getCode().equals(KeyCode.R)){
+            pGroup.setTranslateX(sunPos[0]);
+            pGroup.setTranslateY(sunPos[1]); 
+            pGroup.setTranslateZ(sunPos[2]);
         } else if(ke.getCode().equals(KeyCode.PERIOD)){
             if(eulerLoops == 5000){
                 eulerLoops = 10000;
@@ -347,56 +399,64 @@ public class SolarScene3DController implements Initializable {
                     }
                 }
             }
-            TimeElapsed.setText("Time Elapsed: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");  
+            TimeElapsed.setText("Time Elapsed: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");
+            if(!selectedPlanet.equals(bodies[0])){
+                focusCamera(selectedPlanet);
+            } else if(resetCheck){
+                pGroup.setTranslateX(sunPos[0]);
+                pGroup.setTranslateY(sunPos[1]); 
+                pGroup.setTranslateZ(sunPos[2]);
+                resetCheck = false;
+            } 
 
             //Get and set the GUI coords and paths of the celestial bodies
-            ex = bodies[3].getPosition().getX()/divider;
-            ey = bodies[3].getPosition().getY()/divider;
-            ez = bodies[3].getPosition().getZ()/divider;
+            earPos[0] = bodies[3].getPosition().getX()/divider;
+            earPos[1] = bodies[3].getPosition().getY()/divider;
+            earPos[2] = bodies[3].getPosition().getZ()/divider;
             // circlemaker(3, ex, ey, ez);
-            setGUIcoords(earth, ex, ey, ez);
-            double mx = bodies[4].getPosition().getX()/divider;
-            double my = bodies[4].getPosition().getY()/divider;
-            double mz = bodies[4].getPosition().getZ()/divider;
-            // circlemaker(4, mx, my);
-            setGUIcoords(moon, mx, my, mz);
-            double mex = bodies[1].getPosition().getX()/divider;
-            double mey = bodies[1].getPosition().getY()/divider;
-            double mez = bodies[1].getPosition().getZ()/divider;
+            setGUIcoords(earth, earPos[0], earPos[1], earPos[2]);
+            mooPos[0] = bodies[4].getPosition().getX()/divider;
+            mooPos[1] = bodies[4].getPosition().getY()/divider;
+            mooPos[2] = bodies[4].getPosition().getZ()/divider;
+            // circlemaker(4, merPos[0], merPos[1]);
+            setGUIcoords(moon, mooPos[0], mooPos[1], mooPos[2]);
+            merPos[0] = bodies[1].getPosition().getX()/divider;
+            merPos[1] = bodies[1].getPosition().getY()/divider;
+            merPos[2] = bodies[1].getPosition().getZ()/divider;
             // circlemaker(1, mex, mey);
-            setGUIcoords(mercury, mex, mey, mez);
-            double vx = bodies[2].getPosition().getX()/divider;
-            double vy = bodies[2].getPosition().getY()/divider;
-            double vz = bodies[2].getPosition().getZ()/divider;
-            // circlemaker(2, vx, vy);
-            setGUIcoords(venus, vx, vy, vz);
-            double max = bodies[5].getPosition().getX()/divider;
-            double may = bodies[5].getPosition().getY()/divider;
-            double maz = bodies[5].getPosition().getZ()/divider;
-            // circlemaker(5, max, may);
-            setGUIcoords(mars, max, may, maz);
-            double jx = bodies[6].getPosition().getX()/divider;
-            double jy = bodies[6].getPosition().getY()/divider;
-            double jz = bodies[6].getPosition().getZ()/divider;
-            // circlemaker(6, jx, jy);
-            setGUIcoords(jupiter, jx, jy, jz);
-            sx = bodies[7].getPosition().getX()/divider;
-            sy = bodies[7].getPosition().getY()/divider;
-            sz = bodies[7].getPosition().getZ()/divider;
-            // circlemaker(7, sx, sy);
-            setGUIcoords(saturn, sx, sy, sz);
-            tx = bodies[8].getPosition().getX()/divider;
-            ty = bodies[8].getPosition().getY()/divider;
-            tz = bodies[8].getPosition().getZ()/divider;
+            setGUIcoords(mercury, merPos[0], merPos[1], merPos[2]);
+            venPos[0] = bodies[2].getPosition().getX()/divider;
+            venPos[1] = bodies[2].getPosition().getY()/divider;
+            venPos[2] = bodies[2].getPosition().getZ()/divider;
+            // circlemaker(2, venPos[0], venPos[1]);
+            setGUIcoords(venus, venPos[0], venPos[1], venPos[2]);
+            marPos[0] = bodies[5].getPosition().getX()/divider;
+            marPos[1] = bodies[5].getPosition().getY()/divider;
+            marPos[2] = bodies[5].getPosition().getZ()/divider;
+            // circlemaker(5, marPos[0], marPos[1]);
+            setGUIcoords(mars, marPos[0], marPos[1], marPos[2]);
+            jupPos[0] = bodies[6].getPosition().getX()/divider;
+            jupPos[1] = bodies[6].getPosition().getY()/divider;
+            jupPos[2] = bodies[6].getPosition().getZ()/divider;
+            // circlemaker(6, jupPos[0], jupPos[1]);
+            setGUIcoords(jupiter, jupPos[0], jupPos[1], jupPos[2]);
+            satPos[0] = bodies[7].getPosition().getX()/divider;
+            satPos[1] = bodies[7].getPosition().getY()/divider;
+            satPos[2] = bodies[7].getPosition().getZ()/divider;
+            // circlemaker(7, satPos[0], satPos[1]);
+            setGUIcoords(saturn, satPos[0], satPos[1], satPos[2]);
+            titPos[0] = bodies[8].getPosition().getX()/divider;
+            titPos[1] = bodies[8].getPosition().getY()/divider;
+            titPos[2] = bodies[8].getPosition().getZ()/divider;
             // circlemaker(8, tx, ty);
-            setGUIcoords(titan, tx, ty, tz);
+            setGUIcoords(titan, titPos[0], titPos[1], titPos[2]);
 
             //Get and set the probes GUI coords and adapt the texts based on it and its distance to Titan
             Vector3d spaps = bodies[11].getPosition();
             probeCoords.setText("Currect probe coords: [x " + spaps.getX() + ",y " + spaps.getY() + ",z " + spaps.getZ() + "]");
-            double spax = sunx + spaps.getX()/divider;
-            double spay = suny + spaps.getY()/divider;
-            double titandis = Math.sqrt(((tx-spax)*(tx-spax))+((ty-spay)*(ty-spay)));
+            double spax = sunPos[0] + spaps.getX()/divider;
+            double spay = sunPos[1] + spaps.getY()/divider;
+            double titandis = Math.sqrt(((titPos[0]-spax)*(titPos[0]-spax))+((titPos[1]-spay)*(titPos[1]-spay)));
             distanceTitan.setText("Distance to Titan: " + titandis*divider + " km");
             // spaceprobe.setLayoutX(spax);
             // spaceprobe.setLayoutY(spay-20);
@@ -511,6 +571,67 @@ public class SolarScene3DController implements Initializable {
           }
           return coords;
     }
+
+    /**
+     * Focusses on the sun in the GUI.
+     */
+    @FXML
+    public void sunFocus(){
+        selectedPlanet = bodies[0];
+        resetCheck = true;
+    }
+    /**
+     * Focusses on mercury in the GUI.
+     */
+    @FXML
+    public void mercuryFocus(){
+        selectedPlanet = bodies[1];
+    }
+    /**
+     * Focusses on venus in the GUI.
+     */
+    @FXML
+    public void venusFocus(){
+        selectedPlanet = bodies[2];
+    }
+    /**
+     * Focusses on earth in the GUI.
+     */
+    @FXML
+    public void earthFocus(){
+        selectedPlanet = bodies[3];
+    }
+    /**
+     * Focusses on mars in the GUI.
+     */
+    @FXML
+    public void marsFocus(){
+        selectedPlanet = bodies[5];
+    }
+    /**
+     * Focusses on jupiter in the GUI.
+     */
+    @FXML
+    public void jupiterFocus(){
+        selectedPlanet = bodies[6];
+    }
+    /**
+     * Focusses on saturn in the GUI.
+     */
+    @FXML
+    public void saturnFocus(){
+        selectedPlanet = bodies[7];
+    }
+    /**
+     * Focusses on the probe in the GUI.
+     */
+    @FXML
+    public void probeFocus(){
+        selectedPlanet = bodies[11];
+    }
+
+    @FXML
+    public void onExit(){System.exit(0);}
 
 
 }
