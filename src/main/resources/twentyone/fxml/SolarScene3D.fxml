@@ -10,10 +10,11 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Box?>
+<?import javafx.scene.shape.Cylinder?>
 <?import javafx.scene.shape.Sphere?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#keyPress" prefHeight="400.0" prefWidth="640.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.Controllers.SolarScene3DController">
    <children>
@@ -93,6 +94,42 @@
       </VBox>
       <AnchorPane fx:id="pGroup" prefHeight="200.0" prefWidth="200.0">
          <children>
+            <AnchorPane fx:id="probe" layoutX="-100.0" layoutY="-100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" scaleX="0.05" scaleY="0.05" scaleZ="0.05">
+               <children>
+                  <Group fx:id="fire" layoutX="1.0" layoutY="59.0" scaleX="0.95">
+                     <children>
+                        <Box fx:id="fire8" depth="15.0" height="50.0" layoutY="40.0" rotate="9.0" width="40.0" />
+                        <Box fx:id="fire7" depth="15.0" height="40.0" layoutX="20.0" layoutY="28.0" rotate="-37.0" width="30.0" />
+                        <Box fx:id="fire6" depth="15.0" height="40.0" layoutY="30.0" width="20.0" />
+                        <Box fx:id="fire5" depth="15.0" height="50.0" layoutX="-22.0" layoutY="23.0" rotate="-9.0" width="30.0" />
+                        <Box fx:id="fire1" depth="29.0" height="48.0" rotate="45.0" width="72.0" />
+                        <Box fx:id="fire2" depth="26.0" height="88.0" rotate="66.0" width="38.0" />
+                        <Box fx:id="fire3" depth="13.0" height="29.0" layoutY="-19.0" rotate="-11.0" width="78.0" />
+                        <Box fx:id="fire4" depth="15.0" height="40.0" layoutX="29.0" layoutY="15.0" rotate="-23.0" width="20.0" />
+                     </children>
+                  </Group>
+                  <Group>
+                     <children>
+                        <Sphere layoutY="-75.0" radius="20.0" />
+                        <Cylinder height="150.0" radius="20" />
+                     </children>
+                  </Group>
+                  <Group layoutX="-33.0" layoutY="40.0">
+                     <children>
+                        <Sphere layoutY="-35.0" radius="13.0" />
+                        <Cylinder height="70.0" radius="13.0" />
+                        <Box depth="3.0" height="70.0" layoutX="14.0" width="3.0" />
+                     </children>
+                  </Group>
+                  <Group layoutX="33.0" layoutY="40.0">
+                     <children>
+                        <Sphere layoutX="1.0" layoutY="-35.0" radius="13.0" />
+                        <Cylinder height="70.0" radius="14.0" />
+                        <Box depth="3.0" height="70.0" layoutX="-12.0" width="3.0" />
+                     </children>
+                  </Group>
+               </children>
+            </AnchorPane>
             <Group fx:id="sun">
                <children>
                   <Text fill="#ffc800" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Sun" translateX="7.0">

@@ -28,8 +28,10 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Box;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Sphere;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import twentyone.App;
@@ -138,6 +140,27 @@ public class SolarScene3DController implements Initializable {
     private Label titanMoment;
     @FXML
     private Label closestdistanceTitan;
+    @FXML
+    private AnchorPane probe;
+    @FXML
+    private Box fire1;
+    @FXML
+    private Box fire2;
+    @FXML
+    private Box fire3;
+    @FXML
+    private Box fire4;
+    @FXML
+    private Box fire5;
+    @FXML
+    private Box fire6;
+    @FXML
+    private Box fire7;
+    @FXML
+    private Box fire8;
+    @FXML
+    private Group fire;
+    
 
     /**
      * Starts when the scene is started.
@@ -190,6 +213,14 @@ public class SolarScene3DController implements Initializable {
                 jupiterSphere.setMaterial(new PhongMaterial(Color.BURLYWOOD));
                 saturnSphere.setMaterial(new PhongMaterial(Color.DARKGOLDENROD));
                 titanSphere.setMaterial(new PhongMaterial(Color.DARKCYAN));
+                fire1.setMaterial(new PhongMaterial(Color.RED));
+                fire2.setMaterial(new PhongMaterial(Color.RED));
+                fire3.setMaterial(new PhongMaterial(Color.RED));
+                fire4.setMaterial(new PhongMaterial(Color.RED));
+                fire5.setMaterial(new PhongMaterial(Color.ORANGE));
+                fire6.setMaterial(new PhongMaterial(Color.ORANGE));
+                fire7.setMaterial(new PhongMaterial(Color.ORANGE));
+                fire8.setMaterial(new PhongMaterial(Color.YELLOW));
             }
         });
         timeline = new Timeline();
@@ -209,7 +240,7 @@ public class SolarScene3DController implements Initializable {
         pGroup.setTranslateX(x);
         pGroup.setTranslateY(y);
         pGroup.setTranslateZ(z);
-        System.out.println(pGroup.getTranslateX() + " " + pGroup.getTranslateY() + " " + pGroup.getTranslateZ());
+        // System.out.println(pGroup.getTranslateX() + " " + pGroup.getTranslateY() + " " + pGroup.getTranslateZ());
     }
 
     public void focusCamera(CelestialBody planet){
@@ -236,6 +267,7 @@ public class SolarScene3DController implements Initializable {
             setCameraPos(sunPos[0] - saturn.getTranslateX(), sunPos[1] - saturn.getTranslateY(), -200);
         } else if(planet.equals(bodies[11])){
             focused = true;
+            setCameraPos(sunPos[0] - probe.getTranslateX(), sunPos[1] - probe.getTranslateY(), -300);
             
         } else {setCameraPos(sunPos[0], sunPos[1], sunPos[2]);}
     }
@@ -246,40 +278,51 @@ public class SolarScene3DController implements Initializable {
      */
     @FXML
     public void keyPress(KeyEvent ke) {
-        if(focused){
-            focused = false;
-            resetCheck = true;
-            selectedPlanet = bodies[0];
+        if(ke.getCode().equals(KeyCode.PERIOD) || ke.getCode().equals(KeyCode.COMMA) || ke.getCode().equals(KeyCode.F)){
+            if(ke.getCode().equals(KeyCode.PERIOD)){
+                if(eulerLoops == 5000){
+                    eulerLoops = 10000;
+                    MP.speedUp();
+                } else if(eulerLoops == 10000){
+                    eulerLoops = 20000;
+                    MP.speedUp();
+                } else {}
+            } else if(ke.getCode().equals(KeyCode.COMMA)){
+                if(eulerLoops == 20000){
+                    eulerLoops = 10000;
+                    MP.speedDown();
+                } else if(eulerLoops == 10000){
+                    eulerLoops = 5000;
+                    MP.speedDown();
+                } else {}
+            } else if(ke.getCode().equals(KeyCode.F)){
+                if(fire.isVisible()){
+                    fire.setVisible(false); 
+                } else {
+                    fire.setVisible(true);
+                }
+            }
+        } else {
+            if(focused){
+                focused = false;
+                resetCheck = true;
+                selectedPlanet = bodies[0];
+            }
+            if(ke.getCode().equals(KeyCode.W)){
+                pGroup.setTranslateY(pGroup.getTranslateY() - 100);
+            } else if(ke.getCode().equals(KeyCode.S)){
+                pGroup.setTranslateY(pGroup.getTranslateY() + 100);
+            } else if(ke.getCode().equals(KeyCode.A)){
+                pGroup.setTranslateX(pGroup.getTranslateX() - 100);
+            } else if(ke.getCode().equals(KeyCode.D)){
+                pGroup.setTranslateX(pGroup.getTranslateX() + 100);
+            } else if(ke.getCode().equals(KeyCode.R)){
+                pGroup.setTranslateX(sunPos[0]);
+                pGroup.setTranslateY(sunPos[1]); 
+                pGroup.setTranslateZ(sunPos[2]);
+            }
         }
-        if(ke.getCode().equals(KeyCode.W)){
-            pGroup.setTranslateY(pGroup.getTranslateY() - 100);
-        } else if(ke.getCode().equals(KeyCode.S)){
-            pGroup.setTranslateY(pGroup.getTranslateY() + 100);
-        } else if(ke.getCode().equals(KeyCode.A)){
-            pGroup.setTranslateX(pGroup.getTranslateX() - 100);
-        } else if(ke.getCode().equals(KeyCode.D)){
-            pGroup.setTranslateX(pGroup.getTranslateX() + 100);
-        } else if(ke.getCode().equals(KeyCode.R)){
-            pGroup.setTranslateX(sunPos[0]);
-            pGroup.setTranslateY(sunPos[1]); 
-            pGroup.setTranslateZ(sunPos[2]);
-        } else if(ke.getCode().equals(KeyCode.PERIOD)){
-            if(eulerLoops == 5000){
-                eulerLoops = 10000;
-                MP.speedUp();
-            } else if(eulerLoops == 10000){
-                eulerLoops = 20000;
-                MP.speedUp();
-            } else {}
-        } else if(ke.getCode().equals(KeyCode.COMMA)){
-            if(eulerLoops == 20000){
-                eulerLoops = 10000;
-                MP.speedDown();
-            } else if(eulerLoops == 10000){
-                eulerLoops = 5000;
-                MP.speedDown();
-            } else {}
-        }
+    
     }
 
 
@@ -453,20 +496,31 @@ public class SolarScene3DController implements Initializable {
 
             //Get and set the probes GUI coords and adapt the texts based on it and its distance to Titan
             Vector3d spaps = bodies[11].getPosition();
-            probeCoords.setText("Currect probe coords: [x " + spaps.getX() + ",y " + spaps.getY() + ",z " + spaps.getZ() + "]");
-            double spax = sunPos[0] + spaps.getX()/divider;
-            double spay = sunPos[1] + spaps.getY()/divider;
-            double titandis = Math.sqrt(((titPos[0]-spax)*(titPos[0]-spax))+((titPos[1]-spay)*(titPos[1]-spay)));
-            distanceTitan.setText("Distance to Titan: " + titandis*divider + " km");
-            // spaceprobe.setLayoutX(spax);
-            // spaceprobe.setLayoutY(spay-20);
+            double spax = spaps.getX();
+            double spay = spaps.getY();
+            double spaz = spaps.getZ();
+            probeCoords.setText("Currect probe coords: [x " + spax + ",y " + spay + ",z " + spaz + "]");
+            double titandis = spaps.dist(bodies[8].getPosition());
+            distanceTitan.setText("Distance to Titan: " + titandis + " km");
             if (closestTitan > titandis) {
-                closestdistanceTitan.setText("Closest distance to Titan: " + titandis*divider + " km");
+                closestdistanceTitan.setText("Closest distance to Titan: " + closestTitan + " km");
                 titanMoment.setText("Moment closest distance to Titan: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");
                 closestTitan = titandis;
             }
+            setGUIcoords(probe, spax/divider, spay/divider, spaz/divider);
+            //double probeangle = Math.acos(((spax*titPos[0]) + (spay*titPos[1]) + (spaz*titPos[2]))/(Math.sqrt((Math.pow(spax, 2) + Math.pow(spay, 2) + Math.pow(spaz, 2)) * (Math.pow(titPos[0], 2) + Math.pow(titPos[1], 2) + Math.pow(titPos[2], 2)))));
+            double probeAngleX = Math.atan2(titan.getTranslateY() - probe.getTranslateY(), titan.getTranslateX() - probe.getTranslateX());
+            // System.out.println(probeAngleX);
+            probe.setRotate(90 + probeAngleX*90);
+            // Rotate rotate = new Rotate();
+            // rotate.setPivotX(spax);
+            // rotate.setPivotY(spay);
+            // probe.getTransforms().addAll(rotate);
+            // rotate.setAngle(probeAngleX);
+            // probe.getTransforms().add(rotate);
 
             //Draw the path of the probe
+
             // Circle circle = new Circle();
             // circle.setCenterX(spax);
             // circle.setCenterY(spay);
@@ -534,6 +588,19 @@ public class SolarScene3DController implements Initializable {
             g.setTranslateX(x);
             g.setTranslateY(y*0.2);
             g.setTranslateZ(z);
+        }
+
+        /**
+         * Get the x and y GUI coords of a celestial body
+         * @param g the image of the celestial body
+         * @param x the GUI x coord
+         * @param y the GUI y coord
+         * @param z the GUI z coord
+         */
+        private void setGUIcoords(AnchorPane a, double x, double y, double z){
+            a.setTranslateX(x);
+            a.setTranslateY(y*0.2);
+            a.setTranslateZ(z);
         }
     }
 
@@ -630,6 +697,9 @@ public class SolarScene3DController implements Initializable {
         selectedPlanet = bodies[11];
     }
 
+    /**
+     * Exits the program.
+     */
     @FXML
     public void onExit(){System.exit(0);}
 

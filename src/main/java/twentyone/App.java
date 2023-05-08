@@ -28,7 +28,7 @@ public class App extends Application {
         Rectangle2D bounds = Screen.getPrimary().getBounds();
         width = bounds.getWidth();
         height = bounds.getHeight();
-        System.out.println("width: " + width + " height: " + height);
+        // System.out.println("width: " + width + " height: " + height);
         stage.setScene(scene);
         stage.setTitle("Titanic Space Odyssey"); 
         stage.show();
