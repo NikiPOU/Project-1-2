@@ -41,6 +41,14 @@
                         <MenuItem mnemonicParsing="false" onAction="#probeFocus" text="Probe" />
                     </items>
                   </Menu>
+                  <Menu mnemonicParsing="false" text="Solver Selector">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#onAdamsButton" text="Adams Bashfort" />
+                        <MenuItem mnemonicParsing="false" onAction="#onEulerButton" text="Euler" />
+                        <MenuItem mnemonicParsing="false" onAction="#onVerletButton" text="Verlet" />
+                        <MenuItem mnemonicParsing="false" onAction="#onRungeButton" text="Runge Kutta" />
+                    </items>
+                  </Menu>
                </menus>
             </MenuBar>
             <Button mnemonicParsing="false" onAction="#onReturnButton" style="-fx-background-color: BLACK;" text="Return" textFill="WHITE">

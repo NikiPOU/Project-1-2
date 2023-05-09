@@ -33,7 +33,6 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Sphere;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -52,17 +51,23 @@ public class SolarScene3DController implements Initializable {
     private Euler unreal = new Euler();
     private VerletSolver verlet = new VerletSolver();
 
+    private musicPlayer MP;
+    private int chosenSolver = App.chosenSolver;
+    final Vector3d initialPosProbe = App.initialPosProbe;
+    final Vector3d initialVelProbe = App.initialVelProbe;
+    
+    Vector3d firstprobepos;
+    CelestialBody selectedPlanet;
+
     private Timeline timeline;
     CelestialBody[] bodies = new CelestialBody[12];
     final double stepsize = 10;
     int eulerLoops = 5000;
+
     // final Vector3d initialPosProbe = new Vector3d(-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113);
     // final Vector3d initialVelProbe = new Vector3d(48, -45, 0);
-    final Vector3d initialPosProbe = App.initialPosProbe;
-    final Vector3d initialVelProbe = App.initialVelProbe;
-    Vector3d firstprobepos;
-    CelestialBody selectedPlanet;
     // CelestialBody decoyBody;
+
     boolean focused;
     boolean resetCheck;
     
@@ -80,6 +85,7 @@ public class SolarScene3DController implements Initializable {
     int months = 0;
     int years = 0;
     int divider = 2100000;
+
     double[] sunPos = new double[3];
     double[] merPos = new double[3];
     double[] venPos = new double[3];
@@ -89,11 +95,11 @@ public class SolarScene3DController implements Initializable {
     double[] jupPos = new double[3];
     double[] satPos = new double[3];
     double[] titPos = new double[3];
+
     ArrayList<Circle> dotList = new ArrayList<>();
     Random rand = new Random();
     int k=0;
-    private musicPlayer MP;
-    private int chosenSolver = App.chosenSolver;
+    
 
     @FXML
     private Scene scene;
@@ -138,6 +144,7 @@ public class SolarScene3DController implements Initializable {
     private Group titan;
     @FXML
     private Sphere titanSphere;
+
     @FXML
     private Label launchCoords;
     @FXML
@@ -152,6 +159,7 @@ public class SolarScene3DController implements Initializable {
     private Label titanMoment;
     @FXML
     private Label closestdistanceTitan;
+    
     @FXML
     private AnchorPane probe;
     @FXML
@@ -736,6 +744,26 @@ public class SolarScene3DController implements Initializable {
      */
     @FXML
     public void onExit(){System.exit(0);}
+
+    @FXML
+    public void onAdamsButton(){
+        chosenSolver = 0;
+    }
+
+    @FXML
+    public void onEulerButton(){
+        chosenSolver = 1;
+    }
+
+    @FXML
+    public void onVerletButton(){
+        chosenSolver = 2;
+    }
+
+    @FXML
+    public void onRungeButton(){
+        chosenSolver = 0;
+    }
 
 
 }
