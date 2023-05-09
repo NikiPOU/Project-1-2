@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -34,21 +36,30 @@ import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 import twentyone.App;
 import twentyone.Classes.AdamsBashforth;
 import twentyone.Classes.CelestialBody;
+import twentyone.Classes.Euler;
 import twentyone.Classes.Rocket;
 import twentyone.Classes.Vector3d;
+import twentyone.Classes.VerletSolver;
 import twentyone.Classes.musicPlayer;
 
 public class SolarScene3DController implements Initializable {
+
+    private AdamsBashforth a = new AdamsBashforth();
+    private Euler unreal = new Euler();
+    private VerletSolver verlet = new VerletSolver();
 
     private Timeline timeline;
     CelestialBody[] bodies = new CelestialBody[12];
     final double stepsize = 10;
     int eulerLoops = 5000;
-    final Vector3d initialPosProbe = new Vector3d(-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113);
-    final Vector3d initialVelProbe = new Vector3d(48, -45, 0);
+    // final Vector3d initialPosProbe = new Vector3d(-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113);
+    // final Vector3d initialVelProbe = new Vector3d(48, -45, 0);
+    final Vector3d initialPosProbe = App.initialPosProbe;
+    final Vector3d initialVelProbe = App.initialVelProbe;
     Vector3d firstprobepos;
     CelestialBody selectedPlanet;
     // CelestialBody decoyBody;
@@ -82,6 +93,7 @@ public class SolarScene3DController implements Initializable {
     Random rand = new Random();
     int k=0;
     private musicPlayer MP;
+    private int chosenSolver = App.chosenSolver;
 
     @FXML
     private Scene scene;
@@ -393,6 +405,28 @@ public class SolarScene3DController implements Initializable {
         MP.fadeOut();
         App.setRoot("fxml/StartScene");
     }
+
+    /**
+     * This method checks which Solver method is chosen. It then calculates the next position using that chosen Solver method.
+     * @param celestialBodies
+     * @param chosenBody
+     * @param chosenStepsize
+     * @return the next position.
+     */
+    public CelestialBody[] solvers(CelestialBody[] celestialBodies, int chosenBody, double chosenStepsize){
+        if(chosenSolver == 0){
+            return a.adams(celestialBodies, chosenBody, chosenStepsize);
+        } else if(chosenSolver == 1){
+            return unreal.Eulers(celestialBodies, chosenBody, chosenStepsize);
+        } else if(chosenSolver == 2){
+            return verlet.verlet(celestialBodies, chosenBody, chosenStepsize);
+        } else if(chosenSolver == 3){
+            //Runge kutta
+            return celestialBodies;
+        } else {
+            return celestialBodies;
+        }
+    }
     
     public class Movement implements EventHandler<ActionEvent>{
 
@@ -403,13 +437,13 @@ public class SolarScene3DController implements Initializable {
         public void handle(ActionEvent event) {
             
             // Unreal_Engine unreal = new Unreal_Engine();
-            AdamsBashforth a = new AdamsBashforth();
+            // AdamsBashforth a = new AdamsBashforth();
 
             //Run the Euler's method to get the next position and velocity of all celestial bodies + probe
             for (int i = 0; i < eulerLoops; i++) {
                 for (int j = 0; j < bodies.length; j++) {
                     // bodies = unreal.Eulers(bodies, j, stepsize);
-                    bodies = a.adams(bodies, j, stepsize);
+                    bodies = solvers(bodies, j, stepsize);
                 }
 
                 //Keep track of the time

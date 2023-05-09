@@ -11,17 +11,15 @@ import twentyone.Classes.musicPlayer;
 
 public class StartSceneController implements Initializable{
 
-    musicPlayer MP;
 
     @FXML
     private void switchToSolar() throws IOException {
-        MP.fadeOut();
-        App.setRoot("fxml/SolarScene3D");
+        // App.setRoot("fxml/SolarScene3D");
+        App.setRoot("fxml/solverChooserScreen");
     }
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        MP = new musicPlayer("StarWars.mp3");
-        MP.run();
+        App.MP.run();
     }
 }
