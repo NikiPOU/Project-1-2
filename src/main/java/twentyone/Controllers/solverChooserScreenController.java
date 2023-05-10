@@ -11,7 +11,8 @@ public class solverChooserScreenController {
     public void onAdamsButton() throws IOException{
         App.chosenSolver = 0;
         App.MP.fadeOut();
-        App.setRoot("fxml/SolarScene3D");
+        // App.setRoot("fxml/SolarScene3D");
+        App.setRoot("fxml/numberChooserScreen");
     }
 
     @FXML

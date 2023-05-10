@@ -25,6 +25,11 @@ public class App extends Application {
     public static Vector3d initialPosProbe;
     public static Vector3d initialVelProbe;
 
+    public static int stepSize;
+    public static int chosenStepsize;
+    
+    public static int timeStamp;
+
     public static int chosenSolver;
     public static musicPlayer MP = new musicPlayer("StarWars.mp3");
 
@@ -35,8 +40,10 @@ public class App extends Application {
         stage.setFullScreen(true);
         stage.setFullScreenExitHint("");
 
-        initialPosProbe = new Vector3d(-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113);
-        initialVelProbe = new Vector3d(48, -45, 0);
+        // initialPosProbe = new Vector3d(-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113);
+        // initialVelProbe = new Vector3d(48, -45, 0);
+
+        // stepSize = 10;
 
 
         Rectangle2D bounds = Screen.getPrimary().getBounds();
@@ -48,15 +55,29 @@ public class App extends Application {
         stage.show();
     }
 
+    /**
+     * Set a new scene.
+     * @param fxml (the file name)
+     * @throws IOException
+     */
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 
+    /**
+     * Loads the fxml file.
+     * @param fxml (the file name)
+     * @return Parent
+     * @throws IOException
+     */
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
+    /**
+     * Launches the app.
+     */
     public static void launcher() {
         launch();
     }

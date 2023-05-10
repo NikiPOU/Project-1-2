@@ -25,6 +25,7 @@ import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
@@ -61,7 +62,7 @@ public class SolarScene3DController implements Initializable {
 
     private Timeline timeline;
     CelestialBody[] bodies = new CelestialBody[12];
-    final double stepsize = 10;
+    private double stepsize = App.stepSize;
     int eulerLoops = 5000;
 
     // final Vector3d initialPosProbe = new Vector3d(-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113);
@@ -73,7 +74,8 @@ public class SolarScene3DController implements Initializable {
     
     double closestTitan = 10E40;
 
-    int TimeStamp = -1;
+    int TimeStamp = App.timeStamp;
+    boolean timestampCheck = true;
 
     int r;
     int g;
@@ -159,7 +161,17 @@ public class SolarScene3DController implements Initializable {
     private Label titanMoment;
     @FXML
     private Label closestdistanceTitan;
-    
+    @FXML
+    private Group timestampGroup;
+    @FXML
+    private Label timestampLabel;
+    @FXML
+    private Label positionLabel;
+    @FXML
+    private Label distanceLabel;
+    @FXML
+    private Label totalDistanceLabel;
+
     @FXML
     private AnchorPane probe;
     @FXML
@@ -180,6 +192,9 @@ public class SolarScene3DController implements Initializable {
     private Box fire8;
     @FXML
     private Group fire;
+
+    @FXML
+    private MenuItem stepsizeButton;
     
 
     /**
@@ -187,6 +202,9 @@ public class SolarScene3DController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        stepsizeButton.setText(stepsizeButton.getText() + App.chosenStepsize);
+
         sunPos[0] = (App.width)/2;
         sunPos[1] = (App.height)/2;
         sunPos[2] = 0;
@@ -456,19 +474,21 @@ public class SolarScene3DController implements Initializable {
 
                 //Keep track of the time
                 seconds += stepsize;
+                k += stepsize;
+                if(k >= TimeStamp && timestampCheck){
+                    timestampLabel.setText("Time Stamp: " + k + " seconds (" + getTime(TimeStamp) + ")");
+                    positionLabel.setText("Position of the probe: x: " + bodies[11].getPosition().getX() + " y: " + bodies[11].getPosition().getY() + " z: " + bodies[11].getPosition().getZ());
+                    distanceLabel.setText("Distance Traveled: x: " + (bodies[11].getPosition().getX() - firstprobepos.getX() + " km y: " + (bodies[11].getPosition().getY()-firstprobepos.getY()) + " km z: " + (bodies[11].getPosition().getZ()-firstprobepos.getZ()) + " km"));
+                    totalDistanceLabel.setText("Total distance: " + Math.sqrt(Math.pow(bodies[11].getPosition().getX()-firstprobepos.getX(), 2)+Math.pow(bodies[11].getPosition().getY()-firstprobepos.getY(), 2)+Math.pow(bodies[11].getPosition().getZ()-firstprobepos.getZ(), 2))+ " km");
+                    timestampGroup.setVisible(true);
+                    timestampCheck = false;
+                }
                 if(seconds >= 60){
                     minutes++;
                     seconds = 0;
                     if(minutes % 60 == 0){
                         hours++;
-                        k++;
                         minutes = 0;
-                        if(k == TimeStamp){
-                            System.out.println("Time Stamp: " + k + " hours");
-                            System.out.println("Position of the probe: x: " + bodies[11].getPosition().getX() + " y: " + bodies[11].getPosition().getY() + " z: " + bodies[11].getPosition().getZ());
-                            System.out.println("Distance Traveled: x: " + (bodies[11].getPosition().getX() - firstprobepos.getX() + " km y: " + (bodies[11].getPosition().getY()-firstprobepos.getY()) + " km z: " + (bodies[11].getPosition().getZ()-firstprobepos.getZ()) + " km"));
-                            System.out.println("Total distance: " + Math.sqrt(Math.pow(bodies[11].getPosition().getX()-firstprobepos.getX(), 2)+Math.pow(bodies[11].getPosition().getY()-firstprobepos.getY(), 2)+Math.pow(bodies[11].getPosition().getZ()-firstprobepos.getZ(), 2))+ " km");
-                        }
                         if(hours % 24 == 0){
                             days++;
                             hours = 0;
@@ -545,9 +565,9 @@ public class SolarScene3DController implements Initializable {
             double titandis = spaps.dist(bodies[8].getPosition());
             distanceTitan.setText("Distance to Titan: " + titandis + " km");
             if (closestTitan > titandis) {
+                closestTitan = titandis;
                 closestdistanceTitan.setText("Closest distance to Titan: " + closestTitan + " km");
                 titanMoment.setText("Moment closest distance to Titan: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");
-                closestTitan = titandis;
             }
             setGUIcoords(probe, spax/divider, spay/divider, spaz/divider);
             //double probeangle = Math.acos(((spax*titPos[0]) + (spay*titPos[1]) + (spaz*titPos[2]))/(Math.sqrt((Math.pow(spax, 2) + Math.pow(spay, 2) + Math.pow(spaz, 2)) * (Math.pow(titPos[0], 2) + Math.pow(titPos[1], 2) + Math.pow(titPos[2], 2)))));
@@ -682,6 +702,54 @@ public class SolarScene3DController implements Initializable {
     }
 
     /**
+     * Transfers the time from seconds to the following format:<p>
+     * <years> years, <months> months, <days> days, <hours> hours, <minutes> minutes, <seconds> seconds
+     * @param secs
+     * @return a string in the above mentioned format
+     */
+    private String getTime(int secs){
+        String string = "";
+        
+        int yea = 0;
+        int mont = 0;
+        int das = 0;
+        int hour = 0;
+        int minute = 0;
+        int sec = 0;
+        int temporary;
+        yea = secs / 31104000;
+        if(yea != 0){
+            string += yea + "years, ";
+        }
+        temporary = (secs - (yea * 31104000));
+        mont = temporary / 2592000;
+        if(mont != 0){
+            string += mont + "months, ";
+        }
+        temporary -= mont * 2592000;
+        das = temporary  / 86400;
+        if(das != 0){
+            string += das + "days, ";
+        }
+        temporary -= das * 86400;
+        hour = temporary / 3600;
+        if(hour != 0){
+            string += hour + "hours, ";
+        }
+        temporary -= hour * 3600;
+        minute = temporary / 60;
+        if(minute != 0){
+            string += minute + "minutes, ";
+        }
+        temporary -= minute * 60;
+        sec = temporary;
+        if(sec != 0){
+            string += sec + "seconds";
+        }
+        return string;
+        }
+
+    /**
      * Focusses on the sun in the GUI.
      */
     @FXML
@@ -745,25 +813,68 @@ public class SolarScene3DController implements Initializable {
     @FXML
     public void onExit(){System.exit(0);}
 
+    /**
+     * Sets the used Solver method to Adams Bashfort.
+     */
     @FXML
     public void onAdamsButton(){
         chosenSolver = 0;
     }
 
+    /**
+     * Sets the used Solver method to the Euler method.
+     */
     @FXML
     public void onEulerButton(){
         chosenSolver = 1;
     }
 
+    /**
+     * Sets the used Solver method to Verlet.
+     */
     @FXML
     public void onVerletButton(){
         chosenSolver = 2;
     }
 
+    /**
+     * Sets the used Solver method to Runge Kutta.
+     */
     @FXML
     public void onRungeButton(){
         chosenSolver = 0;
     }
 
+    /**
+     * Sets the stepsize to 1.
+     */
+    @FXML
+    public void onStepsize1(){
+        stepsize = 1;
+    }
+
+    /**
+     * Sets the stepsize to 10.
+     */
+    @FXML
+    public void onStepsize10(){
+        stepsize = 10;
+    }
+
+    /**
+     * Sets the stepsize to 100.
+     */
+    @FXML
+    public void onStepsize100(){
+        stepsize = 100;
+    }
+
+    /**
+     * Sets the stepsize to the initially chosen stepsize.
+     */
+    @FXML
+    public void onStepsizeChosen(){
+        stepsize = App.chosenStepsize;
+    }
 
 }
