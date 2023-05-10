@@ -9,6 +9,9 @@ import javafx.util.Duration;
 
 import java.io.File;
 
+/**
+ * A music player
+ */
 public class musicPlayer {
     private String path = "src/main/resources/twentyone/Music/";
     private File file;
@@ -22,7 +25,7 @@ public class musicPlayer {
 
     /**
      * Creates a new musicPlayer with the correct fileName.
-     * @param fileName
+     * @param fileName as a {@code String}
      */
     public musicPlayer(String fileName){
         this.fileName = fileName;
@@ -31,7 +34,7 @@ public class musicPlayer {
 
     /**
      * Sets the file to play.
-     * @param filename
+     * @param filename as a {@code String}
      */
     public void setFile(String filename){
         file = new File(path + filename);
@@ -80,7 +83,7 @@ public class musicPlayer {
 
     /**
      * Get the name of the file that is playing.
-     * @return the file name
+     * @return the file name as a {@code String}
      */
     public String getFileName(){
         return fileName;

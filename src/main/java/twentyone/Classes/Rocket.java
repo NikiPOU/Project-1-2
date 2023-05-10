@@ -1,6 +1,8 @@
 package twentyone.Classes;
 
-
+/**
+ * The {@code Rocket Class} extends {@code CelestialBody Class}
+ */
 public class Rocket extends CelestialBody{
     /*
      * Potential launching positions (x, y, z):
@@ -15,10 +17,21 @@ public class Rocket extends CelestialBody{
      */
     private Vector3d currentForce = new Vector3d(0, 0, 0);
     private Euler imLazy = new Euler();
+    /**
+     * Constructor for the {@code Rocket Class}.
+     * @param initialVelocity as a {@code Vector3d Class}
+     * @param initialPosition as a {@code Vector3d Class}
+     */
     public Rocket(Vector3d initialVelocity, Vector3d initialPosition){
         super(initialVelocity, initialPosition, 50000);
     }
    
+    /**
+     * Calculates the impulse for the {@code Rocket Class}.
+     * @param testing as a {@code Celestial Body Array}
+     * @param stepSizer as a {@code double}
+     * @return the impulse as a {@code Vector3d Class}
+     */
     public Vector3d calculateImpulse(CelestialBody[] testing, double stepSizer){
         //aight let's go through the process...
         //firstly for velocity use our current velocity
@@ -36,6 +49,7 @@ public class Rocket extends CelestialBody{
         return impulse_vector;
     }
 
+    /**Coming soon */
     public void finalCombinedForce(CelestialBody[] testobago, double gun){
         //aight I can't be bothered so Imma call the functions to get the forces
         Vector3d force = imLazy.sumOf_Forces(testobago, 11);
