@@ -1,5 +1,10 @@
 package twentyone.Classes;
 
+/**
+ * Calculation of the {@code Celestial Bodies'} coordinates using a Verlet solver.
+ * This class extends the {@code Solver} Class.
+ * @see twentyone.Classes.Solver
+ */
 public class VerletSolver extends Solver {
 
     public CelestialBody[] verlet(CelestialBody[] allBodies, int bodyIndex, double stepsize) {

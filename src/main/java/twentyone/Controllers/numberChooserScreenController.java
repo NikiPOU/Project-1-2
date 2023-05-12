@@ -28,6 +28,20 @@ public class numberChooserScreenController {
     @FXML
     private TextField velocityZ;
 
+    /**
+     * When the {@code Next Button} gets pressed in the GUI, this method will be called. The following will be done:
+     * <ul>
+     * <li>The initial probe position will be set
+     * <li>The initial probe velocity will be set
+     * <li>The initial stepsize will be set
+     * <li>The chosen time stamp will be set
+     * </ul>
+     * After this, the music will fade out and the screen will be changed.
+     * 
+     * @throws IOException
+     * @see twentyone.Classes.musicPlayer
+     * @see javafx.scene.control.Button
+     */
     @FXML
     public void onNextButton() throws IOException {
         App.initialPosProbe = setPosition();
@@ -41,9 +55,9 @@ public class numberChooserScreenController {
 
     /**
      * Creates the Vector3d class.
-     * @param x
-     * @param y
-     * @param z
+     * @param x as a {@code double}
+     * @param y as a {@code double}
+     * @param z as a {@code double}
      * @return A Vector3d class
      */
     private Vector3d setVector(double x, double y, double z){
@@ -51,8 +65,9 @@ public class numberChooserScreenController {
     }
 
     /**
-     * Sets the position of the Probe by checking which values were entered. If no values were entered or some were skipped, the value will be set to 0.
-     * @return A Vector3d of the position of the Probe
+     * Sets the {@code position} of the {@code Probe} by checking which values were entered. If no values were entered or some were skipped, the value will be set to {@code 0}.
+     * @return A {@code Vector3d Class} of the {@code position} of the {@code Probe}
+     * @see TextField
      */
     private Vector3d setPosition(){
         double x;
@@ -77,8 +92,9 @@ public class numberChooserScreenController {
     }
 
     /**
-     * Sets the velocity of the Probe by checking which values were entered. If no values were entered or some were skipped, the value will be set to 0.
-     * @return A Vector3d of the velocity of the Probe
+     * Sets the {@code velocity} of the {@code Probe} by checking which values were entered. If no values were entered or some were skipped, the value will be set to {@code 0}.
+     * @return A {@code Vector3d Class} of the {@code position} of the {@code Probe}
+     * @see TextField
      */
     private Vector3d setVelocity(){
         double x;
@@ -102,6 +118,12 @@ public class numberChooserScreenController {
         return setVector(x, y, z);
     }
 
+    /**
+     * This method will get the chosen {@code stepsize} from the {@code stepsizeTextfield} and then set the {@code stepsize} accordingly.<p>
+     * If no {@code stepsize} was chosen, it will be set to {@code 10}
+     * @return the chosen {@code stepsize} as an {@code Integer}
+     * @see TextField
+     */
     private int setStepsize(){
         int stepSize;
         if(stepsizeTextfield.getText() == null || stepsizeTextfield.getText().trim().isEmpty()){
@@ -112,6 +134,12 @@ public class numberChooserScreenController {
         return stepSize;
     }
 
+    /**
+     * This method will get the chosen {@code time stamp} from the {@code timestampTextfield} and then set the {@code time stamp} accordingly.<p>
+     * If no {@code time stamp} was chosen, it will be set to {@code -1} and thus not be used.
+     * @return the chosen {@code time stamp} as an {@code Integer}
+     * @see TextField
+     */
     private int setTimestamp(){
         int timestamp;
         if(timestampTextfield.getText() == null || timestampTextfield.getText().trim().isEmpty()){

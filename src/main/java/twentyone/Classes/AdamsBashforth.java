@@ -1,19 +1,25 @@
 package twentyone.Classes;
 
 /**
- * Calculation of the celestial bodies coordinates using an Adams-Bashforth solver.
+ * Calculation of the {@code Celestial Bodies'} coordinates using an Adams-Bashforth solver.
+ * This class extends the {@code Solver} Class.
+ * @see twentyone.Classes.Solver
  */
 public class AdamsBashforth extends Solver {
     //Placeholder for the old velocity, used because Adams-Bashforth is a two-step method 
     //(using both the last velocity and the one before that)
+    /**
+     * Placeholder for the old velocity, used because Adams-Bashforth is a two-step method 
+     * (using both the last velocity and the one before that)
+     */
     private Vector3d[] oldVelocity = {new Vector3d(0,0, 0), new Vector3d(0,0, 0), new Vector3d(0,0, 0), new Vector3d(0,0, 0),
         new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0)};
 
     /**
-     * Adams-Bashforth differential equation solver for the position and velocity of a celestial body. It uses the 
-     * following formula Yn+2 = Yn+1 + 3/2 * h * Yn+1' - 1/2 * h * Yn'.
-     * @param allBodies an array of all celestial bodies.
-     * @param bodyIndex the index of the celestial body for which the position and velocity will be calculated.
+     * Adams-Bashforth differential equation solver for the {@code position} and {@code velocity} of a celestial body. It uses the 
+     * following formula: {@code Yn+2 = Yn+1 + 3/2 * h * Yn+1' - 1/2 * h * Yn'}.
+     * @param allBodies as a {@code CelestialBody[]}.
+     * @param bodyIndex the {@code index} of the {@code Celestial Body} for which the {@code position} and {@code velocity} will be calculated.
      * @param stepsize h.
      * @return the updated array of all celestial bodies.
      */
