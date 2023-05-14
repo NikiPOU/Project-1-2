@@ -6,13 +6,15 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+
+import javax.imageio.ImageIO;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -26,6 +28,7 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
@@ -380,15 +383,51 @@ public class SolarScene3DController implements Initializable {
                     double delta = event.getDeltaY();
                     pGroup.setTranslateZ(pGroup.getTranslateZ() + delta);
                 });
-                sunSphere.setMaterial(new PhongMaterial(Color.ORANGE));
-                earthSphere.setMaterial(new PhongMaterial(Color.BLUE));
-                moonSphere.setMaterial(new PhongMaterial(Color.GREY));
-                mercurySphere.setMaterial(new PhongMaterial(Color.LIGHTBLUE));
-                venusSphere.setMaterial(new PhongMaterial(new Color(0.78, 0.62, 0.16, 1)));
-                marsSphere.setMaterial(new PhongMaterial(Color.MAROON));
-                jupiterSphere.setMaterial(new PhongMaterial(Color.BURLYWOOD));
-                saturnSphere.setMaterial(new PhongMaterial(Color.DARKGOLDENROD));
-                titanSphere.setMaterial(new PhongMaterial(Color.DARKCYAN));
+                // sunSphere.setMaterial(new PhongMaterial(Color.ORANGE));
+                // earthSphere.setMaterial(new PhongMaterial(Color.BLUE));
+                // moonSphere.setMaterial(new PhongMaterial(Color.GREY));
+                // mercurySphere.setMaterial(new PhongMaterial(Color.LIGHTBLUE));
+                // venusSphere.setMaterial(new PhongMaterial(new Color(0.78, 0.62, 0.16, 1)));
+                // marsSphere.setMaterial(new PhongMaterial(Color.MAROON));
+                // jupiterSphere.setMaterial(new PhongMaterial(Color.BURLYWOOD));
+                // saturnSphere.setMaterial(new PhongMaterial(Color.DARKGOLDENROD));
+                // titanSphere.setMaterial(new PhongMaterial(Color.DARKCYAN));
+                String sunString = "";
+                String mercuryString = "";
+                String venusString = "";
+                String earthString = "";
+                String moonString = "";
+                String marsString = "";
+                String jupiterString = "";
+                String saturnString = "";
+                String titanString = "";
+                try {
+                    sunString = (new File("src/main/resources/twentyone/Images/Sun.png").toURI().toURL()).toString();
+                    mercuryString = (new File("src/main/resources/twentyone/Images/Mercury.png").toURI().toURL()).toString();
+                    venusString = (new File("src/main/resources/twentyone/Images/Venus.png").toURI().toURL()).toString();
+                    earthString = (new File("src/main/resources/twentyone/Images/Earth.png").toURI().toURL()).toString();
+                    moonString = (new File("src/main/resources/twentyone/Images/Moon.png").toURI().toURL()).toString();
+                    marsString = (new File("src/main/resources/twentyone/Images/Mars.png").toURI().toURL()).toString();
+                    jupiterString = (new File("src/main/resources/twentyone/Images/Jupiter.png").toURI().toURL()).toString();
+                    saturnString = (new File("src/main/resources/twentyone/Images/Saturn.png").toURI().toURL()).toString();
+                    titanString = (new File("src/main/resources/twentyone/Images/Titan.png").toURI().toURL()).toString();
+                } catch (MalformedURLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                System.out.println(sunString);
+                // PhongMaterial sunMaterial = new PhongMaterial();
+                // sunMaterial.setDiffuseMap(new Image(sunString));
+                sunSphere.setMaterial(phongMaker(sunString));
+                mercurySphere.setMaterial(phongMaker(mercuryString));
+                venusSphere.setMaterial(phongMaker(venusString));
+                earthSphere.setMaterial(phongMaker(earthString));
+                moonSphere.setMaterial(phongMaker(moonString));
+                marsSphere.setMaterial(phongMaker(marsString));
+                jupiterSphere.setMaterial(phongMaker(jupiterString));
+                saturnSphere.setMaterial(phongMaker(saturnString));
+                titanSphere.setMaterial(phongMaker(titanString));
+                
                 fire1.setMaterial(new PhongMaterial(Color.RED));
                 fire2.setMaterial(new PhongMaterial(Color.RED));
                 fire3.setMaterial(new PhongMaterial(Color.RED));
@@ -410,6 +449,21 @@ public class SolarScene3DController implements Initializable {
         timeline.play();
         MP = new musicPlayer("Interstellar.mp3");
         MP.run();
+    }
+
+    /**
+     * Sets the {@code PhongMaterial} of a 3D Object.
+     * @param url this is the {@code URL} of the image used. This is a {@code String}
+     * @return a {@code PhongMaterial}
+     * @see URL
+     * @see PhongMaterial
+     * @see Image
+     */
+    private PhongMaterial phongMaker(String url){
+        PhongMaterial phong = new PhongMaterial();
+        Image image = new Image(url);
+        phong.setDiffuseMap(image);
+        return phong;
     }
 
     /**
