@@ -122,6 +122,7 @@ public class SolarScene3DController implements Initializable {
     private Timeline timeline;
     /**
      * The array of {@code Celestial Bodies} which stores all the used {@code Celestial Bodies}. They get used for the calculations.
+     * @see CelestialBody
      */
     CelestialBody[] bodies = new CelestialBody[12];
     /**
@@ -241,11 +242,20 @@ public class SolarScene3DController implements Initializable {
 
     ArrayList<Circle> dotList = new ArrayList<>();
     Random rand = new Random();
+
+    /**
+     * The current time in seconds. This one won't be reset to {@code 0} in contrary to {@link twentyone.Controllers.SolarScene3DController#seconds seconds}.
+     */
     int k=0;
     
 
     @FXML
     private Scene scene;
+    /**
+     * The group of all the planets.
+     * @see CelestialBody
+     * @see {@link twentyone.Controllers.SolarScene3DController#bodies bodies}
+     */
     @FXML
     private AnchorPane pGroup;
     @FXML
@@ -665,24 +675,28 @@ public class SolarScene3DController implements Initializable {
         @Override
         public void handle(ActionEvent event) {
             
-            // Unreal_Engine unreal = new Unreal_Engine();
-            // AdamsBashforth a = new AdamsBashforth();
-
             //Run the Euler's method to get the next position and velocity of all celestial bodies + probe
             for (int i = 0; i < eulerLoops; i++) {
                 for (int j = 0; j < bodies.length; j++) {
-                    // bodies = unreal.Eulers(bodies, j, stepsize);
                     bodies = solvers(bodies, j, stepsize);
                 }
 
                 //Keep track of the time
                 seconds += stepsize;
                 k += stepsize;
-                if(k >= TimeStamp && timestampCheck){
-                    timestampLabel.setText("Time Stamp: " + k + " seconds (" + getTime(TimeStamp) + ")");
-                    positionLabel.setText("Position of the probe: x: " + bodies[11].getPosition().getX() + " y: " + bodies[11].getPosition().getY() + " z: " + bodies[11].getPosition().getZ());
-                    distanceLabel.setText("Distance Traveled: x: " + (bodies[11].getPosition().getX() - firstprobepos.getX() + " km y: " + (bodies[11].getPosition().getY()-firstprobepos.getY()) + " km z: " + (bodies[11].getPosition().getZ()-firstprobepos.getZ()) + " km"));
-                    totalDistanceLabel.setText("Total distance: " + Math.sqrt(Math.pow(bodies[11].getPosition().getX()-firstprobepos.getX(), 2)+Math.pow(bodies[11].getPosition().getY()-firstprobepos.getY(), 2)+Math.pow(bodies[11].getPosition().getZ()-firstprobepos.getZ(), 2))+ " km");
+                if(k >= TimeStamp && timestampCheck && TimeStamp != -1){
+                    String timeStampString = "Time Stamp: " + k + " seconds (" + getTime(TimeStamp) + ")";
+                    String positionString = "Position of the probe: x: " + bodies[11].getPosition().getX() + " y: " + bodies[11].getPosition().getY() + " z: " + bodies[11].getPosition().getZ();
+                    String distanceString = "Distance Traveled: x: " + (bodies[11].getPosition().getX() - firstprobepos.getX() + " km y: " + (bodies[11].getPosition().getY()-firstprobepos.getY()) + " km z: " + (bodies[11].getPosition().getZ()-firstprobepos.getZ()) + " km");
+                    String totalDistanceString = "Total distance: " + Math.sqrt(Math.pow(bodies[11].getPosition().getX()-firstprobepos.getX(), 2)+Math.pow(bodies[11].getPosition().getY()-firstprobepos.getY(), 2)+Math.pow(bodies[11].getPosition().getZ()-firstprobepos.getZ(), 2))+ " km";
+                    timestampLabel.setText(timeStampString);
+                    positionLabel.setText(positionString);
+                    distanceLabel.setText(distanceString);
+                    totalDistanceLabel.setText(totalDistanceString);
+                    System.out.println(timeStampString);
+                    System.out.println(positionString);
+                    System.out.println(distanceString);
+                    System.out.println(totalDistanceString);
                     timestampGroup.setVisible(true);
                     timestampCheck = false;
                 }
