@@ -1,17 +1,22 @@
 package twentyone.Classes;
 
+/**
+ * Calculation of the {@code Celestial Bodies'} coordinates using an Adams-Moulton solver.
+ * This class extends the {@code Solver} Class.
+ * @see twentyone.Classes.Solver
+ */
 public class AdamsMoulton extends Solver{
    
     /**
- * Calculation of the celestial bodies coordinates using an Adams-Bashforth solver.
- */
+     * Calculation of the celestial bodies coordinates using an Adams-Moulton solver.
+     */
     //Placeholder for the old velocity, used because Adams-Bashforth is a two-step method 
     //(using both the last velocity and the one before that)
     private Vector3d[] oldVelocity = {new Vector3d(0,0, 0), new Vector3d(0,0, 0), new Vector3d(0,0, 0), new Vector3d(0,0, 0),
         new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0),new Vector3d(0,0, 0)};
 
     /**
-     * Adams-Bashforth differential equation solver for the position and velocity of a celestial body. It uses the 
+     * Adams-Moulton differential equation solver for the position and velocity of a celestial body. It uses the 
      * following formula Yn+2 = Yn+1 + 3/2 * h * Yn+1' - 1/2 * h * Yn'.
      * @param allBodies an array of all celestial bodies.
      * @param bodyIndex the index of the celestial body for which the position and velocity will be calculated.
@@ -57,11 +62,11 @@ public class AdamsMoulton extends Solver{
         //for the position, the formula is Xn+2 = Xn+1 + 3/2 * h * Vn+1 - 1/2 * h * Vn (since V = X')
         position2AB = position1.add(velocity1.mul(3/2*stepsize).sub(velocity0.mul(1/2*stepsize)));
 
-        System.out.println(position2AB);
+        // System.out.println(position2AB);
 
         position2AM = position1.add(position2AB.mul(5/12*stepsize).add(velocity1.mul(8/12*stepsize).sub(velocity0.mul(1/12*stepsize))));
 
-        System.out.println(position2AM);
+        // System.out.println(position2AM);
 
         Vector3d velocity2AB = new Vector3d(0, 0,0);
 
@@ -69,11 +74,11 @@ public class AdamsMoulton extends Solver{
         //for the velocity, the formula is Vn+2 = Vn+1 + 3/2 * h * Vn+1' - 1/2 * h * Vn'
         velocity2AB = velocity1.add(velocity1Derivative.mul(3/2*stepsize).sub(velocity0Derivative.mul(1/2*stepsize)));
 
-        System.out.println(velocity2AB);
+        // System.out.println(velocity2AB);
 
         velocity2AM = velocity1.add(velocity2AB.mul(5/12*stepsize).add(velocity1Derivative.mul(8/12*stepsize).sub(velocity0Derivative.mul(1/12*stepsize))));
 
-        System.out.println(velocity2AM);
+        // System.out.println(velocity2AM);
 
         //Updates the velocity and position of the given celestial body in the array of celestial bodies
         allBodies[bodyIndex].setNewPostion(position2AM);
