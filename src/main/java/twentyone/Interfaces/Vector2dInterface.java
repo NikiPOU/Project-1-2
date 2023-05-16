@@ -19,12 +19,12 @@ public interface Vector2dInterface {
      * @param other  the vector used in the multiplication step
      * @return the result of the multiplication step added to this vector,
      * for example:
-     *
-     *       Vector3d a = Vector();
-     *       double h = 2;
-     *       Vector3d b = Vector();
-     *       ahb = a.addMul(h, b);
-     *
+     * <p>
+     *       Vector3d a = Vector();<p>
+     *       double h = 2;<p>
+     *       Vector3d b = Vector();<p>
+     *       ahb = a.addMul(h, b);<p>
+     * <p>
      * ahb should now contain the result of this mathematical operation:
      *       a+h*b
      */

@@ -140,7 +140,7 @@ public class SolarSceneController implements Initializable {
         r = rand.nextInt(255);
         g = rand.nextInt(255);
         b = rand.nextInt(255);
-      
+    
         //create a timeline for moving the circle
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);

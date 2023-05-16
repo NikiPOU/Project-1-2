@@ -1,17 +1,26 @@
 package twentyone.Classes;
 
+/**
+ * A {@code Abstract Class} that gets extended by other classes.
+ * @see twentyone.Classes.AdamsBashforth
+ * @see twentyone.Classes.Euler
+ * @see twentyone.Classes.VerletSolver
+ */
 public abstract class Solver {
-    //gravitational constant
+    /**Gravitational constant*/
     private final double G = 6.6743E-20;
 
+    /**
+     * Constructor for the {@code Solver Class}.
+     */
     public Solver() {
     }
 
     /**
      * Unreal_Engine method to calculate force.
-     * @param iCelBody
-     * @param jCelBody
-     * @return
+     * @param iCelBody as a {@code Celestial Body}
+     * @param jCelBody as a {@code Celestial Body}
+     * @return the force as a {@code Vector3d Class}
      */
     public Vector3d calculateForce(CelestialBody iCelBody, CelestialBody jCelBody){
         //get the vars needed
@@ -41,9 +50,9 @@ public abstract class Solver {
 
     /**
      * Unreal_Engine method to sum all forces (multiplied by -1 at the end).
-     * @param theCelBodies
-     * @param desiredPlanet
-     * @return
+     * @param theCelBodies as a {@code Celestial Body Array}
+     * @param desiredPlanet as an {@code integer}
+     * @return the sum of all forces as a {@code Vector3d Class}
      */
     public Vector3d sumOf_Forces(CelestialBody[] theCelBodies, int desiredPlanet){
         //create the variables

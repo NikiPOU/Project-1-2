@@ -1,5 +1,10 @@
 package twentyone.Classes;
 
+/**
+ * Calculation of the {@code Celestial Bodies'} coordinates using an Euler solver.
+ * This class extends the {@code Solver} Class.
+ * @see twentyone.Classes.Solver
+ */
 public class Euler extends Solver{
 
     public CelestialBody[] Eulers(CelestialBody[] theCelBodies, int theDesired, double stepSizer){
