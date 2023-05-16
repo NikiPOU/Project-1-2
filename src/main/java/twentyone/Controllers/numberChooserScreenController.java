@@ -58,7 +58,7 @@ public class numberChooserScreenController {
      * @param x as a {@code double}
      * @param y as a {@code double}
      * @param z as a {@code double}
-     * @return A Vector3d class
+     * @return A {@link Vector3d} class
      */
     private Vector3d setVector(double x, double y, double z){
         return new Vector3d(x, y, z);
@@ -68,6 +68,7 @@ public class numberChooserScreenController {
      * Sets the {@code position} of the {@code Probe} by checking which values were entered. If no values were entered or some were skipped, the value will be set to {@code 0}.
      * @return A {@code Vector3d Class} of the {@code position} of the {@code Probe}
      * @see TextField
+     * @see Vector3d
      */
     private Vector3d setPosition(){
         double x;
@@ -95,6 +96,7 @@ public class numberChooserScreenController {
      * Sets the {@code velocity} of the {@code Probe} by checking which values were entered. If no values were entered or some were skipped, the value will be set to {@code 0}.
      * @return A {@code Vector3d Class} of the {@code position} of the {@code Probe}
      * @see TextField
+     * @see Vector3d
      */
     private Vector3d setVelocity(){
         double x;
