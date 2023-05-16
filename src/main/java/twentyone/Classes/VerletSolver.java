@@ -1,5 +1,10 @@
 package twentyone.Classes;
 
+/**
+ * Calculation of the {@code Celestial Bodies'} coordinates using a Verlet solver.
+ * This class extends the {@code Solver} Class.
+ * @see twentyone.Classes.Solver
+ */
 public class VerletSolver extends Solver {
 
     public CelestialBody[] verlet(CelestialBody[] allBodies, int bodyIndex, double stepsize) {
@@ -33,8 +38,7 @@ public class VerletSolver extends Solver {
         // incorrect implementation, to be updated)
         // Dividing by the mass already happens inside sumOf_Forces + it's a Vector3d
         // not a double
-        Vector3d newA = sumOf_Forces(allBodies, bodyIndex); // computing the acceleration (currently incorrect
-                                                            // implementation, to be updated)
+        Vector3d newA = sumOf_Forces(allBodies, bodyIndex); // computing the acceleration
 
         Vector3d newVel = prevVel.add(newA.add(prevA).mul(0.5 * dt));// equation to find the next velocity according to
                                                                      // verlet prevVel + 0.5 * (newa + preva) * dt;

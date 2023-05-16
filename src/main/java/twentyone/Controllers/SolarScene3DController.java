@@ -6,13 +6,15 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+
+import javax.imageio.ImageIO;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -26,6 +28,7 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
@@ -48,63 +51,211 @@ import twentyone.Classes.musicPlayer;
 
 public class SolarScene3DController implements Initializable {
 
+    /**
+     * The {@code Adams-Bashforth Solver}
+     * @see twentyone.Classes.AdamsBashforth
+     */
     private AdamsBashforth a = new AdamsBashforth();
+    /**
+     * The {@code Euler Solver}
+     * @see twentyone.Classes.Euler
+     */
     private Euler unreal = new Euler();
+    /**
+     * The {@code Verlet Solver}
+     * @see twentyone.Classes.VerletSolver
+     */
     private VerletSolver verlet = new VerletSolver();
 
+    /**
+     * The {@code Music Player}
+     * @see twentyone.Classes.musicPlayer
+     */
     private musicPlayer MP;
+    /**
+     * The chosen {@code Solver}. This could be one of the following:
+     * <ul>
+     * <li> {@code Adams-Bashforth Solver}
+     * <li> {@code Euler Solver}
+     * <li> {@code Verlet Solver}
+     * <li> {@code Runge-Kutta Solver}
+     * </ul>
+     * @see twentyone.Classes.AdamsBashforth
+     * @see twentyone.Classes.Euler
+     * @see twentyone.Classes.VerletSolver
+     * @see twentyone.Classes.?
+     */
     private int chosenSolver = App.chosenSolver;
+    /**
+     * The intitial {@code position} of the {@code Probe}
+     */
     final Vector3d initialPosProbe = App.initialPosProbe;
+    /**
+     * The intitial {@code velocity} of the {@code Probe}
+     */
     final Vector3d initialVelProbe = App.initialVelProbe;
     
+    /**
+     * The current {@code position} of the {@code Probe}
+     */
     Vector3d firstprobepos;
+    /**
+     * The selected planet is a {@code CelestialBody}. This will be used to focus the camera on that {@code CelestialBody}
+     * @see twentyone.Classes.CelestialBody
+     * @see {@link twentyone.Controllers.SolarScene3DController#focusCamera(CelestialBody) focusCamera(CelestialBody)}
+     * @see {@link twentyone.Controllers.SolarScene3DController#sunFocus() sunFocus()}
+     * @see {@link twentyone.Controllers.SolarScene3DController#mercuryFocus() mercuryFocus()}
+     * @see {@link twentyone.Controllers.SolarScene3DController#venusFocus() venusFocus()}
+     * @see {@link twentyone.Controllers.SolarScene3DController#earthFocus() earthFocus()}
+     * @see {@link twentyone.Controllers.SolarScene3DController#marsFocus() marsFocus()} 
+     * @see {@link twentyone.Controllers.SolarScene3DController#jupiterFocus() jupiterFocus()} 
+     * @see {@link twentyone.Controllers.SolarScene3DController#saturnFocus() saturnFocus()}
+     * @see {@link twentyone.Controllers.SolarScene3DController#probeFocus() probeFocus()}
+     */
     CelestialBody selectedPlanet;
 
+    /**
+     * The used {@code Timeline} to keep the {@code Movement} going.
+     * @see Timeline
+     * @see {@link twentyone.Controllers.SolarScene3DController.Movement Movement}
+     */
     private Timeline timeline;
+    /**
+     * The array of {@code Celestial Bodies} which stores all the used {@code Celestial Bodies}. They get used for the calculations.
+     * @see CelestialBody
+     */
     CelestialBody[] bodies = new CelestialBody[12];
+    /**
+     * The current {@code stepsize}. It can be changed using {@code MenuItems}.
+     * @see MenuItem
+     * @see {@link twentyone.Controllers.SolarScene3DController#onStepsize1() onStepsize1()}
+     * @see {@link twentyone.Controllers.SolarScene3DController#onStepsize10() onStepsize10()}
+     * @see {@link twentyone.Controllers.SolarScene3DController#onStepsize100() onStepsize100()}
+     * @see {@link twentyone.Controllers.SolarScene3DController#onStepsizeChosen() onStepsizeChosen()}
+     */
     private double stepsize = App.stepSize;
+    /**
+     * The chosen amount of {@code loops}. This is the amount of times the next {@code position} gets calculated before updating the GUI.
+     * @see {@link twentyone.Controllers.SolarScene3DController.Movement#handle(ActionEvent) handle}
+     */
     int eulerLoops = 5000;
 
     // final Vector3d initialPosProbe = new Vector3d(-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113);
     // final Vector3d initialVelProbe = new Vector3d(48, -45, 0);
     // CelestialBody decoyBody;
 
+    /**
+     * A {@code boolean} to see if the camera is focused.
+     */
     boolean focused;
+    /**
+     * A {@code boolean} to see if the camera is already reset.
+     */
     boolean resetCheck;
     
+    /**
+     * The closest distance from the {@code Probe} and the {@code CelestialBody} {@code Titan}.
+     */
     double closestTitan = 10E40;
 
+    /**
+     * The {@code times tamp} chosen by the user.
+     * @see {@link twentyone.Controllers.numberChooserScreenController#setTimestamp() setTimestamp()}
+     */
     int TimeStamp = App.timeStamp;
+    /**
+     * A {@code boolean} to see if the {@code time stamp} has already been reached.
+     * @see {@link twentyone.Controllers.SolarScene3DController#TimeStamp TimeStamp}
+     */
     boolean timestampCheck = true;
 
-    int r;
-    int g;
-    int b;
+    /**
+     * Amount of {@code seconds} in the current {@code minute}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#minutes minutes}
+     */
     int seconds = 0;
+    /**
+     * Amount of {@code minutes} in the current {@code hour}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#hours hours}
+     */
     int minutes = 0;
+    /**
+     * Amount of {@code hours} in the current {@code day}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#days days}
+     */
     int hours = 0;
+    /**
+     * Amount of {@code days} in the current {@code month}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#months months}
+     */
     int days = 0;
+    /**
+     * Amount of {@code months} in the current {@code year}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#years years}
+     */
     int months = 0;
+    /**
+     * Amount of {@code years}
+     */
     int years = 0;
+    /**
+     * The amount the actual {@code positions} get divided by to fit the GUI.
+     */
     int divider = 2100000;
 
+    /**
+     * An {@code doulbe[]} of the positions of the sun.
+     */
     double[] sunPos = new double[3];
+    /**
+     * An {@code doulbe[]} of the positions of mercury.
+     */
     double[] merPos = new double[3];
+    /**
+     * An {@code doulbe[]} of the positions of venus.
+     */
     double[] venPos = new double[3];
+    /**
+     * An {@code doulbe[]} of the positions of the earth.
+     */
     double[] earPos = new double[3];
+    /**
+     * An {@code doulbe[]} of the positions of the moon.
+     */
     double[] mooPos = new double[3];
+    /**
+     * An {@code doulbe[]} of the positions of mars.
+     */
     double[] marPos = new double[3];
+    /**
+     * An {@code doulbe[]} of the positions of jupiter.
+     */
     double[] jupPos = new double[3];
+    /**
+     * An {@code doulbe[]} of the positions of saturn.
+     */
     double[] satPos = new double[3];
+    /**
+     * An {@code doulbe[]} of the positions of titan.
+     */
     double[] titPos = new double[3];
 
     ArrayList<Circle> dotList = new ArrayList<>();
     Random rand = new Random();
+
+    /**
+     * The current time in seconds. This one won't be reset to {@code 0} in contrary to {@link twentyone.Controllers.SolarScene3DController#seconds seconds}.
+     */
     int k=0;
     
 
     @FXML
     private Scene scene;
+    /**
+     * The group of all the planets.
+     * @see CelestialBody
+     * @see {@link twentyone.Controllers.SolarScene3DController#bodies bodies}
+     */
     @FXML
     private AnchorPane pGroup;
     @FXML
@@ -242,15 +393,51 @@ public class SolarScene3DController implements Initializable {
                     double delta = event.getDeltaY();
                     pGroup.setTranslateZ(pGroup.getTranslateZ() + delta);
                 });
-                sunSphere.setMaterial(new PhongMaterial(Color.ORANGE));
-                earthSphere.setMaterial(new PhongMaterial(Color.BLUE));
-                moonSphere.setMaterial(new PhongMaterial(Color.GREY));
-                mercurySphere.setMaterial(new PhongMaterial(Color.LIGHTBLUE));
-                venusSphere.setMaterial(new PhongMaterial(new Color(0.78, 0.62, 0.16, 1)));
-                marsSphere.setMaterial(new PhongMaterial(Color.MAROON));
-                jupiterSphere.setMaterial(new PhongMaterial(Color.BURLYWOOD));
-                saturnSphere.setMaterial(new PhongMaterial(Color.DARKGOLDENROD));
-                titanSphere.setMaterial(new PhongMaterial(Color.DARKCYAN));
+                // sunSphere.setMaterial(new PhongMaterial(Color.ORANGE));
+                // earthSphere.setMaterial(new PhongMaterial(Color.BLUE));
+                // moonSphere.setMaterial(new PhongMaterial(Color.GREY));
+                // mercurySphere.setMaterial(new PhongMaterial(Color.LIGHTBLUE));
+                // venusSphere.setMaterial(new PhongMaterial(new Color(0.78, 0.62, 0.16, 1)));
+                // marsSphere.setMaterial(new PhongMaterial(Color.MAROON));
+                // jupiterSphere.setMaterial(new PhongMaterial(Color.BURLYWOOD));
+                // saturnSphere.setMaterial(new PhongMaterial(Color.DARKGOLDENROD));
+                // titanSphere.setMaterial(new PhongMaterial(Color.DARKCYAN));
+                String sunString = "";
+                String mercuryString = "";
+                String venusString = "";
+                String earthString = "";
+                String moonString = "";
+                String marsString = "";
+                String jupiterString = "";
+                String saturnString = "";
+                String titanString = "";
+                try {
+                    sunString = (new File("src/main/resources/twentyone/Images/Sun.png").toURI().toURL()).toString();
+                    mercuryString = (new File("src/main/resources/twentyone/Images/Mercury.png").toURI().toURL()).toString();
+                    venusString = (new File("src/main/resources/twentyone/Images/Venus.png").toURI().toURL()).toString();
+                    earthString = (new File("src/main/resources/twentyone/Images/Earth.png").toURI().toURL()).toString();
+                    moonString = (new File("src/main/resources/twentyone/Images/Moon.png").toURI().toURL()).toString();
+                    marsString = (new File("src/main/resources/twentyone/Images/Mars.png").toURI().toURL()).toString();
+                    jupiterString = (new File("src/main/resources/twentyone/Images/Jupiter.png").toURI().toURL()).toString();
+                    saturnString = (new File("src/main/resources/twentyone/Images/Saturn.png").toURI().toURL()).toString();
+                    titanString = (new File("src/main/resources/twentyone/Images/Titan.png").toURI().toURL()).toString();
+                } catch (MalformedURLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                System.out.println(sunString);
+                // PhongMaterial sunMaterial = new PhongMaterial();
+                // sunMaterial.setDiffuseMap(new Image(sunString));
+                sunSphere.setMaterial(phongMaker(sunString));
+                mercurySphere.setMaterial(phongMaker(mercuryString));
+                venusSphere.setMaterial(phongMaker(venusString));
+                earthSphere.setMaterial(phongMaker(earthString));
+                moonSphere.setMaterial(phongMaker(moonString));
+                marsSphere.setMaterial(phongMaker(marsString));
+                jupiterSphere.setMaterial(phongMaker(jupiterString));
+                saturnSphere.setMaterial(phongMaker(saturnString));
+                titanSphere.setMaterial(phongMaker(titanString));
+                
                 fire1.setMaterial(new PhongMaterial(Color.RED));
                 fire2.setMaterial(new PhongMaterial(Color.RED));
                 fire3.setMaterial(new PhongMaterial(Color.RED));
@@ -274,6 +461,27 @@ public class SolarScene3DController implements Initializable {
         MP.run();
     }
 
+    /**
+     * Sets the {@code PhongMaterial} of a 3D Object.
+     * @param url this is the {@code URL} of the image used. This is a {@code String}
+     * @return a {@code PhongMaterial}
+     * @see URL
+     * @see PhongMaterial
+     * @see Image
+     */
+    private PhongMaterial phongMaker(String url){
+        PhongMaterial phong = new PhongMaterial();
+        Image image = new Image(url);
+        phong.setDiffuseMap(image);
+        return phong;
+    }
+
+    /**
+     * Sets the position of the {@code pGroup}.
+     * @param x as a {@code double}
+     * @param y as a {@code double}
+     * @param z as a {@code double}
+     */
     public void setCameraPos(double x, double y, double z){
         pGroup.setTranslateX(x);
         pGroup.setTranslateY(y);
@@ -281,6 +489,10 @@ public class SolarScene3DController implements Initializable {
         // System.out.println(pGroup.getTranslateX() + " " + pGroup.getTranslateY() + " " + pGroup.getTranslateZ());
     }
 
+    /**
+     * Used to focus on certain {@code Celestial Bodies}.
+     * @param planet as a {@code CelestialBody}
+     */
     public void focusCamera(CelestialBody planet){
         if(planet.equals(bodies[0])){
             focused = false;
@@ -312,7 +524,7 @@ public class SolarScene3DController implements Initializable {
 
     /**
      * When a key gets pressed, only "w", "a", "s", "d", "r", "." and ","
-     * @param ke
+     * @param ke as a {@code KeyEvent}
      */
     @FXML
     public void keyPress(KeyEvent ke) {
@@ -365,7 +577,7 @@ public class SolarScene3DController implements Initializable {
 
 
     /**
-     * Initiates all the planets and the probe. It gives the correct positions, velocities and masses.
+     * Initiates all the {@code Celestial Bodies}. It gives the correct {@code positions}, {@code velocities} and {@code masses}.
      */
     private void initiateCB(){
         Vector3d sunvel = new Vector3d(0,0,0);
@@ -425,6 +637,7 @@ public class SolarScene3DController implements Initializable {
     /**
      * Returns to the start screen when pressed.
      * @throws IOException
+     * @see javafx.scene.control.Button
      */
     @FXML
     public void onReturnButton() throws IOException{
@@ -462,24 +675,28 @@ public class SolarScene3DController implements Initializable {
         @Override
         public void handle(ActionEvent event) {
             
-            // Unreal_Engine unreal = new Unreal_Engine();
-            // AdamsBashforth a = new AdamsBashforth();
-
             //Run the Euler's method to get the next position and velocity of all celestial bodies + probe
             for (int i = 0; i < eulerLoops; i++) {
                 for (int j = 0; j < bodies.length; j++) {
-                    // bodies = unreal.Eulers(bodies, j, stepsize);
                     bodies = solvers(bodies, j, stepsize);
                 }
 
                 //Keep track of the time
                 seconds += stepsize;
                 k += stepsize;
-                if(k >= TimeStamp && timestampCheck){
-                    timestampLabel.setText("Time Stamp: " + k + " seconds (" + getTime(TimeStamp) + ")");
-                    positionLabel.setText("Position of the probe: x: " + bodies[11].getPosition().getX() + " y: " + bodies[11].getPosition().getY() + " z: " + bodies[11].getPosition().getZ());
-                    distanceLabel.setText("Distance Traveled: x: " + (bodies[11].getPosition().getX() - firstprobepos.getX() + " km y: " + (bodies[11].getPosition().getY()-firstprobepos.getY()) + " km z: " + (bodies[11].getPosition().getZ()-firstprobepos.getZ()) + " km"));
-                    totalDistanceLabel.setText("Total distance: " + Math.sqrt(Math.pow(bodies[11].getPosition().getX()-firstprobepos.getX(), 2)+Math.pow(bodies[11].getPosition().getY()-firstprobepos.getY(), 2)+Math.pow(bodies[11].getPosition().getZ()-firstprobepos.getZ(), 2))+ " km");
+                if(k >= TimeStamp && timestampCheck && TimeStamp != -1){
+                    String timeStampString = "Time Stamp: " + k + " seconds (" + getTime(TimeStamp) + ")";
+                    String positionString = "Position of the probe: x: " + bodies[11].getPosition().getX() + " y: " + bodies[11].getPosition().getY() + " z: " + bodies[11].getPosition().getZ();
+                    String distanceString = "Distance Traveled: x: " + (bodies[11].getPosition().getX() - firstprobepos.getX() + " km y: " + (bodies[11].getPosition().getY()-firstprobepos.getY()) + " km z: " + (bodies[11].getPosition().getZ()-firstprobepos.getZ()) + " km");
+                    String totalDistanceString = "Total distance: " + Math.sqrt(Math.pow(bodies[11].getPosition().getX()-firstprobepos.getX(), 2)+Math.pow(bodies[11].getPosition().getY()-firstprobepos.getY(), 2)+Math.pow(bodies[11].getPosition().getZ()-firstprobepos.getZ(), 2))+ " km";
+                    timestampLabel.setText(timeStampString);
+                    positionLabel.setText(positionString);
+                    distanceLabel.setText(distanceString);
+                    totalDistanceLabel.setText(totalDistanceString);
+                    System.out.println(timeStampString);
+                    System.out.println(positionString);
+                    System.out.println(distanceString);
+                    System.out.println(totalDistanceString);
                     timestampGroup.setVisible(true);
                     timestampCheck = false;
                 }
@@ -751,6 +968,7 @@ public class SolarScene3DController implements Initializable {
 
     /**
      * Focusses on the sun in the GUI.
+     * @see MenuItem
      */
     @FXML
     public void sunFocus(){
@@ -759,6 +977,7 @@ public class SolarScene3DController implements Initializable {
     }
     /**
      * Focusses on mercury in the GUI.
+     * @see MenuItem
      */
     @FXML
     public void mercuryFocus(){
@@ -766,6 +985,7 @@ public class SolarScene3DController implements Initializable {
     }
     /**
      * Focusses on venus in the GUI.
+     * @see MenuItem
      */
     @FXML
     public void venusFocus(){
@@ -773,6 +993,7 @@ public class SolarScene3DController implements Initializable {
     }
     /**
      * Focusses on earth in the GUI.
+     * @see MenuItem
      */
     @FXML
     public void earthFocus(){
@@ -780,6 +1001,7 @@ public class SolarScene3DController implements Initializable {
     }
     /**
      * Focusses on mars in the GUI.
+     * @see MenuItem
      */
     @FXML
     public void marsFocus(){
@@ -787,6 +1009,7 @@ public class SolarScene3DController implements Initializable {
     }
     /**
      * Focusses on jupiter in the GUI.
+     * @see MenuItem
      */
     @FXML
     public void jupiterFocus(){
@@ -794,6 +1017,7 @@ public class SolarScene3DController implements Initializable {
     }
     /**
      * Focusses on saturn in the GUI.
+     * @see MenuItem
      */
     @FXML
     public void saturnFocus(){
@@ -801,6 +1025,7 @@ public class SolarScene3DController implements Initializable {
     }
     /**
      * Focusses on the probe in the GUI.
+     * @see MenuItem
      */
     @FXML
     public void probeFocus(){
@@ -809,12 +1034,15 @@ public class SolarScene3DController implements Initializable {
 
     /**
      * Exits the program.
+     * @see MenuItem
      */
     @FXML
     public void onExit(){System.exit(0);}
 
     /**
      * Sets the used Solver method to Adams Bashfort.
+     * @see MenuItem
+     * @see twentyone.Classes.AdamsBashforth
      */
     @FXML
     public void onAdamsButton(){
@@ -823,6 +1051,8 @@ public class SolarScene3DController implements Initializable {
 
     /**
      * Sets the used Solver method to the Euler method.
+     * @see MenuItem
+     * @see twentyone.Classes.Euler
      */
     @FXML
     public void onEulerButton(){
@@ -831,6 +1061,8 @@ public class SolarScene3DController implements Initializable {
 
     /**
      * Sets the used Solver method to Verlet.
+     * @see MenuItem
+     * @see twentyone.Classes.VerletSolver
      */
     @FXML
     public void onVerletButton(){
@@ -839,6 +1071,8 @@ public class SolarScene3DController implements Initializable {
 
     /**
      * Sets the used Solver method to Runge Kutta.
+     * @see MenuItem
+     * @see twentyone.Classes.?
      */
     @FXML
     public void onRungeButton(){
@@ -847,6 +1081,8 @@ public class SolarScene3DController implements Initializable {
 
     /**
      * Sets the stepsize to 1.
+     * @see MenuItem
+     * @see twentyone.Controllers.SolarScene3DController#stepsize
      */
     @FXML
     public void onStepsize1(){
@@ -855,6 +1091,7 @@ public class SolarScene3DController implements Initializable {
 
     /**
      * Sets the stepsize to 10.
+     * @see MenuItem
      */
     @FXML
     public void onStepsize10(){
@@ -863,6 +1100,7 @@ public class SolarScene3DController implements Initializable {
 
     /**
      * Sets the stepsize to 100.
+     * @see MenuItem
      */
     @FXML
     public void onStepsize100(){
@@ -871,6 +1109,7 @@ public class SolarScene3DController implements Initializable {
 
     /**
      * Sets the stepsize to the initially chosen stepsize.
+     * @see MenuItem
      */
     @FXML
     public void onStepsizeChosen(){

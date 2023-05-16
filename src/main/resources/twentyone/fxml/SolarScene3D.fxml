@@ -8,6 +8,8 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Box?>
@@ -172,12 +174,17 @@
             </AnchorPane>
             <Group fx:id="sun">
                <children>
-                  <Text fill="#ffc800" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Sun" translateX="7.0">
+                  <Text fill="#ffc800" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Sun" translateX="7.0" visible="false">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Text>
                   <Sphere fx:id="sunSphere" radius="7.0" />
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-70.0" layoutY="-60.0" pickOnBounds="true" preserveRatio="true" scaleX="0.2" scaleY="0.2" scaleZ="0.2">
+                     <image>
+                        <Image url="@../Images/SunText.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Group>
             <Group fx:id="earth">
