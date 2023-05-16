@@ -14,8 +14,6 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-import javax.imageio.ImageIO;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -667,6 +665,9 @@ public class SolarScene3DController implements Initializable {
         }
     }
     
+    /**
+     * The class that calculates the movement of the {@code Celestial Bodies} and updates the time. 
+     */
     public class Movement implements EventHandler<ActionEvent>{
 
         /**

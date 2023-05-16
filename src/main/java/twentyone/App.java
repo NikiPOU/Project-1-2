@@ -14,6 +14,10 @@ import java.io.IOException;
 
 /**
  * JavaFX App
+ * <ul>
+ * <li>This extends the {@code Application}
+ * </ul>
+ * @see Application
  */
 public class App extends Application {
 
