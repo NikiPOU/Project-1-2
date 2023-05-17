@@ -2,7 +2,7 @@ package twentyone.Classes;
 
 import twentyone.Interfaces.Vector3dInterface;
 
-//package core;
+package core;
 
 /**
  * The <code>Vector3d Class</code> is a 3D array of positions used to calculate the next positions and velocities.
