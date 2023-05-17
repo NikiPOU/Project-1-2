@@ -189,8 +189,13 @@
             </Group>
             <Group fx:id="earth">
                <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-80.0" layoutY="-55.0" pickOnBounds="true" preserveRatio="true" scaleX="0.2" scaleY="0.2" scaleZ="0.2">
+                     <image>
+                        <Image url="@../Images/EarthText.png" />
+                     </image>
+                  </ImageView>
                   <Sphere fx:id="earthSphere" radius="2.0" />
-                  <Text fill="BLUE" strokeType="OUTSIDE" strokeWidth="0.0" text="Earth" translateX="2.0">
+                  <Text fill="BLUE" strokeType="OUTSIDE" strokeWidth="0.0" text="Earth" translateX="2.0" visible="false">
                      <font>
                         <Font size="10.0" />
                      </font>
@@ -199,8 +204,13 @@
             </Group>
             <Group fx:id="mercury">
                <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-80.0" layoutY="-55.0" pickOnBounds="true" preserveRatio="true" scaleX="0.2" scaleY="0.2" scaleZ="0.2">
+                     <image>
+                        <Image url="@../Images/MercuryText.png" />
+                     </image>
+                  </ImageView>
                   <Sphere fx:id="mercurySphere" />
-                  <Text fill="LIGHTBLUE" strokeType="OUTSIDE" strokeWidth="0.0" text="Mercury" translateX="1.0">
+                  <Text fill="LIGHTBLUE" strokeType="OUTSIDE" strokeWidth="0.0" text="Mercury" translateX="1.0" visible="false">
                      <font>
                         <Font size="10.0" />
                      </font>
@@ -210,57 +220,87 @@
             <Group fx:id="venus">
                <children>
                   <Sphere fx:id="venusSphere" radius="2.0" />
-                  <Text fill="#c99f29" strokeType="OUTSIDE" strokeWidth="0.0" text="Venus" translateX="2.0">
+                  <Text fill="#c99f29" strokeType="OUTSIDE" strokeWidth="0.0" text="Venus" translateX="2.0" visible="false">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Text>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-80.0" layoutY="-55.0" pickOnBounds="true" preserveRatio="true" scaleX="0.2" scaleY="0.2" scaleZ="0.2">
+                     <image>
+                        <Image url="@../Images/VenusText.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Group>
             <Group fx:id="mars">
                <children>
                   <Sphere fx:id="marsSphere" radius="2.0" />
-                  <Text fill="MAROON" strokeType="OUTSIDE" strokeWidth="0.0" text="Mars" translateX="2.0">
+                  <Text fill="MAROON" strokeType="OUTSIDE" strokeWidth="0.0" text="Mars" translateX="2.0" visible="false">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Text>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-80.0" layoutY="-55.0" pickOnBounds="true" preserveRatio="true" scaleX="0.2" scaleY="0.2" scaleZ="0.2">
+                     <image>
+                        <Image url="@../Images/MarsText.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Group>
             <Group fx:id="jupiter">
                <children>
-                  <Text fill="BURLYWOOD" strokeType="OUTSIDE" strokeWidth="0.0" text="Jupiter" translateX="4.0">
+                  <Text fill="BURLYWOOD" strokeType="OUTSIDE" strokeWidth="0.0" text="Jupiter" translateX="4.0" visible="false">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Text>
                   <Sphere fx:id="jupiterSphere" radius="4.0" />
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-70.0" layoutY="-55.0" pickOnBounds="true" preserveRatio="true" scaleX="0.2" scaleY="0.2" scaleZ="0.2">
+                     <image>
+                        <Image url="@../Images/JupiterText.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Group>
             <Group fx:id="saturn">
                <children>
-                  <Text fill="DARKGOLDENROD" strokeType="OUTSIDE" strokeWidth="0.0" text="Saturn" translateX="3.0">
+                  <Text fill="DARKGOLDENROD" strokeType="OUTSIDE" strokeWidth="0.0" text="Saturn" translateX="3.0" visible="false">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Text>
                   <Sphere fx:id="saturnSphere" radius="3.0" />
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-80.0" layoutY="-55.0" pickOnBounds="true" preserveRatio="true" scaleX="0.2" scaleY="0.2" scaleZ="0.2">
+                     <image>
+                        <Image url="@../Images/SaturnText.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Group>
             <Group fx:id="moon">
                <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-80.0" layoutY="-55.0" pickOnBounds="true" preserveRatio="true" scaleX="0.2" scaleY="0.2" scaleZ="0.2">
+                     <image>
+                        <Image url="@../Images/MoonText.png" />
+                     </image>
+                  </ImageView>
                   <Sphere fx:id="moonSphere" />
-                  <Text fill="GREY" strokeType="OUTSIDE" strokeWidth="0.0" text="Moon" />
+                  <Text fill="GREY" strokeType="OUTSIDE" strokeWidth="0.0" text="Moon" visible="false" />
                </children>
             </Group>
             <Group fx:id="titan">
                <children>
-                  <Text fill="DARKCYAN" strokeType="OUTSIDE" strokeWidth="0.0" text="Titan">
+                  <Text fill="DARKCYAN" strokeType="OUTSIDE" strokeWidth="0.0" text="Titan" visible="false">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Text>
                   <Sphere fx:id="titanSphere" radius="2.0" />
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-80.0" layoutY="-55.0" pickOnBounds="true" preserveRatio="true" scaleX="0.2" scaleY="0.2" scaleZ="0.2">
+                     <image>
+                        <Image url="@../Images/TitanText.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Group>
          </children>
