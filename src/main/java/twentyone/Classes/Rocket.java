@@ -17,6 +17,7 @@ public class Rocket extends CelestialBody{
      */
     private Vector3d currentForce = new Vector3d(0, 0, 0);
     private Euler imLazy = new Euler();
+    private double fuel = 100000000;
     /**
      * Constructor for the {@code Rocket Class}.
      * @param initialVelocity as a {@code Vector3d Class}
@@ -60,5 +61,42 @@ public class Rocket extends CelestialBody{
 
         super.setNewForce(finalforce);
     }
+
     
+    private double norm_Two(Vector3d vect){
+        double finala = 0;
+        finala = Math.sqrt(vect.getX() + vect.getY() + vect.getZ());
+        return finala;
+    } 
+
+
+    public Vector3d getAnImpulse(Vector3d force, double startTime, double endtime){
+        if(norm_Two(force) <= 3*Math.pow(10, 7)){
+            Vector3d impulse = force.mul(endtime).sub(force.mul(startTime)); 
+            return impulse;
+        }
+        return null;
+    }
+
+
+    public void boostedVelo(Vector3d force, double start, double end){
+        Vector3d currentVelo = super.getVelocity();
+        Vector3d impulse = getAnImpulse(force, start, end);
+        Vector3d finalVelo = currentVelo.add(impulse.mul(1/super.getMass()));
+        super.setNewVelocity(finalVelo);
+    }
+
+    public void consumeImpulse(Vector3d imp){
+        double foir = norm_Two(imp);
+        //to consume fuel multiply with 1 m/s
+        //our velocity is in km/s so what we could do is convert the final velo of boosted to 
+        //m/s so then we can use it to consume 
+    }
+
+    public void consumeForce(Vector3d force){
+        double foir = norm_Two(force);
+        //to consume fuel multiply with 1 m
+        //we could use displacement
+    }
+
 }
