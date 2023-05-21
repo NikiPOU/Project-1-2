@@ -60,25 +60,27 @@ public class AdamsMoulton extends Solver{
 
         Vector3d position2AM = new Vector3d(0, 0,0);
         //for the position, the formula is Xn+2 = Xn+1 + 3/2 * h * Vn+1 - 1/2 * h * Vn (since V = X')
-        position2AB = position1.add(velocity1.mul(3/2*stepsize).sub(velocity0.mul(1/2*stepsize)));
+        position2AB = position1.add(velocity1.mul((double)3/2*stepsize).sub(velocity0.mul((double)1/2*stepsize)));
 
-        // System.out.println(position2AB);
+        //System.out.println(position2AB);
 
-        position2AM = position1.add(position2AB.mul(5/12*stepsize).add(velocity1.mul(8/12*stepsize).sub(velocity0.mul(1/12*stepsize))));
+        position2AM = position1.add(position2AB.mul((double)5/12*stepsize).add(velocity1.mul((double)8/12*stepsize).
+        sub(velocity0.mul((double)1/12*stepsize))));
 
-        // System.out.println(position2AM);
+        //System.out.println(position2AM);
 
         Vector3d velocity2AB = new Vector3d(0, 0,0);
 
         Vector3d velocity2AM = new Vector3d(0, 0,0);
         //for the velocity, the formula is Vn+2 = Vn+1 + 3/2 * h * Vn+1' - 1/2 * h * Vn'
-        velocity2AB = velocity1.add(velocity1Derivative.mul(3/2*stepsize).sub(velocity0Derivative.mul(1/2*stepsize)));
+        velocity2AB = velocity1.add((velocity1Derivative.mul((double)3/2*stepsize)).sub(velocity0Derivative.mul((double)1/2*stepsize)));
 
         // System.out.println(velocity2AB);
 
-        velocity2AM = velocity1.add(velocity2AB.mul(5/12*stepsize).add(velocity1Derivative.mul(8/12*stepsize).sub(velocity0Derivative.mul(1/12*stepsize))));
+        velocity2AM = velocity1.add((velocity2AB.mul((double)5/12*stepsize)).add((velocity1Derivative.mul((double)8/12*stepsize)).
+        sub((velocity0Derivative.mul((double)1/12*stepsize)))));
 
-        // System.out.println(velocity2AM);
+        //System.out.println(velocity2AM);
 
         //Updates the velocity and position of the given celestial body in the array of celestial bodies
         allBodies[bodyIndex].setNewPostion(position2AM);

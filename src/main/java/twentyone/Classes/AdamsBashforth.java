@@ -58,11 +58,11 @@ public class AdamsBashforth extends Solver {
         
         Vector3d position2 = new Vector3d(0, 0,0);
         //for the position, the formula is Xn+2 = Xn+1 + 3/2 * h * Vn+1 - 1/2 * h * Vn (since V = X')
-        position2 = position1.add(velocity1.mul(3/2*stepsize).sub(velocity0.mul(1/2*stepsize)));
+        position2 = position1.add(velocity1.mul((double)3/2*stepsize).sub(velocity0.mul((double)1/2*stepsize)));
 
         Vector3d velocity2 = new Vector3d(0, 0,0);
         //for the velocity, the formula is Vn+2 = Vn+1 + 3/2 * h * Vn+1' - 1/2 * h * Vn'
-        velocity2 = velocity1.add(velocity1Derivative.mul(3/2*stepsize).sub(velocity0Derivative.mul(1/2*stepsize)));
+        velocity2 = velocity1.add(velocity1Derivative.mul((double)3/2*stepsize).sub(velocity0Derivative.mul((double)1/2*stepsize)));
 
         //Updates the velocity and position of the given celestial body in the array of celestial bodies
         allBodies[bodyIndex].setNewPostion(position2);
