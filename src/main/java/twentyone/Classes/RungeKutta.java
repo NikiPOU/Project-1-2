@@ -38,7 +38,7 @@ public class RungeKutta extends Solver{
         double newX = currentPos.getX() + (k1x + 2.0 * k2x + 2.0 * k3x + k4x) / 6.0;
         double newY = currentPos.getY() + (k1y + 2.0 * k2y + 2.0 * k3y + k4y) / 6.0;
         double newZ = currentPos.getZ() + (k1z + 2.0 * k2z + 2.0 * k3z + k4z) / 6.0;
-        Vector3d newPosition = new Vector3d(newX,newY,newX);
+        Vector3d newPosition = new Vector3d(newX,newY,newZ);
 
 
         double newVX = velocityX(currentVel.getX() + k1x);
