@@ -43,6 +43,7 @@ import twentyone.Classes.AdamsBashforth;
 import twentyone.Classes.CelestialBody;
 import twentyone.Classes.Euler;
 import twentyone.Classes.Rocket;
+import twentyone.Classes.RungeKutta;
 import twentyone.Classes.Vector3d;
 import twentyone.Classes.VerletSolver;
 import twentyone.Classes.musicPlayer;
@@ -64,6 +65,11 @@ public class SolarScene3DController implements Initializable {
      * @see twentyone.Classes.VerletSolver
      */
     private VerletSolver verlet = new VerletSolver();
+    /**
+     * The {@code Runge-Kutta Solver}
+     * @see twentyone.Classes.RungeKutta
+     */
+    private RungeKutta rungeKutta = new RungeKutta();
 
     /**
      * The {@code Music Player}
@@ -81,7 +87,7 @@ public class SolarScene3DController implements Initializable {
      * @see twentyone.Classes.AdamsBashforth
      * @see twentyone.Classes.Euler
      * @see twentyone.Classes.VerletSolver
-     * @see twentyone.Classes.?
+     * @see twentyone.Classes.RungeKutta
      */
     private int chosenSolver = App.chosenSolver;
     /**
@@ -658,8 +664,7 @@ public class SolarScene3DController implements Initializable {
         } else if(chosenSolver == 2){
             return verlet.verlet(celestialBodies, chosenBody, chosenStepsize);
         } else if(chosenSolver == 3){
-            //Runge kutta
-            return celestialBodies;
+            return rungeKutta.rungKutta(celestialBodies, chosenBody, chosenStepsize);
         } else {
             return celestialBodies;
         }
@@ -1073,11 +1078,11 @@ public class SolarScene3DController implements Initializable {
     /**
      * Sets the used Solver method to Runge Kutta.
      * @see MenuItem
-     * @see twentyone.Classes.?
+     * @see twentyone.Classes.RungeKutta
      */
     @FXML
     public void onRungeButton(){
-        chosenSolver = 0;
+        chosenSolver = 3;
     }
 
     /**

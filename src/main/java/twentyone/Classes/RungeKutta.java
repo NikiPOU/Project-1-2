@@ -1,5 +1,10 @@
 package twentyone.Classes;
 
+/**
+ * Calculation of the {@code Celestial Bodies'} coordinates using a Runge-Kutta solver.
+ * This class extends the {@code Solver} Class.
+ * @see twentyone.Classes.Solver
+ */
 public class RungeKutta extends Solver{
 
     public CelestialBody[] rungKutta(CelestialBody[] allBodies, int bodyIndex, double stepSize) {
