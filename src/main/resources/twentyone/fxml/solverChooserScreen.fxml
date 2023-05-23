@@ -59,11 +59,6 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onAdamsMoultonButton" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: LIGHTBLUE;" text="Adams-Moulton" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
                </children>
             </GridPane>
          </children>
