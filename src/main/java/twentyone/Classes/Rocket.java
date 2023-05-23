@@ -15,8 +15,6 @@ public class Rocket extends CelestialBody{
      * 
      * velocity with a 90 degrees angle from the earths surface
      */
-    private Vector3d currentForce = new Vector3d(0, 0, 0);
-    private Euler imLazy = new Euler();
     private double fuel = 100000000;
     /**
      * Constructor for the {@code Rocket Class}.
@@ -26,50 +24,25 @@ public class Rocket extends CelestialBody{
     public Rocket(Vector3d initialVelocity, Vector3d initialPosition){
         super(initialVelocity, initialPosition, 50000);
     }
-   
-    /**
-     * Calculates the impulse for the {@code Rocket Class}.
-     * @param testing as a {@code Celestial Body Array}
-     * @param stepSizer as a {@code double}
-     * @return the impulse as a {@code Vector3d Class}
-     */
-    public Vector3d calculateImpulse(CelestialBody[] testing, double stepSizer){
-        //aight let's go through the process...
-        //firstly for velocity use our current velocity
-        Vector3d firstVelo = super.getVelocity();
-        //aight then get the next velocity we will use euler
-        Vector3d derivVelo = imLazy.sumOf_Forces(testing, 11); //1 is a random number just not to get error, it represents probe in array
-        Vector3d newVelocityOfDesiredPlanet = new Vector3d(0,0, 0);
-
-        newVelocityOfDesiredPlanet = firstVelo.sub(derivVelo.mul(stepSizer));
-
-        //ez right now lets see we should have all we need to do m(Vn+1  -  Vn) to get impulse
-        Vector3d impulse_vector = new Vector3d(0, 0, 0);
-
-        impulse_vector = (newVelocityOfDesiredPlanet.sub(firstVelo)).mul(super.getMass());
-        return impulse_vector;
-    }
-
-    /**Coming soon */
-    public void finalCombinedForce(CelestialBody[] testobago, double gun){
-        //aight I can't be bothered so Imma call the functions to get the forces
-        Vector3d force = imLazy.sumOf_Forces(testobago, 11);
-        Vector3d impulse = calculateImpulse(testobago, gun);
-        Vector3d finalforce = new Vector3d(0, 0, 0);
-
-        finalforce = force.add(impulse);//O(k) in which k is the length of the array to represent a 3d vector
-
-        super.setNewForce(finalforce);
-    }
-
     
+    /**
+     * Get the norm two of a vector.
+     * @param vect a 3d vector
+     * @return a double norm two of a vector
+     */
     private double norm_Two(Vector3d vect){
         double finala = 0;
         finala = Math.sqrt(vect.getX() + vect.getY() + vect.getZ());
         return finala;
     } 
 
-
+    /**
+     * Calculates and returns an impulse if the force is small enough.
+     * @param force the total force the impulse must have
+     * @param startTime the start time of the impulse
+     * @param endtime the end time of the impulse
+     * @return a 3D vector of the calculated impulse
+     */
     public Vector3d getAnImpulse(Vector3d force, double startTime, double endtime){
         if(norm_Two(force) <= 3*Math.pow(10, 7)){
             Vector3d impulse = force.mul(endtime).sub(force.mul(startTime)); 
@@ -78,7 +51,12 @@ public class Rocket extends CelestialBody{
         return null;
     }
 
-
+    /**
+     * The velocity of the rocket with the impulse added to it
+     * @param force the force decided to give the rocket
+     * @param start the start time of the impulse
+     * @param end the end time of the impulse
+     */
     public void boostedVelo(Vector3d force, double start, double end){
         Vector3d currentVelo = super.getVelocity();
         consumeForce(force, (end-start));
@@ -88,6 +66,11 @@ public class Rocket extends CelestialBody{
         super.setNewVelocity(finalVelo);
     }
 
+    /**
+     * Subtracts the fuel used during an impulse
+     * @param imp the impulse
+     * @param timeInterval the time the impulse took
+     */
     public void consumeImpulse(Vector3d imp, double timeInterval){
         double foir = norm_Two(imp)*timeInterval;
         fuel = fuel - foir;
@@ -96,6 +79,11 @@ public class Rocket extends CelestialBody{
         //m/s so then we can use it to consume 
     }
 
+    /**
+     * Subtracts the fuel used during a force
+     * @param force the force
+     * @param timeInterval the time the force took
+     */
     public void consumeForce(Vector3d force, double timeInterval){
         double foir = norm_Two(force)*timeInterval;
         fuel = fuel - foir;
@@ -103,6 +91,10 @@ public class Rocket extends CelestialBody{
         //we could use displacement
     }
 
+    /**
+     * Get the fuel of the rocket
+     * @return the amount of fuel
+     */
     public double getFuel() {
         return fuel;
     }
