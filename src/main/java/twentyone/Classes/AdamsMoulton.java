@@ -42,9 +42,9 @@ public class AdamsMoulton extends Solver{
         //For the first run Vn+1 and Xn+1 do not exist yet, so the Euler solver is used to calculate them. After that
         //they are the last calculated velocity and position saved in the array with all celestial bodies
         if (oldVelocity[bodyIndex].getX() == 0.0) {
-            Euler engine = new Euler();
-            velocity1 = engine.Eulers(allBodies, bodyIndex, stepsize)[bodyIndex].getVelocity();
-            position1 = engine.Eulers(allBodies, bodyIndex, stepsize)[bodyIndex].getPosition();
+            RungeKutta k = new RungeKutta();
+            velocity1 = k.rungKutta(allBodies, bodyIndex, stepsize)[bodyIndex].getVelocity();
+            position1 = k.rungKutta(allBodies, bodyIndex, stepsize)[bodyIndex].getPosition();
 
             oldVelocity[bodyIndex] = velocity1;
 
