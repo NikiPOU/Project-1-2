@@ -30,7 +30,6 @@ public class Vector3dTest {
 
         Vector3d res = a.addMul(2, b);
         assertTrue(res.equals(new Vector3d(9, 12, 15)));
-
     }
 
     @Test

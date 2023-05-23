@@ -43,8 +43,9 @@ public class AdamsMoulton extends Solver{
         //they are the last calculated velocity and position saved in the array with all celestial bodies
         if (oldVelocity[bodyIndex].getX() == 0.0) {
             RungeKutta k = new RungeKutta();
-            velocity1 = k.rungKutta(allBodies, bodyIndex, stepsize)[bodyIndex].getVelocity();
-            position1 = k.rungKutta(allBodies, bodyIndex, stepsize)[bodyIndex].getPosition();
+            CelestialBody c = k.rungKutta(allBodies, bodyIndex, stepsize)[bodyIndex];
+            velocity1 = c.getVelocity();
+            position1 = c.getPosition();
 
             oldVelocity[bodyIndex] = velocity1;
 
