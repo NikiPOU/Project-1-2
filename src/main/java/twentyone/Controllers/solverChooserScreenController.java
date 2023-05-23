@@ -60,14 +60,14 @@ public class solverChooserScreenController {
     }
 
     /**
-     * When the {@code Adams-Bashforth Button} gets pressed, the chosen {@code Solver} will be set to the {@code Adams-Bashforth solver}. It will then change to the next screen.
+     * When the {@code Adams-Moulton Button} gets pressed, the chosen {@code Solver} will be set to the {@code Adams-Moulton solver}. It will then change to the next screen.
      * @throws IOException
      * @see twentyone.Classes.Solver
-     * @see twentyone.Classes.AdamsBashforth
+     * @see twentyone.Classes.AdamsMoulton
      * @see javafx.scene.control.Button
      */
     @FXML
-    public void onAdamsMoultonButton() throws IOException{
+    public void onMoultonButton() throws IOException{
         App.chosenSolver = 4;
         App.setRoot("fxml/numberChooserScreen");
     }

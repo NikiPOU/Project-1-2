@@ -35,6 +35,7 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Sphere;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -75,7 +76,7 @@ public class SolarScene3DController implements Initializable {
      * The {@code Adams-Moulton Solver}
      * @see twentyone.Classes.AdamsMoulton
      */
-    private AdamsMoulton am = new AdamsMoulton();
+    private AdamsMoulton aMoulton = new AdamsMoulton();
 
     /**
      * The {@code Music Player}
@@ -86,11 +87,13 @@ public class SolarScene3DController implements Initializable {
      * The chosen {@code Solver}. This could be one of the following:
      * <ul>
      * <li> {@code Adams-Bashforth Solver}
+     * <li> {@code Adams-Moulton Solver}
      * <li> {@code Euler Solver}
      * <li> {@code Verlet Solver}
      * <li> {@code Runge-Kutta Solver}
      * </ul>
      * @see twentyone.Classes.AdamsBashforth
+     * @see twentyone.Classes.AdamsMoulton
      * @see twentyone.Classes.Euler
      * @see twentyone.Classes.VerletSolver
      * @see twentyone.Classes.RungeKutta
@@ -356,6 +359,11 @@ public class SolarScene3DController implements Initializable {
 
     @FXML
     private MenuItem stepsizeButton;
+
+    @FXML
+    private AnchorPane mainScreen;
+    @FXML
+    private Group path;
     
 
     /**
@@ -371,6 +379,8 @@ public class SolarScene3DController implements Initializable {
         sunPos[2] = 0;
         focused = false;
         resetCheck = false;
+        path = new Group();
+        mainScreen.getChildren().add(path);
         // decoyBody = new CelestialBody(initialPosProbe, firstprobepos, 0);
         // sun.setTranslateX(sunPos[0]);
         // sun.setTranslateY(sunPos[1]);
@@ -422,20 +432,20 @@ public class SolarScene3DController implements Initializable {
                 String saturnString = "";
                 String titanString = "";
                 try {
-                    sunString = (new File("src/main/resources/twentyone/Images/Sun.png").toURI().toURL()).toString();
-                    mercuryString = (new File("src/main/resources/twentyone/Images/Mercury.png").toURI().toURL()).toString();
-                    venusString = (new File("src/main/resources/twentyone/Images/Venus.png").toURI().toURL()).toString();
-                    earthString = (new File("src/main/resources/twentyone/Images/Earth.png").toURI().toURL()).toString();
-                    moonString = (new File("src/main/resources/twentyone/Images/Moon.png").toURI().toURL()).toString();
-                    marsString = (new File("src/main/resources/twentyone/Images/Mars.png").toURI().toURL()).toString();
-                    jupiterString = (new File("src/main/resources/twentyone/Images/Jupiter.png").toURI().toURL()).toString();
-                    saturnString = (new File("src/main/resources/twentyone/Images/Saturn.png").toURI().toURL()).toString();
+                    sunString = (new File("src/main/resources/twentyone/Images/sunMap.jpg").toURI().toURL()).toString();
+                    mercuryString = (new File("src/main/resources/twentyone/Images/mercuryMap.jpg").toURI().toURL()).toString();
+                    venusString = (new File("src/main/resources/twentyone/Images/venusMap.jpg").toURI().toURL()).toString();
+                    earthString = (new File("src/main/resources/twentyone/Images/earthMap.jpg").toURI().toURL()).toString();
+                    moonString = (new File("src/main/resources/twentyone/Images/moonMap.jpg").toURI().toURL()).toString();
+                    marsString = (new File("src/main/resources/twentyone/Images/marsMap.jpg").toURI().toURL()).toString();
+                    jupiterString = (new File("src/main/resources/twentyone/Images/jupiterMap.jpg").toURI().toURL()).toString();
+                    saturnString = (new File("src/main/resources/twentyone/Images/saturnMap.jpg").toURI().toURL()).toString();
                     titanString = (new File("src/main/resources/twentyone/Images/Titan.png").toURI().toURL()).toString();
                 } catch (MalformedURLException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                System.out.println(sunString);
+                // System.out.println(sunString);
                 // PhongMaterial sunMaterial = new PhongMaterial();
                 // sunMaterial.setDiffuseMap(new Image(sunString));
                 sunSphere.setMaterial(phongMaker(sunString));
@@ -458,6 +468,13 @@ public class SolarScene3DController implements Initializable {
                 fire8.setMaterial(new PhongMaterial(Color.YELLOW));
             }
         });
+        earthSphere.setRotationAxis(Rotate.Y_AXIS);
+        mercurySphere.setRotationAxis(Rotate.Y_AXIS);
+        venusSphere.setRotationAxis(Rotate.Y_AXIS);
+        marsSphere.setRotationAxis(Rotate.Y_AXIS);
+        jupiterSphere.setRotationAxis(Rotate.Y_AXIS);
+        saturnSphere.setRotationAxis(Rotate.Y_AXIS);
+        sunSphere.setRotationAxis(Rotate.Y_AXIS);
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setAutoReverse(false);
@@ -672,7 +689,7 @@ public class SolarScene3DController implements Initializable {
         } else if(chosenSolver == 3){
             return rungeKutta.rungKutta(celestialBodies, chosenBody, chosenStepsize);
         } else if(chosenSolver == 4){
-            return am.adams(celestialBodies, chosenBody, chosenStepsize);            
+            return aMoulton.adams(celestialBodies, chosenBody, chosenStepsize);
         } else {
             return celestialBodies;
         }
@@ -718,6 +735,13 @@ public class SolarScene3DController implements Initializable {
                     minutes++;
                     seconds = 0;
                     if(minutes % 60 == 0){
+                        earthSphere.rotateProperty().set(earthSphere.getRotate() + 15);
+                        mercurySphere.rotateProperty().set(mercurySphere.getRotate() + 0.256);
+                        venusSphere.rotateProperty().set(venusSphere.getRotate() + 0.062);
+                        marsSphere.rotateProperty().set(marsSphere.getRotate() + 14.4);
+                        jupiterSphere.rotateProperty().set(jupiterSphere.getRotate() + 36);
+                        saturnSphere.rotateProperty().set(saturnSphere.getRotate() + 32.727);
+                        sunSphere.rotateProperty().set(sunSphere.getRotate() + 0.556);
                         hours++;
                         minutes = 0;
                         if(hours % 24 == 0){
@@ -800,28 +824,23 @@ public class SolarScene3DController implements Initializable {
                 closestdistanceTitan.setText("Closest distance to Titan: " + closestTitan + " km");
                 titanMoment.setText("Moment closest distance to Titan: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");
             }
-            setGUIcoords(probe, spax/divider, spay/divider, spaz/divider);
+            spax /= divider;
+            spay /= divider;
+            spaz /= divider;
+            setGUIcoords(probe, spax, spay, spaz);
+            // circlemaker(9, spax, spay, spaz);
             //double probeangle = Math.acos(((spax*titPos[0]) + (spay*titPos[1]) + (spaz*titPos[2]))/(Math.sqrt((Math.pow(spax, 2) + Math.pow(spay, 2) + Math.pow(spaz, 2)) * (Math.pow(titPos[0], 2) + Math.pow(titPos[1], 2) + Math.pow(titPos[2], 2)))));
             double probeAngleX = Math.atan2(titan.getTranslateY() - probe.getTranslateY(), titan.getTranslateX() - probe.getTranslateX());
             // System.out.println(probeAngleX);
             probe.setRotate(90 + probeAngleX*90);
-            // Rotate rotate = new Rotate();
-            // rotate.setPivotX(spax);
-            // rotate.setPivotY(spay);
-            // probe.getTransforms().addAll(rotate);
-            // rotate.setAngle(probeAngleX);
-            // probe.getTransforms().add(rotate);
-
-            //Draw the path of the probe
-
-            // Circle circle = new Circle();
-            // circle.setCenterX(spax);
-            // circle.setCenterY(spay);
-            // circle.setRadius(2);
-            // circle.setFill(Color.rgb(r, g, b));
-            // circle.setOpacity(0.4);
-            // dotList.add(circle);
-            // dots.getChildren().add(circle);
+            path.setVisible(true);
+            
+            Sphere sphere = new Sphere();
+            sphere.setRadius(2);
+            sphere.setTranslateX(spax);
+            sphere.setTranslateY(spay);
+            sphere.setTranslateZ(spaz);
+            path.getChildren().add(sphere);
         }
 
         /**
@@ -829,45 +848,52 @@ public class SolarScene3DController implements Initializable {
          * @param index
          * @param x
          * @param y
+         * @param z
          */
-        private void circlemaker(int index, double x, double y){
-            Circle circle = new Circle();
-            if(index == 1){
-                circle.setLayoutX(x+5);
-                circle.setLayoutY(y+5);
-                circle.setFill(Color.LIGHTGRAY);
-            } else if(index == 2){
-                circle.setLayoutX(x+10);
-                circle.setLayoutY(y+10);
-                circle.setFill(Color.DARKORANGE);
-            } else if(index == 3){
-                circle.setCenterX(x+10);
-                circle.setCenterY(y+10);
-                circle.setFill(Color.GREEN);
-            } else if(index == 4){
-                circle.setCenterX(x+2);
-                circle.setCenterY(y+2);
-                circle.setFill(Color.WHITE);
-            } else if(index == 5){
-                circle.setLayoutX(x+8);
-                circle.setLayoutY(y+8);
-                circle.setFill(Color.CRIMSON);
-            } else if(index == 6){
-                circle.setLayoutX(x+30);
-                circle.setLayoutY(y+30);
-                circle.setFill(Color.KHAKI);
-            } else if(index == 7){
-                circle.setLayoutX(x+48);
-                circle.setLayoutY(y+24);
-                circle.setFill(Color.MAROON);
-            } else if(index == 8){
-                circle.setLayoutX(x+9);
-                circle.setLayoutY(y+9);
-                circle.setFill(Color.CYAN);
+        private void circlemaker(int index, double x, double y, double z){
+            Sphere sphere = new Sphere();
+            // if(index == 1){
+            //     circle.setLayoutX(x+5);
+            //     circle.setLayoutY(y+5);
+            //     circle.setFill(Color.LIGHTGRAY);
+            // } else if(index == 2){
+            //     circle.setLayoutX(x+10);
+            //     circle.setLayoutY(y+10);
+            //     circle.setFill(Color.DARKORANGE);
+            // } else if(index == 3){
+            //     circle.setCenterX(x+10);
+            //     circle.setCenterY(y+10);
+            //     circle.setFill(Color.GREEN);
+            // } else if(index == 4){
+            //     circle.setCenterX(x+2);
+            //     circle.setCenterY(y+2);
+            //     circle.setFill(Color.WHITE);
+            // } else if(index == 5){
+            //     circle.setLayoutX(x+8);
+            //     circle.setLayoutY(y+8);
+            //     circle.setFill(Color.CRIMSON);
+            // } else if(index == 6){
+            //     circle.setLayoutX(x+30);
+            //     circle.setLayoutY(y+30);
+            //     circle.setFill(Color.KHAKI);
+            // } else if(index == 7){
+            //     circle.setLayoutX(x+48);
+            //     circle.setLayoutY(y+24);
+            //     circle.setFill(Color.MAROON);
+            // } else if(index == 8){
+            //     circle.setLayoutX(x+9);
+            //     circle.setLayoutY(y+9);
+            //     circle.setFill(Color.CYAN);
+            // } else 
+            if(index == 9){
+                sphere.setTranslateX(x);
+                sphere.setTranslateY(y);
+                sphere.setTranslateZ(z);
+                // sphere.setFill(Color.GREY);
             }
-            circle.setRadius(1);
-            circle.setOpacity(0.3);
-            // path.getChildren().add(circle);
+            sphere.setRadius(2);
+            sphere.setOpacity(1);
+            path.getChildren().add(sphere);
         }
 
         /**
@@ -1094,12 +1120,12 @@ public class SolarScene3DController implements Initializable {
     }
 
     /**
-     * Sets the used Solver method to Adams Bashfort.
+     * Sets the used Solver method to Adams-Moulton.
      * @see MenuItem
-     * @see twentyone.Classes.AdamsBashforth
+     * @see twentyone.Classes.AdamsMoulton
      */
     @FXML
-    public void onAdamsMoultonButton(){
+    public void onMoultonButton(){
         chosenSolver = 4;
     }
 
