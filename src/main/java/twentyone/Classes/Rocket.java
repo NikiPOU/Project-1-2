@@ -103,4 +103,8 @@ public class Rocket extends CelestialBody{
         //we could use displacement
     }
 
+    public double getFuel() {
+        return fuel;
+    }
+
 }
