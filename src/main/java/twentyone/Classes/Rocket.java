@@ -81,20 +81,24 @@ public class Rocket extends CelestialBody{
 
     public void boostedVelo(Vector3d force, double start, double end){
         Vector3d currentVelo = super.getVelocity();
+        consumeForce(force, (end-start));
         Vector3d impulse = getAnImpulse(force, start, end);
+        consumeImpulse(impulse, (end-start));
         Vector3d finalVelo = currentVelo.add(impulse.mul(1/super.getMass()));
         super.setNewVelocity(finalVelo);
     }
 
-    public void consumeImpulse(Vector3d imp){
-        double foir = norm_Two(imp);
+    public void consumeImpulse(Vector3d imp, double timeInterval){
+        double foir = norm_Two(imp)*timeInterval;
+        fuel = fuel - foir;
         //to consume fuel multiply with 1 m/s
         //our velocity is in km/s so what we could do is convert the final velo of boosted to 
         //m/s so then we can use it to consume 
     }
 
-    public void consumeForce(Vector3d force){
-        double foir = norm_Two(force);
+    public void consumeForce(Vector3d force, double timeInterval){
+        double foir = norm_Two(force)*timeInterval;
+        fuel = fuel - foir;
         //to consume fuel multiply with 1 m
         //we could use displacement
     }
