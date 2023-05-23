@@ -32,7 +32,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import twentyone.App;
-import twentyone.Classes.AdamsBashforth;
 import twentyone.Classes.CelestialBody;
 import twentyone.Classes.Euler;
 import twentyone.Classes.Vector3d;

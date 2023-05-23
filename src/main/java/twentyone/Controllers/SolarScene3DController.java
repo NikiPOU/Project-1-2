@@ -40,6 +40,7 @@ import javafx.util.Duration;
 
 import twentyone.App;
 import twentyone.Classes.AdamsBashforth;
+import twentyone.Classes.AdamsMoulton;
 import twentyone.Classes.CelestialBody;
 import twentyone.Classes.Euler;
 import twentyone.Classes.Rocket;
@@ -70,6 +71,11 @@ public class SolarScene3DController implements Initializable {
      * @see twentyone.Classes.RungeKutta
      */
     private RungeKutta rungeKutta = new RungeKutta();
+    /**
+     * The {@code Adams-Moulton Solver}
+     * @see twentyone.Classes.AdamsMoulton
+     */
+    private AdamsMoulton am = new AdamsMoulton();
 
     /**
      * The {@code Music Player}
@@ -665,6 +671,8 @@ public class SolarScene3DController implements Initializable {
             return verlet.verlet(celestialBodies, chosenBody, chosenStepsize);
         } else if(chosenSolver == 3){
             return rungeKutta.rungKutta(celestialBodies, chosenBody, chosenStepsize);
+        } else if(chosenSolver == 4){
+            return am.adams(celestialBodies, chosenBody, chosenStepsize);            
         } else {
             return celestialBodies;
         }
@@ -1083,6 +1091,16 @@ public class SolarScene3DController implements Initializable {
     @FXML
     public void onRungeButton(){
         chosenSolver = 3;
+    }
+
+    /**
+     * Sets the used Solver method to Adams Bashfort.
+     * @see MenuItem
+     * @see twentyone.Classes.AdamsBashforth
+     */
+    @FXML
+    public void onAdamsMoultonButton(){
+        chosenSolver = 4;
     }
 
     /**
