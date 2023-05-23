@@ -30,17 +30,18 @@ public class CoordsToFile {
         AdamsBashforth a = new AdamsBashforth(); 
         writeToFile(bodies[3].getPosition().getX(), bodies[3].getPosition().getY(), filename);
         //coords are printed 720 times so 12 hours
-        for (int k = 0; k < 720; k++) {
+
+        for (int k = 0; k < 30; k++) {
             //runs 60 times so every minute coords are printed
-            for (int i = 0; i < 60; i++) {
+            for (int i = 0; i < 60 * 60 * 24; i++) {
                 for (int j = 0; j < bodies.length; j++) {
                     //update bodies with the chosen solver
-                    bodies = a.adams(bodies, j, 1);
+                    bodies = am.adams(bodies, j, 1);
                 }
             }
+
             writeToFile(bodies[3].getPosition().getX(), bodies[3].getPosition().getY(), filename);
         }
-
     }
 
     public static void nasaCoordsToFile(String newfilename, String horizon_resultsFile) {
@@ -114,7 +115,7 @@ public class CoordsToFile {
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw))
         {
-            out.println(x + " " + y);
+            out.println("X =" + x + " " + "Y =" + y);
 
         } catch (Exception e) {
             System.out.println("file not found");

@@ -42,9 +42,18 @@ public class AdamsMoulton extends Solver{
         //For the first run Vn+1 and Xn+1 do not exist yet, so the Euler solver is used to calculate them. After that
         //they are the last calculated velocity and position saved in the array with all celestial bodies
         if (oldVelocity[bodyIndex].getX() == 0.0) {
-            Euler engine = new Euler();
-            velocity1 = engine.Eulers(allBodies, bodyIndex, stepsize)[bodyIndex].getVelocity();
-            position1 = engine.Eulers(allBodies, bodyIndex, stepsize)[bodyIndex].getPosition();
+            RungeKutta k = new RungeKutta();
+            CelestialBody c = k.rungKutta(allBodies, bodyIndex, stepsize)[bodyIndex];
+            velocity1 = c.getVelocity();
+            position1 = c.getPosition();
+
+            oldVelocity[bodyIndex] = velocity1;
+
+            //Updates the velocity and position of the given celestial body in the array of celestial bodies
+            allBodies[bodyIndex].setNewPostion(position1);
+            allBodies[bodyIndex].setNewVelocity(velocity1);
+            
+            return allBodies;
         }
         else {
             velocity1 = allBodies[bodyIndex].getVelocity();
@@ -55,32 +64,38 @@ public class AdamsMoulton extends Solver{
         Vector3d velocity1Derivative = sumOf_Forces(allBodies, bodyIndex); 
         //The old velocity is now Vn+1 instead of Vn
         oldVelocity[bodyIndex] = velocity1;
-        
-        Vector3d position2AB = new Vector3d(0, 0,0);
 
-        Vector3d position2AM = new Vector3d(0, 0,0);
+        //First do the predictor (Adams-Bashforth)
+        Vector3d position2AB = new Vector3d(0, 0,0);
         //for the position, the formula is Xn+2 = Xn+1 + 3/2 * h * Vn+1 - 1/2 * h * Vn (since V = X')
         position2AB = position1.add(velocity1.mul((double)3/2*stepsize).sub(velocity0.mul((double)1/2*stepsize)));
-
-        //System.out.println(position2AB);
-
-        position2AM = position1.add(position2AB.mul((double)5/12*stepsize).add(velocity1.mul((double)8/12*stepsize).
-        sub(velocity0.mul((double)1/12*stepsize))));
-
-        //System.out.println(position2AM);
-
+        
         Vector3d velocity2AB = new Vector3d(0, 0,0);
-
-        Vector3d velocity2AM = new Vector3d(0, 0,0);
         //for the velocity, the formula is Vn+2 = Vn+1 + 3/2 * h * Vn+1' - 1/2 * h * Vn'
         velocity2AB = velocity1.add((velocity1Derivative.mul((double)3/2*stepsize)).sub(velocity0Derivative.mul((double)1/2*stepsize)));
 
-        // System.out.println(velocity2AB);
+        //Update to get the velocity2derivative later
+        allBodies[bodyIndex].setNewPostion(position2AB);
+        allBodies[bodyIndex].setNewVelocity(velocity2AB);
 
-        velocity2AM = velocity1.add((velocity2AB.mul((double)5/12*stepsize)).add((velocity1Derivative.mul((double)8/12*stepsize)).
+        //Then the corrector
+        Vector3d position2AM = new Vector3d(0, 0,0);
+
+        Vector3d am1 = velocity2AB.mul((double)5/12*stepsize);
+        Vector3d am2 = velocity1.mul((double)8/12*stepsize);
+        Vector3d am3 = velocity0.mul((double)1/12*stepsize);
+
+        //Single iteration for the corrector
+        position2AM = position1.add(am1).add(am2).sub(am3);
+
+
+        Vector3d velocity2AM = new Vector3d(0, 0,0);
+
+        Vector3d velocity2Derivative = sumOf_Forces(allBodies, bodyIndex); 
+
+        //Single iteration for the corrector
+        velocity2AM = velocity1.add((velocity2Derivative.mul((double)5/12*stepsize)).add((velocity1Derivative.mul((double)8/12*stepsize)).
         sub((velocity0Derivative.mul((double)1/12*stepsize)))));
-
-        //System.out.println(velocity2AM);
 
         //Updates the velocity and position of the given celestial body in the array of celestial bodies
         allBodies[bodyIndex].setNewPostion(position2AM);
@@ -89,7 +104,3 @@ public class AdamsMoulton extends Solver{
         return allBodies;
     }
 }
-// LINES 62 AND 70 HAVE BEEN ADDED (AND updated TO LINES 79 and 80) FOR A PREDICTOR CORRECTOR AM METHOD
-// PLEASE CHECK IF IT FUNCTIONS
-
-// ONLY A SINGLE ITERATION OF THE CORRECTOR

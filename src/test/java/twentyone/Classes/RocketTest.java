@@ -17,15 +17,15 @@ public class RocketTest {
     @Test
     public void testConsumeForce() {
         Rocket rocket = new Rocket(new Vector3d(1, 2, 3), new Vector3d(2, 2, 2));
-        rocket.consumeForce(new Vector3d(50000, 0, 0));
-        //Code not done yet
+        rocket.consumeForce(new Vector3d(50000, 0, 0), 2);
+        assertTrue(rocket.getFuel()==100000000-Math.sqrt(50000)*2);
     }
 
     @Test
     public void testConsumeImpulse() {
         Rocket rocket = new Rocket(new Vector3d(1, 2, 3), new Vector3d(2, 2, 2));
-        rocket.consumeImpulse(new Vector3d(50000, 0, 0));
-        //Code not done yet
+        rocket.consumeImpulse(new Vector3d(50000, 0, 0), 2);
+        assertTrue(rocket.getFuel()==100000000-Math.sqrt(50000)*2);
     }
 
     @Test
