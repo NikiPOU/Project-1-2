@@ -12,12 +12,13 @@ import twentyone.Classes.CelestialBody;
 import twentyone.Classes.Euler;
 import twentyone.Classes.Vector3d;
 import twentyone.Classes.VerletSolver;
+import twentyone.Classes.RungeKutta;
 
 public class CoordsToFile {
     static CelestialBody[] bodies = new CelestialBody[11];
 
     public static void main(String[] args) {
-        solverCoordsToFile("adams.txt");
+        solverCoordsToFile("C:\\Users\\nikip\\Desktop\\matlabTEST\\Verlet.txt");
         //nasaCoordsToFile("nasacoords.txt", "horizon_results");
     }
 
@@ -28,15 +29,16 @@ public class CoordsToFile {
         VerletSolver v = new VerletSolver();
         AdamsMoulton am = new AdamsMoulton();
         AdamsBashforth a = new AdamsBashforth(); 
+        RungeKutta r = new RungeKutta();
         writeToFile(bodies[3].getPosition().getX(), bodies[3].getPosition().getY(), filename);
         //coords are printed 720 times so 12 hours
 
-        for (int k = 0; k < 30; k++) {
+        for (int k = 0; k < 365; k++) {
             //runs 60 times so every minute coords are printed
             for (int i = 0; i < 60 * 60 * 24; i++) {
                 for (int j = 0; j < bodies.length; j++) {
                     //update bodies with the chosen solver
-                    bodies = am.adams(bodies, j, 1);
+                    bodies = v.verlet(bodies, j, 1);
                 }
             }
 
