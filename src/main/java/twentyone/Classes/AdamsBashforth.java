@@ -45,6 +45,14 @@ public class AdamsBashforth extends Solver {
             Euler engine = new Euler();
             velocity1 = engine.Eulers(allBodies, bodyIndex, stepsize)[bodyIndex].getVelocity();
             position1 = engine.Eulers(allBodies, bodyIndex, stepsize)[bodyIndex].getPosition();
+
+            oldVelocity[bodyIndex] = velocity1;
+
+            //Updates the velocity and position of the given celestial body in the array of celestial bodies
+            allBodies[bodyIndex].setNewPostion(position1);
+            allBodies[bodyIndex].setNewVelocity(velocity1);
+            
+            return allBodies;
         }
         else {
             velocity1 = allBodies[bodyIndex].getVelocity();
