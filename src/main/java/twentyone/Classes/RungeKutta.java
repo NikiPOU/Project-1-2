@@ -40,11 +40,31 @@ public class RungeKutta extends Solver{
         double newZ = currentPos.getZ() + (k1z + 2.0 * k2z + 2.0 * k3z + k4z) / 6.0;
         Vector3d newPosition = new Vector3d(newX,newY,newZ);
 
+        Vector3d velocityDerivative = sumOf_Forces(allBodies, bodyIndex); 
 
-        double newVX = velocityX(currentVel.getX() + k1x);
-        double newVY = velocityY(currentVel.getY() + k1y);
-        double newVZ = velocityZ(currentVel.getZ() + k1z);
-        Vector3d newVelocity = new Vector3d(newVX,newVY,newVZ);
+
+
+        double kv1x = h * velocityX(velocityDerivative.getX());
+        double kv1y = h * velocityY(velocityDerivative.getY());
+        double kv1z = h * velocityZ(velocityDerivative.getZ());
+
+        double kv2x = h * velocityX(velocityDerivative.getX() + 0.5 * kv1x);
+        double kv2y = h * velocityY(velocityDerivative.getY() + 0.5 * kv1y);
+        double kv2z = h * velocityZ(velocityDerivative.getZ() + 0.5 * kv1z);
+
+        double kv3x = h * velocityX(velocityDerivative.getX() + 0.5 * kv2x);
+        double kv3y = h * velocityY(velocityDerivative.getY() + 0.5 * kv2y);
+        double kv3z = h * velocityZ(velocityDerivative.getZ() + 0.5 * kv2z);
+
+        double kv4x = h * velocityX(velocityDerivative.getX() + kv3x);
+        double kv4y = h * velocityY(velocityDerivative.getY() + kv3y);
+        double kv4z = h * velocityZ(velocityDerivative.getZ() + kv3z);
+
+
+        double newvX = currentVel.getX() + (kv1x + 2.0 * kv2x + 2.0 * kv3x + kv4x) / 6.0;
+        double newvY = currentVel.getY() + (kv1y + 2.0 * kv2y + 2.0 * kv3y + kv4y) / 6.0;
+        double newvZ = currentVel.getZ() + (kv1z + 2.0 * kv2z + 2.0 * kv3z + kv4z) / 6.0;
+        Vector3d newVelocity = new Vector3d(newvX,newvY,newvZ);
 
         allBodies[bodyIndex].setNewPostion(newPosition);
         allBodies[bodyIndex].setNewVelocity(newVelocity);
