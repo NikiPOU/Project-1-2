@@ -18,7 +18,7 @@ public class CoordsToFile {
     static CelestialBody[] bodies = new CelestialBody[11];
 
     public static void main(String[] args) {
-        solverCoordsToFile("C:\\Users\\nikip\\Desktop\\matlabTEST\\Verlet.txt");
+        solverCoordsToFile("C:\\Users\\nikip\\Desktop\\matlabTEST\\RungeKutta.txt");
         //nasaCoordsToFile("nasacoords.txt", "horizon_results");
     }
 
@@ -38,7 +38,7 @@ public class CoordsToFile {
             for (int i = 0; i < 60 * 60 * 24; i++) {
                 for (int j = 0; j < bodies.length; j++) {
                     //update bodies with the chosen solver
-                    bodies = v.verlet(bodies, j, 1);
+                    bodies = r.rungKutta(bodies, j, 1);
                 }
             }
 
