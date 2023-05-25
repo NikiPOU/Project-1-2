@@ -146,7 +146,7 @@
       </VBox>
       <AnchorPane fx:id="pGroup" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <AnchorPane fx:id="probe" layoutX="-100.0" layoutY="-100.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" scaleX="0.05" scaleY="0.05" scaleZ="0.05">
+            <AnchorPane fx:id="probe" layoutX="-25.0" layoutY="-63.0" scaleX="0.05" scaleY="0.05" scaleZ="0.05">
                <children>
                   <Group fx:id="fire" layoutX="1.0" layoutY="59.0" scaleX="0.95">
                      <children>

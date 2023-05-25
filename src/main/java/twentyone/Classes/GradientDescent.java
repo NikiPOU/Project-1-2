@@ -6,47 +6,57 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class GradientDescent {
-public static int Count = 0;
+    public static int Count = 0;
+ public static CelestialBody[] bodies  = new CelestialBody[12];
+public static double [] GradientDescentMethod(double x , double y , double z, CelestialBody[] allBodies) {
+    Euler euler = new Euler();
 
-    public static double GradientDescentMethod() {
+    double LearingRate = 0.01;
+    int LoopTimes= 1000;
+    double prevOutput = 1200000000;
+    double XOutput =x; 
+    double YOutput = y;
+    double ZOutput = z;
+    for(int i =0;i<=LoopTimes;i++ ) {
+         double dfdx = allBodies[11].getVelocity().getX() ;
+         double dfdy = allBodies[11].getVelocity().getY() ; 
+         double dfdz = allBodies[11].getVelocity().getZ() ;
+        x -= LearingRate * dfdx ;
+        y -= LearingRate * dfdy ;
+        z -= LearingRate * dfdz ; 
 
-        double StartingPoint = 0;
-        double LearningRate = 0.01;
-        int NumberOfMaxIterations = 1000;
+for(int j =0;j<11;j++){
+euler.Eulers( allBodies, j , 10);
+}
+double Output = (allBodies[8].getPosition().dist(allBodies[11].getPosition()));
+ if(prevOutput> Output){
+    prevOutput= Output;
+    XOutput =x ; 
+     YOutput = y ;
+     ZOutput = z ;
+ }
+    }   
+    return new double[]{XOutput,YOutput,ZOutput,prevOutput}; 
+}
 
-        for (int i = 0; i < NumberOfMaxIterations; i++) {
-            double GradientValue = DerivativeOfFuction(StartingPoint);
-            StartingPoint = StartingPoint - LearningRate * GradientValue;
-        }
+    public static void DataWriter( double x , double y , double z ) {
 
-        return StartingPoint;
-    }
-
-    // Here is the fuction based on time for fuel consuption
-    public static double DerivativeOfFuction(double Time) {
-        // We don't have fuel useage fuction yet so I made up some random fuction for
-        // fuel conspution = f(x) = x^4 + 3x^3 + 2x^2 + x + 1, f'(x) = 4x^3 + 9x^2 + 4x+ 1
-        //  or the the coordinates x,y,z with eurosolver or something
-        // Double Time= 32.40;
-        // Double Fuction = Math.pow(Time, 4) + 3*Math.pow(Time,3)+ 2*Math.pow(Time, 2)+ Time +1;
-
-        Double DerivativeOfFuctionAsDouble = 4 * Math.pow(Time, 3) + 9 * Math.pow(Time, 2) + 4 * Time + 1;
-        return DerivativeOfFuctionAsDouble;
-    }
-
-    public static void DataWriter(double Value) {
+        double[] GradientDescentOutput  = GradientDescentMethod(x, y, z, null);
+        double XOutput  = GradientDescentOutput[0];
+        double YOutput= GradientDescentOutput[1];
+        double zOutput= GradientDescentOutput[2]; 
+        double OutputOutput = GradientDescentOutput[3];
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("Data.txt", true))) {
 
-             writer.write("-345635635.30 "); // write Coordinate X
+             writer.write(String.valueOf(XOutput)); // write Coordinate X
              writer.newLine();
-             writer.write("246246.1535"); // write Coordinate Y
+             writer.write(String.valueOf(YOutput)); // write Coordinate Y
              writer.newLine();
-             writer.write("135135.15"); // write Coordinate Z
+             writer.write(String.valueOf(zOutput)); // write Coordinate Z
              writer.newLine();
-             writer.write(String.valueOf(Value));
+             writer.write(String.valueOf(OutputOutput));  // write the distance 
              writer.newLine(); 
-
       
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,9 +67,8 @@ public static int Count = 0;
 
         double LowestValue = Double.MAX_VALUE;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("Data.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("D.txt"))) {
             String Line;
-           
 
                 while ((Line = reader.readLine()) != null) {
                     Count=Count+1; 
@@ -79,17 +88,73 @@ public static int Count = 0;
         return LowestValue;
     }
 
-    public static double MethodConnection() {
+    public static double MethodConnection(double x, double y, double z,CelestialBody[] allBodies) {
 
-    if(GradientDescentMethod()<DataReader()){
-    DataWriter(GradientDescentMethod());
-    return GradientDescentMethod();
+    double[] GradientDescentOutput  = GradientDescentMethod(x, y, z, null);
+    double XOutput  = GradientDescentOutput[0];
+    double YOutput= GradientDescentOutput[1];
+    double zOutput= GradientDescentOutput[2];
+    double OutputOutput = GradientDescentOutput[3];
+
+    if(OutputOutput<DataReader()){
+    DataWriter(XOutput,YOutput,zOutput);
+    return OutputOutput;
         }else{
         return DataReader();
 }
+}
+    public static void initiateCB(){
+        Vector3d sunvel = new Vector3d(0,0,0);
+        Vector3d sunpos = new Vector3d(0,0,0);
+
+        Vector3d merpos = new Vector3d((long) 7833268.43923962, (long) 44885949.3703908, (long) 2867693.20054382);
+        Vector3d mervel = new Vector3d(-57.4967480139828, 11.52095127176, 6.21695374334136);
+
+        Vector3d venusvel = new Vector3d(-34.0236737066136, -8.96521274688838, 1.84061735279188);
+        Vector3d venuspos = new Vector3d((long) -28216773.9426889, (long) 103994008.541512, (long) 3012326.64296788);
+        
+        Vector3d earthvel = new Vector3d(5.05251577575409, -29.3926687625899,  0.00170974277401292);
+        Vector3d earthpos = new Vector3d((long) -148186906.893642, (long) -27823158.5715694, (long) 33746.8987977113);
+
+        Vector3d moonvel = new Vector3d(4.34032634654904, -30.0480834180741, -0.0116103535014229);
+        Vector3d moonpos = new Vector3d((long) -148458048.395164, (long) -27524868.1841142, (long) 70233.6499287411);
+
+        Vector3d marsvel = new Vector3d(-17.6954469224752, -13.4635253412947, 0.152331928200531);
+        Vector3d marspos = new Vector3d((long) -159116303.422552, (long) 189235671.561057, (long) 7870476.08522969);
+
+        Vector3d jupivel = new Vector3d(-4.71443059866156, 12.8555096964427, 0.0522118126939208);
+        Vector3d jupipos = new Vector3d((long) 692722875.928222, (long) 258560760.813524, (long) -16570817.7105996);
+
+        Vector3d satuvel = new Vector3d(4.46781341335014, 8.23989540475628,  -0.320745376969732);
+        Vector3d satupos = new Vector3d((long) 1253801723.95465, (long) -760453007.810989, (long) -36697431.1565206);
+
+        Vector3d titvel = new Vector3d(8.99593229549645, 11.1085713608453, -2.25130986174761);
+        Vector3d titpos = new Vector3d((long) 1254501624.95946, (long) -761340299.067828, (long) -36309613.8378104);
+
+        Vector3d nepvel = new Vector3d(0.447991656952326, 5.44610697514907, -0.122638125365954);
+        Vector3d neppos = new Vector3d((long) 4454487339.09447, (long) -397895128.763904, (long) -94464151.3421107);
+
+        Vector3d uravel = new Vector3d(-5.12766216337626, 4.22055347264457, 0.0821190336403063);
+        Vector3d urapos = new Vector3d((long) 1958732435.99338, (long) 2191808553.21893, (long) -17235283.8321992);
+
+        Vector3d probeposs = new Vector3d(0, 0,0);
+        Vector3d probevelo = new Vector3d(0, 0,0);
+        bodies[0] = new CelestialBody(sunvel, sunpos, 1.991E30);
+        bodies[1] = new CelestialBody(mervel, merpos, 3.302E+23);
+        bodies[2] = new CelestialBody(venusvel, venuspos, 4.8685E+24);
+        bodies[3] = new CelestialBody(earthvel, earthpos, 5.97219E+24);
+        bodies[4] = new CelestialBody(moonvel, moonpos, 7.3491E22);
+        bodies[5] = new CelestialBody(marsvel, marspos, 6.4171E+23);
+        bodies[6] = new CelestialBody(jupivel, jupipos, 1.89819E+27);
+        bodies[7] = new CelestialBody(satuvel, satupos, 5.6834E+26);
+        bodies[8] = new CelestialBody(titvel, titpos, 1.34553E+23);
+        bodies[9] = new CelestialBody(nepvel, neppos, 1.02409E+26);
+        bodies[10] = new CelestialBody(uravel, urapos, 86.813E+24);
+        bodies[11] = new Rocket(probevelo, probeposs);
     }
 
     public static void main(String[] args) {
-System.out.println(MethodConnection());
+System.out.println(MethodConnection(-148186906.893642,-27823158.5715694,33746.8987977113 + 6370,bodies));
     }
 }
+

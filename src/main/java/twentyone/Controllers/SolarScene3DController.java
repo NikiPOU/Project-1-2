@@ -21,11 +21,13 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.effect.Light.Point;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.ScrollEvent;
@@ -34,8 +36,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Cylinder;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -260,6 +264,11 @@ public class SolarScene3DController implements Initializable {
      * The current time in seconds. This one won't be reset to {@code 0} in contrary to {@link twentyone.Controllers.SolarScene3DController#seconds seconds}.
      */
     int k=0;
+
+    /**
+     * The last position of the space probe. This is used to show the path of the probe.
+     */
+    double[] lastSpacePos = new double[3];
     
 
     @FXML
@@ -363,7 +372,7 @@ public class SolarScene3DController implements Initializable {
     @FXML
     private AnchorPane mainScreen;
     @FXML
-    private Group path;
+    Group path;
     
 
     /**
@@ -374,13 +383,15 @@ public class SolarScene3DController implements Initializable {
 
         stepsizeButton.setText(stepsizeButton.getText() + App.chosenStepsize);
 
+        lastSpacePos[0] = 5E40;
+
         sunPos[0] = (App.width)/2;
         sunPos[1] = (App.height)/2;
         sunPos[2] = 0;
         focused = false;
         resetCheck = false;
         path = new Group();
-        mainScreen.getChildren().add(path);
+        pGroup.getChildren().add(path);
         // decoyBody = new CelestialBody(initialPosProbe, firstprobepos, 0);
         // sun.setTranslateX(sunPos[0]);
         // sun.setTranslateY(sunPos[1]);
@@ -442,7 +453,6 @@ public class SolarScene3DController implements Initializable {
                     saturnString = (new File("src/main/resources/twentyone/Images/saturnMap.jpg").toURI().toURL()).toString();
                     titanString = (new File("src/main/resources/twentyone/Images/Titan.png").toURI().toURL()).toString();
                 } catch (MalformedURLException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 // System.out.println(sunString);
@@ -555,7 +565,7 @@ public class SolarScene3DController implements Initializable {
      */
     @FXML
     public void keyPress(KeyEvent ke) {
-        if(ke.getCode().equals(KeyCode.PERIOD) || ke.getCode().equals(KeyCode.COMMA) || ke.getCode().equals(KeyCode.F)){
+        if(ke.getCode().equals(KeyCode.PERIOD) || ke.getCode().equals(KeyCode.COMMA) || ke.getCode().equals(KeyCode.F) || ke.getCode().equals(KeyCode.V)){
             if(ke.getCode().equals(KeyCode.PERIOD)){
                 if(eulerLoops == 5000){
                     eulerLoops = 10000;
@@ -577,6 +587,12 @@ public class SolarScene3DController implements Initializable {
                     fire.setVisible(false); 
                 } else {
                     fire.setVisible(true);
+                }
+            } else if(ke.getCode().equals(KeyCode.V)){
+                if(path.isVisible()){
+                    path.setVisible(false); 
+                } else {
+                    path.setVisible(true);
                 }
             }
         } else {
@@ -833,14 +849,47 @@ public class SolarScene3DController implements Initializable {
             double probeAngleX = Math.atan2(titan.getTranslateY() - probe.getTranslateY(), titan.getTranslateX() - probe.getTranslateX());
             // System.out.println(probeAngleX);
             probe.setRotate(90 + probeAngleX*90);
-            path.setVisible(true);
             
-            Sphere sphere = new Sphere();
-            sphere.setRadius(2);
-            sphere.setTranslateX(spax);
-            sphere.setTranslateY(spay);
-            sphere.setTranslateZ(spaz);
-            path.getChildren().add(sphere);
+            // Cylinder cyl = new Cylinder(2, spaceheigth);
+            // cyl.setRotate(90 + probeAngleX*90);
+            // cyl.setTranslateX(lastSpacePos[0]);
+            // cyl.setTranslateY(lastSpacePos[1]);
+            // cyl.setTranslateZ(lastSpacePos[2]);
+            // path.getChildren().add(cyl);
+            // path.setVisible(true);
+
+            if(lastSpacePos[0] == 5E40){
+
+            } else {
+                Point3D p1 = new Point3D(probe.getTranslateX(), probe.getTranslateY(), probe.getTranslateZ());
+                Point3D p2 = new Point3D(lastSpacePos[0], lastSpacePos[1], lastSpacePos[2]);
+
+                path.getChildren().add(createConnection(p1, p2));
+            }
+        
+            lastSpacePos[0] = probe.getTranslateX();
+            lastSpacePos[1] = probe.getTranslateY();
+            lastSpacePos[2] = probe.getTranslateZ();
+        }
+
+        public Cylinder createConnection(Point3D origin, Point3D target) {
+            Point3D yAxis = new Point3D(0, 1, 0);
+            Point3D diff = target.subtract(origin);
+            double height = diff.magnitude();
+        
+            Point3D mid = target.midpoint(origin);
+            Translate moveToMidpoint = new Translate(mid.getX(), mid.getY(), mid.getZ());
+        
+            Point3D axisOfRotation = diff.crossProduct(yAxis);
+            double angle = Math.acos(diff.normalize().dotProduct(yAxis));
+            Rotate rotateAroundCenter = new Rotate(-Math.toDegrees(angle), axisOfRotation);
+        
+            Cylinder line = new Cylinder(1, height);
+            line.setMaterial(new PhongMaterial(Color.GREEN));
+        
+            line.getTransforms().addAll(moveToMidpoint, rotateAroundCenter);
+        
+            return line;
         }
 
         /**
