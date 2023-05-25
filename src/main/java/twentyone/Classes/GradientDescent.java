@@ -4,16 +4,17 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.util.Arrays;
 public class GradientDescent {
     public static int Count = 0;
- public static CelestialBody[] bodies  = new CelestialBody[12];
+ public static CelestialBody[] allBodies  = new CelestialBody[12];
+
 public static double [] GradientDescentMethod(double x , double y , double z, CelestialBody[] allBodies) {
     Euler euler = new Euler();
 
-    double LearingRate = 0.01;
-    int LoopTimes= 1000;
-    double prevOutput = 1200000000;
+    double LearingRate = 0.1;
+    int LoopTimes= 1000000;
+    double prevOutput = 999999999999.9999999;
     double XOutput =x; 
     double YOutput = y;
     double ZOutput = z;
@@ -27,16 +28,52 @@ public static double [] GradientDescentMethod(double x , double y , double z, Ce
 
 for(int j =0;j<11;j++){
 euler.Eulers( allBodies, j , 10);
-}
+
 double Output = (allBodies[8].getPosition().dist(allBodies[11].getPosition()));
  if(prevOutput> Output){
     prevOutput= Output;
     XOutput =x ; 
      YOutput = y ;
      ZOutput = z ;
- }
+ }}
     }   
     return new double[]{XOutput,YOutput,ZOutput,prevOutput}; 
+}
+
+public static double [] GradientDescentMethodForVelocity(double x , double y , double z, CelestialBody[] allBodies) {
+    Euler euler = new Euler();
+
+    double LearingRate = 0.1;
+    int LoopTimes= 1000000000;
+    double prevOutput = 999999999999.9999999;
+
+        double dfdx = x;
+         double dfdy = y ; 
+         double dfdz = z ;
+    double dfdxOutput =dfdx; 
+    double dfdyOutput = dfdy;
+    double dfdzOutput =dfdz;
+    for(int i =0;i<=LoopTimes;i++ ) {
+      double   dfdxdx=euler.sumOf_Forces(allBodies, 11).getX()/allBodies[11].getMass();
+        double dfdydy =euler.sumOf_Forces(allBodies, 11).getY()/allBodies[11].getMass();
+        double dfdzdz=euler.sumOf_Forces(allBodies, 11).getZ()/allBodies[11].getMass();
+
+        dfdx -= LearingRate * dfdxdx ;
+        dfdy -= LearingRate * dfdydy ;
+        dfdz -= LearingRate * dfdzdz ; 
+
+for(int j =0;j<11;j++){
+euler.Eulers( allBodies, j , 10);
+
+double Output = (allBodies[8].getPosition().dist(allBodies[11].getPosition()));
+ if(prevOutput> Output){
+    prevOutput= Output;
+   dfdxOutput =dfdx ; 
+   dfdyOutput = dfdx ;
+   dfdzOutput = dfdz;
+ }}
+    }   
+    return new double[]{dfdxOutput,dfdyOutput,dfdzOutput,prevOutput}; 
 }
 
     public static void DataWriter( double x , double y , double z ) {
@@ -90,7 +127,7 @@ double Output = (allBodies[8].getPosition().dist(allBodies[11].getPosition()));
 
     public static double MethodConnection(double x, double y, double z,CelestialBody[] allBodies) {
 
-    double[] GradientDescentOutput  = GradientDescentMethod(x, y, z, null);
+    double[] GradientDescentOutput  = GradientDescentMethod(x, y, z, allBodies);
     double XOutput  = GradientDescentOutput[0];
     double YOutput= GradientDescentOutput[1];
     double zOutput= GradientDescentOutput[2];
@@ -137,24 +174,28 @@ double Output = (allBodies[8].getPosition().dist(allBodies[11].getPosition()));
         Vector3d uravel = new Vector3d(-5.12766216337626, 4.22055347264457, 0.0821190336403063);
         Vector3d urapos = new Vector3d((long) 1958732435.99338, (long) 2191808553.21893, (long) -17235283.8321992);
 
-        Vector3d probeposs = new Vector3d(0, 0,0);
-        Vector3d probevelo = new Vector3d(0, 0,0);
-        bodies[0] = new CelestialBody(sunvel, sunpos, 1.991E30);
-        bodies[1] = new CelestialBody(mervel, merpos, 3.302E+23);
-        bodies[2] = new CelestialBody(venusvel, venuspos, 4.8685E+24);
-        bodies[3] = new CelestialBody(earthvel, earthpos, 5.97219E+24);
-        bodies[4] = new CelestialBody(moonvel, moonpos, 7.3491E22);
-        bodies[5] = new CelestialBody(marsvel, marspos, 6.4171E+23);
-        bodies[6] = new CelestialBody(jupivel, jupipos, 1.89819E+27);
-        bodies[7] = new CelestialBody(satuvel, satupos, 5.6834E+26);
-        bodies[8] = new CelestialBody(titvel, titpos, 1.34553E+23);
-        bodies[9] = new CelestialBody(nepvel, neppos, 1.02409E+26);
-        bodies[10] = new CelestialBody(uravel, urapos, 86.813E+24);
-        bodies[11] = new Rocket(probevelo, probeposs);
+        Vector3d probeposs = new Vector3d(-148186906.893642, -27823158.5715694 + 6370, 33746.8987977113);
+        Vector3d probevelo = new Vector3d(1,1,1);
+        allBodies[0] = new CelestialBody(sunvel, sunpos, 1.991E30);
+        allBodies[1] = new CelestialBody(mervel, merpos, 3.302E+23);
+        allBodies[2] = new CelestialBody(venusvel, venuspos, 4.8685E+24);
+        allBodies[3] = new CelestialBody(earthvel, earthpos, 5.97219E+24);
+        allBodies[4] = new CelestialBody(moonvel, moonpos, 7.3491E22);
+        allBodies[5] = new CelestialBody(marsvel, marspos, 6.4171E+23);
+        allBodies[6] = new CelestialBody(jupivel, jupipos, 1.89819E+27);
+        allBodies[7] = new CelestialBody(satuvel, satupos, 5.6834E+26);
+        allBodies[8] = new CelestialBody(titvel, titpos, 1.34553E+23);
+        allBodies[9] = new CelestialBody(nepvel, neppos, 1.02409E+26);
+        allBodies[10] = new CelestialBody(uravel, urapos, 86.813E+24);
+        allBodies[11] = new Rocket(probevelo, probeposs);
     }
 
     public static void main(String[] args) {
-System.out.println(MethodConnection(-148186906.893642,-27823158.5715694,33746.8987977113 + 6370,bodies));
+
+        initiateCB();
+        //System.out.println(Arrays.toString(GradientDescentMethodForVelocity(allBodies[11].getVelocity().getX(),allBodies[11].getVelocity().getY(),allBodies[11].getVelocity().getZ(),allBodies)));
+        System.out.println(Arrays.toString(GradientDescentMethod(allBodies[11].getPosition().getX(),allBodies[11].getPosition().getY(),allBodies[11].getPosition().getZ(),allBodies)));
+     
     }
 }
 
