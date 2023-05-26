@@ -271,40 +271,121 @@ public class SolarScene3DController implements Initializable {
     @FXML
     private PerspectiveCamera pCamera;
 
+    /**
+     * The group of the {@code Sphere} and {@code Text (as ImageView)} of the sun
+     * @see Sphere
+     * @see {@link javafx.scene.image.ImageView ImageView}
+     */
     @FXML
     private Group sun;
+    /**
+     * The 3D representation of the sun. 
+     * @see Sphere
+     */
     @FXML
     private Sphere sunSphere;
+    /**
+     * The group of the {@code Sphere} and {@code Text (as ImageView)} of earth
+     * @see Sphere
+     * @see {@link javafx.scene.image.ImageView ImageView}
+     */
     @FXML
     private Group earth;
+    /**
+     * The 3D representation of earth. 
+     * @see Sphere
+     */
     @FXML
     private Sphere earthSphere;
+    /**
+     * The group of the {@code Sphere} and {@code Text (as ImageView)} of the moon
+     * @see Sphere
+     * @see {@link javafx.scene.image.ImageView ImageView}
+     */
     @FXML
     private Group moon;
+    /**
+     * The 3D representation of the moon. 
+     * @see Sphere
+     */
     @FXML 
     private Sphere moonSphere;
+    /**
+     * The group of the {@code Sphere} and {@code Text (as ImageView)} of mercury
+     * @see Sphere
+     * @see {@link javafx.scene.image.ImageView ImageView}
+     */
     @FXML
     private Group mercury;
+    /**
+     * The 3D representation of mercury. 
+     * @see Sphere
+     */
     @FXML
     private Sphere mercurySphere;
+    /**
+     * The group of the {@code Sphere} and {@code Text (as ImageView)} of venus
+     * @see Sphere
+     * @see {@link javafx.scene.image.ImageView ImageView}
+     */
     @FXML
     private Group venus;
+    /**
+     * The 3D representation of venus. 
+     * @see Sphere
+     */
     @FXML
     private Sphere venusSphere;
+    /**
+     * The group of the {@code Sphere} and {@code Text (as ImageView)} of mars
+     * @see Sphere
+     * @see {@link javafx.scene.image.ImageView ImageView}
+     */
     @FXML
     private Group mars;
+    /**
+     * The 3D representation of mars. 
+     * @see Sphere
+     */
     @FXML
     private Sphere marsSphere;
+    /**
+     * The group of the {@code Sphere} and {@code Text (as ImageView)} of jupiter
+     * @see Sphere
+     * @see {@link javafx.scene.image.ImageView ImageView}
+     */
     @FXML
     private Group jupiter;
+    /**
+     * The 3D representation of jupiter. 
+     * @see Sphere
+     */
     @FXML
     private Sphere jupiterSphere;
+    /**
+     * The group of the {@code Sphere} and {@code Text (as ImageView)} of saturn
+     * @see Sphere
+     * @see {@link javafx.scene.image.ImageView ImageView}
+     */
     @FXML
     private Group saturn;
+    /**
+     * The 3D representation of saturn. 
+     * @see Sphere
+     */
     @FXML
     private Sphere saturnSphere;
+    /**
+     * The group of the {@code Sphere} and {@code Text (as ImageView)} of titan
+     * @see Sphere
+     * @see {@link javafx.scene.image.ImageView ImageView}
+     */
     @FXML
     private Group titan;
+    /**
+     * The 3D representation of titan. 
+     * @see Sphere
+     */
     @FXML
     private Sphere titanSphere;
 
@@ -360,7 +441,7 @@ public class SolarScene3DController implements Initializable {
     @FXML
     private AnchorPane mainScreen;
     @FXML
-    Group path;
+    private Group path;
     
 
     /**
@@ -394,7 +475,6 @@ public class SolarScene3DController implements Initializable {
                 pCamera.setTranslateZ(-400);
                 pCamera.setTranslateX(sunPos[0]);
                 pCamera.setTranslateY(sunPos[1]);
-                // pGroup.getChildren().add(pCamera);
                 Stage stage = (Stage) launchCoords.getScene().getWindow();
                 stage.addEventHandler(ScrollEvent.SCROLL, event -> {
                     if(!selectedPlanet.equals(bodies[0])){
@@ -447,13 +527,13 @@ public class SolarScene3DController implements Initializable {
                 fire8.setMaterial(new PhongMaterial(Color.YELLOW));
             }
         });
-        earthSphere.setRotationAxis(Rotate.Y_AXIS);
-        mercurySphere.setRotationAxis(Rotate.Y_AXIS);
-        venusSphere.setRotationAxis(Rotate.Y_AXIS);
-        marsSphere.setRotationAxis(Rotate.Y_AXIS);
-        jupiterSphere.setRotationAxis(Rotate.Y_AXIS);
-        saturnSphere.setRotationAxis(Rotate.Y_AXIS);
-        sunSphere.setRotationAxis(Rotate.Y_AXIS);
+        setPlanetRotation(mercurySphere, 0);
+        setPlanetRotation(venusSphere, 177.3);
+        setPlanetRotation(earthSphere, 23.26);
+        setPlanetRotation(marsSphere, 25.19);
+        setPlanetRotation(jupiterSphere, 3.13);
+        setPlanetRotation(saturnSphere, 26.73);
+        setPlanetRotation(sunSphere, 7.25);
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setAutoReverse(false);
@@ -465,6 +545,19 @@ public class SolarScene3DController implements Initializable {
         timeline.play();
         MP = new musicPlayer("Interstellar.mp3");
         MP.run();
+    }
+
+    /**
+     * Sets the angle of the given {@code planet} and then sets the {@code Rotation axis} to the Y-axis.
+     * @param planet as a {@code Sphere} - The given planet
+     * @param angle as a {@code double} - The given angle
+     * @see Sphere
+     * @see Rotate
+     */
+    private void setPlanetRotation(Sphere planet, double angle){
+        planet.setRotationAxis(Rotate.X_AXIS);
+        planet.rotateProperty().set(angle);
+        planet.setRotationAxis(Rotate.Y_AXIS);
     }
 
     /**
