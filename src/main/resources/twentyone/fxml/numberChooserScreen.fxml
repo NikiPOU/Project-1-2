@@ -3,13 +3,14 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.Controllers.numberChooserScreenController">
    <children>
@@ -67,6 +68,7 @@
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -75,6 +77,16 @@
                         <TextField fx:id="positionX" focusTraversable="false" promptText="i.e. 3600" />
                         <TextField fx:id="positionY" focusTraversable="false" promptText="i.e. -1500" GridPane.columnIndex="1" />
                         <TextField fx:id="positionZ" focusTraversable="false" promptText="i.e. 0" GridPane.columnIndex="2" />
+                        <MenuButton mnemonicParsing="false" text="Choose" GridPane.columnIndex="3">
+                          <items>
+                            <MenuItem mnemonicParsing="false" onAction="#onNorthPoleButton" text="North Pole" />
+                            <MenuItem mnemonicParsing="false" onAction="#onSouthPoleButton" text="South Pole" />
+                              <MenuItem mnemonicParsing="false" onAction="#onPacificOceanButton" text="Pacific Ocean" />
+                              <MenuItem mnemonicParsing="false" onAction="#onAfricaButton" text="Africa" />
+                              <MenuItem mnemonicParsing="false" onAction="#onSouthAmericaButton" text="South America" />
+                              <MenuItem mnemonicParsing="false" onAction="#onAsiaButton" text="Asia" />
+                          </items>
+                        </MenuButton>
                      </children>
                   </GridPane>
                   <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">

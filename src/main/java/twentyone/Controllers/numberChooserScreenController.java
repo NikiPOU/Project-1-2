@@ -40,7 +40,7 @@ public class numberChooserScreenController {
      * 
      * @throws IOException
      * @see twentyone.Classes.musicPlayer
-     * @see javafx.scene.control.Button
+     * @see {@link javafx.scene.control.Button Button}
      */
     @FXML
     public void onNextButton() throws IOException {
@@ -150,6 +150,72 @@ public class numberChooserScreenController {
             timestamp = Integer.parseInt(timestampTextfield.getText());
         }
         return timestamp;
+    }
+
+    /**
+     * When the {@code MenuItem} "North Pole" gets clicked, this method will run. This will set the initial position of the {@code Rocket} to the North Pole.
+     * @see {@link javafx.scene.control.MenuItem MenuItem}
+     */
+    @FXML
+    public void onNorthPoleButton(){
+        positionZ.setText("6370");
+        positionX.setText("");
+        positionY.setText("");
+    }
+
+    /**
+     * When the {@code MenuItem} "South Pole" gets clicked, this method will run. This will set the initial position of the {@code Rocket} to the South Pole.
+     * @see {@link javafx.scene.control.MenuItem MenuItem}
+     */
+    @FXML
+    public void onSouthPoleButton(){
+        positionZ.setText("-6370");
+        positionX.setText("");
+        positionY.setText("");
+    }
+
+    /**
+     * When the {@code MenuItem} "Pacific Ocean" gets clicked, this method will run. This will set the initial position of the {@code Rocket} to the Pacific Ocean.
+     * @see {@link javafx.scene.control.MenuItem MenuItem}
+     */
+    @FXML
+    public void onPacificOceanButton(){
+        positionX.setText("6370");
+        positionZ.setText("");
+        positionY.setText("");
+    }
+
+    /**
+     * When the {@code MenuItem} "Africa" gets clicked, this method will run. This will set the initial position of the {@code Rocket} to the Africa.
+     * @see {@link javafx.scene.control.MenuItem MenuItem}
+     */
+    @FXML
+    public void onAfricaButton(){
+        positionX.setText("-6370");
+        positionZ.setText("");
+        positionY.setText("");
+    }
+
+    /**
+     * When the {@code MenuItem} "South America" gets clicked, this method will run. This will set the initial position of the {@code Rocket} to the South America.
+     * @see {@link javafx.scene.control.MenuItem MenuItem}
+     */
+    @FXML
+    public void onSouthAmericaButton(){
+        positionY.setText("6370");
+        positionZ.setText("");
+        positionX.setText("");
+    }
+
+    /**
+     * When the {@code MenuItem} "Asia" gets clicked, this method will run. This will set the initial position of the {@code Rocket} to the Asia.
+     * @see {@link javafx.scene.control.MenuItem MenuItem}
+     */
+    @FXML
+    public void onAsiaButton(){
+        positionY.setText("-6370");
+        positionZ.setText("");
+        positionX.setText("");
     }
     
 }
