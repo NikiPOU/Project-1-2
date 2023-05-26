@@ -415,14 +415,14 @@ public class SolarScene3DController implements Initializable {
                 String saturnString = "";
                 String titanString = "";
                 try {
-                    sunString = (new File("src/main/resources/twentyone/Images/sunMap.jpg").toURI().toURL()).toString();
-                    mercuryString = (new File("src/main/resources/twentyone/Images/mercuryMap.jpg").toURI().toURL()).toString();
-                    venusString = (new File("src/main/resources/twentyone/Images/venusMap.jpg").toURI().toURL()).toString();
-                    earthString = (new File("src/main/resources/twentyone/Images/earthMap.jpg").toURI().toURL()).toString();
-                    moonString = (new File("src/main/resources/twentyone/Images/moonMap.jpg").toURI().toURL()).toString();
-                    marsString = (new File("src/main/resources/twentyone/Images/marsMap.jpg").toURI().toURL()).toString();
-                    jupiterString = (new File("src/main/resources/twentyone/Images/jupiterMap.jpg").toURI().toURL()).toString();
-                    saturnString = (new File("src/main/resources/twentyone/Images/saturnMap.jpg").toURI().toURL()).toString();
+                    sunString = (new File("src/main/resources/twentyone/Images/sunMap2k.jpg").toURI().toURL()).toString();
+                    mercuryString = (new File("src/main/resources/twentyone/Images/mercuryMap2k.jpg").toURI().toURL()).toString();
+                    venusString = (new File("src/main/resources/twentyone/Images/venusMap2k.jpg").toURI().toURL()).toString();
+                    earthString = (new File("src/main/resources/twentyone/Images/earthMap2k.jpg").toURI().toURL()).toString();
+                    moonString = (new File("src/main/resources/twentyone/Images/moonMap2k.jpg").toURI().toURL()).toString();
+                    marsString = (new File("src/main/resources/twentyone/Images/marsMap2k.jpg").toURI().toURL()).toString();
+                    jupiterString = (new File("src/main/resources/twentyone/Images/jupiterMap2k.jpg").toURI().toURL()).toString();
+                    saturnString = (new File("src/main/resources/twentyone/Images/saturnMap2k.jpg").toURI().toURL()).toString();
                     titanString = (new File("src/main/resources/twentyone/Images/Titan.png").toURI().toURL()).toString();
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
