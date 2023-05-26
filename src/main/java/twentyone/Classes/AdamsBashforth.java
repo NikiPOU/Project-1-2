@@ -6,8 +6,6 @@ package twentyone.Classes;
  * @see twentyone.Classes.Solver
  */
 public class AdamsBashforth extends Solver {
-    //Placeholder for the old velocity, used because Adams-Bashforth is a two-step method 
-    //(using both the last velocity and the one before that)
     /**
      * Placeholder for the old velocity, used because Adams-Bashforth is a two-step method 
      * (using both the last velocity and the one before that)

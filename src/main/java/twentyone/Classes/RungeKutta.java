@@ -19,10 +19,8 @@ public class RungeKutta extends Solver{
 
         //velocity at point y 
         Vector3d k1Position = velocity0.mul(stepSize);
-        //System.out.println(k1Position.toString());
         //velocity at point y+0.5*k1
         Vector3d k2Position = derivativeFormula(velocity0, velocity1, stepSize, position0.add(k1Position.mul(0.5))).mul(stepSize);
-        //System.out.println(k2Position.toString());
         //velocity at point y+0.5*k2
         Vector3d k3Position = derivativeFormula(velocity0, velocity1, stepSize, position0.add(k2Position.mul(0.5))).mul(stepSize);
         //velocity at point y+k3
@@ -49,11 +47,9 @@ public class RungeKutta extends Solver{
 
     private Vector3d derivativeFormula(Vector3d oldy, Vector3d newy, double h, Vector3d y) {
         Vector3d derivative = (newy.sub(oldy)).mul(1/h);
-        //System.out.println(y.toString());
         if (y.norm() != 0.0) {
             y = y.mul(1/y.norm());
         }
-        //System.out.println(y.toString());
         return oldy.add(derivative.mulVector(y));
     }
 

@@ -9,8 +9,6 @@ import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -27,7 +25,6 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.effect.Light.Point;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.ScrollEvent;
@@ -35,7 +32,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Cylinder;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
@@ -257,9 +253,6 @@ public class SolarScene3DController implements Initializable {
      */
     double[] titPos = new double[3];
 
-    ArrayList<Circle> dotList = new ArrayList<>();
-    Random rand = new Random();
-
     /**
      * The current time in seconds. This one won't be reset to {@code 0} in contrary to {@link twentyone.Controllers.SolarScene3DController#seconds seconds}.
      */
@@ -392,16 +385,9 @@ public class SolarScene3DController implements Initializable {
         resetCheck = false;
         path = new Group();
         pGroup.getChildren().add(path);
-        // decoyBody = new CelestialBody(initialPosProbe, firstprobepos, 0);
-        // sun.setTranslateX(sunPos[0]);
-        // sun.setTranslateY(sunPos[1]);
-        // earth.setTranslateX(sunPos[0]-100);
-        // earth.setTranslateY(sunPos[1]);
         pGroup.setTranslateX(sunPos[0]);
         pGroup.setTranslateY(sunPos[1]); 
         pGroup.setTranslateZ(sunPos[2]);
-        // pGroup.setRotationAxis(new Point3D(10, 0, 0));
-        // pGroup.setRotate(45);
         launchCoords.sceneProperty().addListener((Observable, oldScene, newScene) -> {
             if(newScene != null){
                 scene = launchCoords.getScene();
@@ -424,15 +410,6 @@ public class SolarScene3DController implements Initializable {
                     double delta = event.getDeltaY();
                     pGroup.setTranslateZ(pGroup.getTranslateZ() + delta);
                 });
-                // sunSphere.setMaterial(new PhongMaterial(Color.ORANGE));
-                // earthSphere.setMaterial(new PhongMaterial(Color.BLUE));
-                // moonSphere.setMaterial(new PhongMaterial(Color.GREY));
-                // mercurySphere.setMaterial(new PhongMaterial(Color.LIGHTBLUE));
-                // venusSphere.setMaterial(new PhongMaterial(new Color(0.78, 0.62, 0.16, 1)));
-                // marsSphere.setMaterial(new PhongMaterial(Color.MAROON));
-                // jupiterSphere.setMaterial(new PhongMaterial(Color.BURLYWOOD));
-                // saturnSphere.setMaterial(new PhongMaterial(Color.DARKGOLDENROD));
-                // titanSphere.setMaterial(new PhongMaterial(Color.DARKCYAN));
                 String sunString = "";
                 String mercuryString = "";
                 String venusString = "";
@@ -455,9 +432,6 @@ public class SolarScene3DController implements Initializable {
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
-                // System.out.println(sunString);
-                // PhongMaterial sunMaterial = new PhongMaterial();
-                // sunMaterial.setDiffuseMap(new Image(sunString));
                 sunSphere.setMaterial(phongMaker(sunString));
                 mercurySphere.setMaterial(phongMaker(mercuryString));
                 venusSphere.setMaterial(phongMaker(venusString));
@@ -523,7 +497,6 @@ public class SolarScene3DController implements Initializable {
         pGroup.setTranslateX(x);
         pGroup.setTranslateY(y);
         pGroup.setTranslateZ(z);
-        // System.out.println(pGroup.getTranslateX() + " " + pGroup.getTranslateY() + " " + pGroup.getTranslateZ());
     }
 
     /**
@@ -560,7 +533,7 @@ public class SolarScene3DController implements Initializable {
     }
 
     /**
-     * When a key gets pressed, only "w", "a", "s", "d", "r", "." and ","
+     * When a key gets pressed, only "w", "a", "s", "d", "r", "v", "." and ","
      * @param ke as a {@code KeyEvent}
      */
     @FXML
@@ -751,6 +724,7 @@ public class SolarScene3DController implements Initializable {
                     minutes++;
                     seconds = 0;
                     if(minutes % 60 == 0){
+                        //==================== Rotation of planets ====================
                         earthSphere.rotateProperty().set(earthSphere.getRotate() + 15);
                         mercurySphere.rotateProperty().set(mercurySphere.getRotate() + 0.256);
                         venusSphere.rotateProperty().set(venusSphere.getRotate() + 0.062);
@@ -758,6 +732,7 @@ public class SolarScene3DController implements Initializable {
                         jupiterSphere.rotateProperty().set(jupiterSphere.getRotate() + 36);
                         saturnSphere.rotateProperty().set(saturnSphere.getRotate() + 32.727);
                         sunSphere.rotateProperty().set(sunSphere.getRotate() + 0.556);
+                        //==================== Rotation of planets ====================
                         hours++;
                         minutes = 0;
                         if(hours % 24 == 0){
@@ -789,42 +764,41 @@ public class SolarScene3DController implements Initializable {
             earPos[0] = bodies[3].getPosition().getX()/divider;
             earPos[1] = bodies[3].getPosition().getY()/divider;
             earPos[2] = bodies[3].getPosition().getZ()/divider;
-            // circlemaker(3, ex, ey, ez);
             setGUIcoords(earth, earPos[0], earPos[1], earPos[2]);
+
             mooPos[0] = bodies[4].getPosition().getX()/divider;
             mooPos[1] = bodies[4].getPosition().getY()/divider;
             mooPos[2] = bodies[4].getPosition().getZ()/divider;
-            // circlemaker(4, merPos[0], merPos[1]);
             setGUIcoords(moon, mooPos[0], mooPos[1], mooPos[2]);
+
             merPos[0] = bodies[1].getPosition().getX()/divider;
             merPos[1] = bodies[1].getPosition().getY()/divider;
             merPos[2] = bodies[1].getPosition().getZ()/divider;
-            // circlemaker(1, mex, mey);
             setGUIcoords(mercury, merPos[0], merPos[1], merPos[2]);
+
             venPos[0] = bodies[2].getPosition().getX()/divider;
             venPos[1] = bodies[2].getPosition().getY()/divider;
             venPos[2] = bodies[2].getPosition().getZ()/divider;
-            // circlemaker(2, venPos[0], venPos[1]);
             setGUIcoords(venus, venPos[0], venPos[1], venPos[2]);
+
             marPos[0] = bodies[5].getPosition().getX()/divider;
             marPos[1] = bodies[5].getPosition().getY()/divider;
             marPos[2] = bodies[5].getPosition().getZ()/divider;
-            // circlemaker(5, marPos[0], marPos[1]);
             setGUIcoords(mars, marPos[0], marPos[1], marPos[2]);
+
             jupPos[0] = bodies[6].getPosition().getX()/divider;
             jupPos[1] = bodies[6].getPosition().getY()/divider;
             jupPos[2] = bodies[6].getPosition().getZ()/divider;
-            // circlemaker(6, jupPos[0], jupPos[1]);
             setGUIcoords(jupiter, jupPos[0], jupPos[1], jupPos[2]);
+
             satPos[0] = bodies[7].getPosition().getX()/divider;
             satPos[1] = bodies[7].getPosition().getY()/divider;
             satPos[2] = bodies[7].getPosition().getZ()/divider;
-            // circlemaker(7, satPos[0], satPos[1]);
             setGUIcoords(saturn, satPos[0], satPos[1], satPos[2]);
+
             titPos[0] = bodies[8].getPosition().getX()/divider;
             titPos[1] = bodies[8].getPosition().getY()/divider;
             titPos[2] = bodies[8].getPosition().getZ()/divider;
-            // circlemaker(8, tx, ty);
             setGUIcoords(titan, titPos[0], titPos[1], titPos[2]);
 
             //Get and set the probes GUI coords and adapt the texts based on it and its distance to Titan
@@ -844,20 +818,9 @@ public class SolarScene3DController implements Initializable {
             spay /= divider;
             spaz /= divider;
             setGUIcoords(probe, spax, spay, spaz);
-            // circlemaker(9, spax, spay, spaz);
-            //double probeangle = Math.acos(((spax*titPos[0]) + (spay*titPos[1]) + (spaz*titPos[2]))/(Math.sqrt((Math.pow(spax, 2) + Math.pow(spay, 2) + Math.pow(spaz, 2)) * (Math.pow(titPos[0], 2) + Math.pow(titPos[1], 2) + Math.pow(titPos[2], 2)))));
             double probeAngleX = Math.atan2(titan.getTranslateY() - probe.getTranslateY(), titan.getTranslateX() - probe.getTranslateX());
-            // System.out.println(probeAngleX);
             probe.setRotate(90 + probeAngleX*90);
             
-            // Cylinder cyl = new Cylinder(2, spaceheigth);
-            // cyl.setRotate(90 + probeAngleX*90);
-            // cyl.setTranslateX(lastSpacePos[0]);
-            // cyl.setTranslateY(lastSpacePos[1]);
-            // cyl.setTranslateZ(lastSpacePos[2]);
-            // path.getChildren().add(cyl);
-            // path.setVisible(true);
-
             if(lastSpacePos[0] == 5E40){
 
             } else {
@@ -893,59 +856,6 @@ public class SolarScene3DController implements Initializable {
         }
 
         /**
-         * Makes the trails of the planets.
-         * @param index
-         * @param x
-         * @param y
-         * @param z
-         */
-        private void circlemaker(int index, double x, double y, double z){
-            Sphere sphere = new Sphere();
-            // if(index == 1){
-            //     circle.setLayoutX(x+5);
-            //     circle.setLayoutY(y+5);
-            //     circle.setFill(Color.LIGHTGRAY);
-            // } else if(index == 2){
-            //     circle.setLayoutX(x+10);
-            //     circle.setLayoutY(y+10);
-            //     circle.setFill(Color.DARKORANGE);
-            // } else if(index == 3){
-            //     circle.setCenterX(x+10);
-            //     circle.setCenterY(y+10);
-            //     circle.setFill(Color.GREEN);
-            // } else if(index == 4){
-            //     circle.setCenterX(x+2);
-            //     circle.setCenterY(y+2);
-            //     circle.setFill(Color.WHITE);
-            // } else if(index == 5){
-            //     circle.setLayoutX(x+8);
-            //     circle.setLayoutY(y+8);
-            //     circle.setFill(Color.CRIMSON);
-            // } else if(index == 6){
-            //     circle.setLayoutX(x+30);
-            //     circle.setLayoutY(y+30);
-            //     circle.setFill(Color.KHAKI);
-            // } else if(index == 7){
-            //     circle.setLayoutX(x+48);
-            //     circle.setLayoutY(y+24);
-            //     circle.setFill(Color.MAROON);
-            // } else if(index == 8){
-            //     circle.setLayoutX(x+9);
-            //     circle.setLayoutY(y+9);
-            //     circle.setFill(Color.CYAN);
-            // } else 
-            if(index == 9){
-                sphere.setTranslateX(x);
-                sphere.setTranslateY(y);
-                sphere.setTranslateZ(z);
-                // sphere.setFill(Color.GREY);
-            }
-            sphere.setRadius(2);
-            sphere.setOpacity(1);
-            path.getChildren().add(sphere);
-        }
-
-        /**
          * Get the x and y GUI coords of a celestial body
          * @param g the image of the celestial body
          * @param x the GUI x coord
@@ -972,44 +882,9 @@ public class SolarScene3DController implements Initializable {
         }
     }
 
-    //Unused method
-    public static void writeToFile(String filePath, int x, int y) {
-        try(FileWriter fw = new FileWriter("src\\main\\resources\\twentyone\\venusCoords.txt", true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter out = new PrintWriter(bw))
-        {
-            out.println(x + " " + y);
-
-        } catch (IOException e) {
-            System.out.println("file not found");
-        }
-    }
-
-    //Unused method
-    public static int[][] readFromFile(int index, String s) {
-        int[][] coords = new int[index][2];
-        try {
-            File file = new File("src\\main\\resources\\twentyone\\" + s);
-            Scanner sc = new Scanner(file);
-            int i = 0;
-            while (sc.hasNextLine()) {
-              String str = sc.nextLine();
-              String[] split = str.split(" ");
-              coords[i][0] = Integer.parseInt(split[0]);
-              coords[i][1] = Integer.parseInt(split[1]);
-              i++;
-            }
-            sc.close();
-          } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-          }
-          return coords;
-    }
-
     /**
      * Transfers the time from seconds to the following format:<p>
-     * <years> years, <months> months, <days> days, <hours> hours, <minutes> minutes, <seconds> seconds
+     * years, months, days, hours, minutes, seconds
      * @param secs
      * @return a string in the above mentioned format
      */
