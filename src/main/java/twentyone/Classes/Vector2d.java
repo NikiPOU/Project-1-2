@@ -21,16 +21,6 @@ public class Vector2d {
     }
 
     /**
-     * Constructor to initialize the {@code x} and {@code y} values where the {@code x} and {@code y} values will be drawn from another <code>Vector2d Class</code>.
-     * @param otherVector as a {@code Vector2d Class}
-     */
-    public Vector2d(Vector2d otherVector2dClass){
-        this.x=otherVector2dClass.getX();
-        this.y=otherVector2dClass.getY();
-        this.length=otherVector2dClass.getLength();
-    }
-
-    /**
      * Sets the {@code x} value of the <code>Vector2d Class</code>.
      * @param x as a {@code double}
      */
