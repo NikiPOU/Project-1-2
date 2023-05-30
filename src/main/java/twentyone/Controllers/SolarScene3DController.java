@@ -460,10 +460,6 @@ public class SolarScene3DController implements Initializable {
 
         stepsizeButton.setText(stepsizeButton.getText() + App.chosenStepsize);
 
-        double resizer = App.width / 1920;
-        double actualResize = Math.pow(resizer, 2);
-        divider /= resizer;
-
         lastSpacePos[0] = 5E40;
 
         sunPos[0] = (App.width)/2;
@@ -478,10 +474,6 @@ public class SolarScene3DController implements Initializable {
         pGroup.setTranslateZ(sunPos[2]);
         milkyway.setFitWidth(App.width);
         milkyway.setFitHeight(App.height);
-        // menu.setScaleX(menu.getScaleX() * resizer);
-        // menu.setScaleY(menu.getScaleY() * resizer);
-        // data.setScaleX(data.getScaleX() * resizer);
-        // data.setScaleY(data.getScaleY() * resizer);
         launchCoords.sceneProperty().addListener((Observable, oldScene, newScene) -> {
             if(newScene != null){
                 scene = launchCoords.getScene();
