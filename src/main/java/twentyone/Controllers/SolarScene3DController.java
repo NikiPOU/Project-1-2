@@ -710,35 +710,35 @@ public class SolarScene3DController implements Initializable {
         Vector3d sunvel = new Vector3d(0,0,0);
         Vector3d sunpos = new Vector3d(0,0,0);
 
-        Vector3d merpos = new Vector3d((long) 7833268.43923962, (long) 44885949.3703908, (long) 2867693.20054382);
+        Vector3d merpos = new Vector3d( 7833268.43923962,  44885949.3703908,  2867693.20054382);
         Vector3d mervel = new Vector3d(-57.4967480139828, 11.52095127176, 6.21695374334136);
 
         Vector3d venusvel = new Vector3d(-34.0236737066136, -8.96521274688838, 1.84061735279188);
-        Vector3d venuspos = new Vector3d((long) -28216773.9426889, (long) 103994008.541512, (long) 3012326.64296788);
+        Vector3d venuspos = new Vector3d( -28216773.9426889,  103994008.541512,  3012326.64296788);
         
         Vector3d earthvel = new Vector3d(5.05251577575409, -29.3926687625899,  0.00170974277401292);
-        Vector3d earthpos = new Vector3d((long) -148186906.893642, (long) -27823158.5715694, (long) 33746.8987977113);
+        Vector3d earthpos = new Vector3d( -148186906.893642,  -27823158.5715694,  33746.8987977113);
 
         Vector3d moonvel = new Vector3d(4.34032634654904, -30.0480834180741, -0.0116103535014229);
-        Vector3d moonpos = new Vector3d((long) -148458048.395164, (long) -27524868.1841142, (long) 70233.6499287411);
+        Vector3d moonpos = new Vector3d( -148458048.395164,  -27524868.1841142,  70233.6499287411);
 
         Vector3d marsvel = new Vector3d(-17.6954469224752, -13.4635253412947, 0.152331928200531);
-        Vector3d marspos = new Vector3d((long) -159116303.422552, (long) 189235671.561057, (long) 7870476.08522969);
+        Vector3d marspos = new Vector3d( -159116303.422552,  189235671.561057,  7870476.08522969);
 
         Vector3d jupivel = new Vector3d(-4.71443059866156, 12.8555096964427, 0.0522118126939208);
-        Vector3d jupipos = new Vector3d((long) 692722875.928222, (long) 258560760.813524, (long) -16570817.7105996);
+        Vector3d jupipos = new Vector3d( 692722875.928222,  258560760.813524,  -16570817.7105996);
 
         Vector3d satuvel = new Vector3d(4.46781341335014, 8.23989540475628,  -0.320745376969732);
-        Vector3d satupos = new Vector3d((long) 1253801723.95465, (long) -760453007.810989, (long) -36697431.1565206);
+        Vector3d satupos = new Vector3d( 1253801723.95465,  -760453007.810989,  -36697431.1565206);
 
         Vector3d titvel = new Vector3d(8.99593229549645, 11.1085713608453, -2.25130986174761);
-        Vector3d titpos = new Vector3d((long) 1254501624.95946, (long) -761340299.067828, (long) -36309613.8378104);
+        Vector3d titpos = new Vector3d( 1254501624.95946,  -761340299.067828,  -36309613.8378104);
 
         Vector3d nepvel = new Vector3d(0.447991656952326, 5.44610697514907, -0.122638125365954);
-        Vector3d neppos = new Vector3d((long) 4454487339.09447, (long) -397895128.763904, (long) -94464151.3421107);
+        Vector3d neppos = new Vector3d( 4454487339.09447,  -397895128.763904,  -94464151.3421107);
 
         Vector3d uravel = new Vector3d(-5.12766216337626, 4.22055347264457, 0.0821190336403063);
-        Vector3d urapos = new Vector3d((long) 1958732435.99338, (long) 2191808553.21893, (long) -17235283.8321992);
+        Vector3d urapos = new Vector3d( 1958732435.99338,  2191808553.21893,  -17235283.8321992);
 
         Vector3d probevel = initialVelProbe;
         Vector3d probepos = initialPosProbe;
@@ -805,12 +805,12 @@ public class SolarScene3DController implements Initializable {
          */
         @Override
         public void handle(ActionEvent event) {
-            
             //Run the Euler's method to get the next position and velocity of all celestial bodies + probe
             for (int i = 0; i < eulerLoops; i++) {
                 for (int j = 0; j < bodies.length; j++) {
                     bodies = solvers(bodies, j, stepsize);
                 }
+                bodies = rocketTrajectory(bodies, stepsize, 0);
 
                 //Keep track of the time
                 seconds += stepsize;
@@ -861,6 +861,7 @@ public class SolarScene3DController implements Initializable {
                     }
                 }
             }
+
             TimeElapsed.setText("Time Elapsed: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");
             if(!selectedPlanet.equals(bodies[0])){
                 focusCamera(selectedPlanet);
@@ -917,7 +918,9 @@ public class SolarScene3DController implements Initializable {
             double spax = spaps.getX();
             double spay = spaps.getY();
             double spaz = spaps.getZ();
-            probeCoords.setText("Currect probe coords: [x " + spax + ",y " + spay + ",z " + spaz + "]");
+            probeCoords.setText("Currect rocket coords: [x " + spax + ",y " + spay + ",z " + spaz + "]");
+            launchVelocity.setText("Currect rocket velocity: [x " + bodies[11].getVelocity().getX() + ", y " + bodies[11].getVelocity().getY() + ", z " + bodies[11].getVelocity().getZ() + "]");
+            
             double titandis = spaps.dist(bodies[8].getPosition());
             distanceTitan.setText("Distance to Titan: " + titandis + " km");
             if (closestTitan > titandis) {
@@ -1201,4 +1204,20 @@ public class SolarScene3DController implements Initializable {
         stepsize = App.chosenStepsize;
     }
 
+    private CelestialBody[] rocketTrajectory(CelestialBody[] bodies, double stepSize, double startTime) {
+        double s = 0;
+        double e = stepSize;
+
+        Vector3d dis = bodies[11].getPosition().sub(bodies[8].getPosition());
+        Vector3d force = dis.mul(-1/dis.norm());
+
+        if (dis.norm() < 8.5e8) {
+            force = bodies[11].getVelocity();
+            force = force.mul(-1/force.norm());
+        }
+        
+        ((Rocket) bodies[11]).boostedVelo(force, s, e);
+        
+        return bodies;
+    }
 }

@@ -32,7 +32,7 @@ public class Rocket extends CelestialBody{
      */
     private double norm_Two(Vector3d vect){
         double finala = 0;
-        finala = Math.sqrt(vect.getX() + vect.getY() + vect.getZ());
+        finala = Math.sqrt(vect.getX()*vect.getX() + vect.getY()*vect.getY() + vect.getZ()*vect.getZ());
         return finala;
     } 
 

@@ -12,11 +12,6 @@ public class Euler extends Solver{
 
             //our V' by this I mean first derivative of velocity
         Vector3d derivativeOfVelo = sumOf_Forces(theCelBodies, theDesired); // no need to divide by Mi
-        
-        if(theDesired == 11){ //this makes the engine run every time we call eulers
-            //((Rocket) theCelBodies[11]).finalCombinedForce(theCelBodies, stepSizer);
-            //derivativeOfVelo = theCelBodies[11].getForce().mul((1/theCelBodies[11].getMass()));
-        }
 
             //our Vn and Xn
         Vector3d velocityOfDesiredPlanet = theCelBodies[theDesired].getVelocity();

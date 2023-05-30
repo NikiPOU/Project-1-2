@@ -4,23 +4,23 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-public class AdamsMoultonTest {
+public class EulerTest {
     private CelestialBody[] bodies = new CelestialBody[11];
     final double THRESHOLD = .0001;
 
     @Test
-    public void testAdams() {
+    public void testEulers() {
         initiateCB();
-        AdamsMoulton a = new AdamsMoulton();
+        Euler e = new Euler();
 
-        bodies = a.adams(bodies, 3, 1);
+        bodies = e.Eulers(bodies, 3, 1);
         Vector3d earth1sec = bodies[3].getPosition();
 
         Vector3d res = earth1sec.sub(new Vector3d(-1.481869018411237E+08, -2.782318796423767E+07, 3.374690050745569E+04));
 
         assertTrue(Math.abs(res.getX()) < THRESHOLD && Math.abs(res.getY()) < THRESHOLD && Math.abs(res.getZ()) < THRESHOLD, earth1sec.toString());
 
-        bodies = a.adams(bodies, 3, 1);
+        bodies = e.Eulers(bodies, 3, 1);
         Vector3d earth2sec = bodies[3].getPosition();
 
         res = earth2sec.sub(new Vector3d(-1.481868967885992E+08, -2.782321735690475E+07, 3.374690221720189E+04));

@@ -45,7 +45,7 @@ public class RungeKutta extends Solver{
         return allBodies;
     }
 
-    private Vector3d derivativeFormula(Vector3d oldy, Vector3d newy, double h, Vector3d y) {
+    public Vector3d derivativeFormula(Vector3d oldy, Vector3d newy, double h, Vector3d y) {
         Vector3d derivative = (newy.sub(oldy)).mul(1/h);
         if (y.norm() != 0.0) {
             y = y.mul(1/y.norm());
