@@ -60,7 +60,7 @@ public abstract class Solver {
         Vector3d vector = new Vector3d(0, 0, 0);
 
         //get the force between your desiredPlanet and ith planet and then add it to sumForces which is the total sum
-        for(int i = 0; i<theCelBodies.length; i++){
+        for(int i = 0; i<theCelBodies.length-1; i++){
             if(i != desiredPlanet){
                 vector = calculateForce(theCelBodies[desiredPlanet], theCelBodies[i]);
                 sumForces = sumForces.add(vector);

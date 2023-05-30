@@ -466,11 +466,8 @@ public class SolarScene3DController implements Initializable {
 
         lastSpacePos[0] = 5E40;
 
-        mainScreen.setLayoutX(0);
-        mainScreen.setLayoutY(0);
-
-        sunPos[0] = (App.width)/2 - 100;
-        sunPos[1] = (App.height)/2 - 60;
+        sunPos[0] = (App.width)/2;
+        sunPos[1] = (App.height)/2;
         sunPos[2] = 0;
         focused = false;
         resetCheck = false;
@@ -485,8 +482,6 @@ public class SolarScene3DController implements Initializable {
         // menu.setScaleY(menu.getScaleY() * resizer);
         // data.setScaleX(data.getScaleX() * resizer);
         // data.setScaleY(data.getScaleY() * resizer);
-        data.setLayoutX(15);
-        data.setLayoutY(App.height - 201);
         launchCoords.sceneProperty().addListener((Observable, oldScene, newScene) -> {
             if(newScene != null){
                 scene = launchCoords.getScene();
@@ -984,7 +979,7 @@ public class SolarScene3DController implements Initializable {
 
         /**
          * Get the x and y GUI coords of a celestial body
-         * @param g the image of the celestial body
+         * @param a the AnchorPane of the celestial body
          * @param x the GUI x coord
          * @param y the GUI y coord
          * @param z the GUI z coord
@@ -1211,10 +1206,10 @@ public class SolarScene3DController implements Initializable {
         Vector3d dis = bodies[11].getPosition().sub(bodies[8].getPosition());
         Vector3d force = dis.mul(-1/dis.norm());
 
-        if (dis.norm() < 8.5e8) {
-            force = bodies[11].getVelocity();
-            force = force.mul(-1/force.norm());
-        }
+        // if (dis.norm() < 8.5e8) {
+        //     force = bodies[11].getVelocity();
+        //     force = force.mul(-1/force.norm());
+        // }
         
         ((Rocket) bodies[11]).boostedVelo(force, s, e);
         

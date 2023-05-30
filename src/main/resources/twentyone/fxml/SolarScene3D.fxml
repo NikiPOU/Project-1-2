@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainScreen" maxHeight="-Infinity" maxWidth="-Infinity" onKeyPressed="#keyPress" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: BLACK; -fx-border-color: BLUE;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.Controllers.SolarScene3DController">
+<AnchorPane fx:id="mainScreen" maxHeight="-Infinity" maxWidth="-Infinity" onKeyPressed="#keyPress" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.Controllers.SolarScene3DController">
    <children>
       <ImageView fx:id="milkyway" fitHeight="200.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -30,7 +30,7 @@
          </viewport>
       </ImageView>
       <PerspectiveCamera fx:id="pCamera" />
-      <VBox fx:id="menu" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: RED;">
+      <VBox fx:id="menu" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
          <children>
             <MenuBar style="-fx-background-color: BLACK;">
                <menus>
@@ -81,7 +81,7 @@
             </Button>
          </children>
       </VBox>
-      <VBox fx:id="data" style="-fx-border-color: GREEN;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0">
+      <VBox fx:id="data" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0">
          <children>
             <Group fx:id="timestampGroup" visible="false">
                <children>
@@ -116,7 +116,7 @@
             <Label fx:id="launchVelocity" text="Launch velocity: " textFill="WHITE" />
          </children>
       </VBox>
-      <AnchorPane fx:id="pGroup" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: YELLOW;">
+      <AnchorPane fx:id="pGroup" prefHeight="200.0" prefWidth="200.0">
          <children>
             <AnchorPane fx:id="probe" layoutX="-25.0" layoutY="-63.0" scaleX="0.05" scaleY="0.05" scaleZ="0.05">
                <children>
