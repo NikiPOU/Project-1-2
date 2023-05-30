@@ -48,7 +48,7 @@ public class Rocket extends CelestialBody{
             Vector3d impulse = force.mul(endtime).sub(force.mul(startTime)); 
             return impulse;
         }
-        return null;
+        return new Vector3d(0,0,0);
     }
 
     /**
@@ -98,5 +98,38 @@ public class Rocket extends CelestialBody{
     public double getFuel() {
         return fuel;
     }
+
+        private double time = 1;
+
+    public Vector3d simulateEngine(Vector3d force, double start, double end){
+        Vector3d currentVelo = super.getVelocity();
+        Vector3d impulse = getAnImpulse(force, start, end);
+        Vector3d finalVelo = currentVelo.add(impulse.mul(1/super.getMass()));
+        return finalVelo;
+    }
+
+    public void autopilot(CelestialBody[] celBodies){
+        double currentDistSat = super.getPosition().dist(celBodies[1].getPosition()); //use saturn index
+        double currentDistTit = super.getPosition().dist(celBodies[2].getPosition()); //use titan index
+        if(currentDistTit > 100000){
+            System.out.println("not close");
+        }else{
+            System.out.println("go to saturn");
+
+        }
+    }
+
+    public double gettime(){
+        return time;
+    }
+
+    public void settime(double time){
+        this.time = time;
+    }
+
+    public void resetTime(){
+        time = 1;
+    }
+
 
 }
