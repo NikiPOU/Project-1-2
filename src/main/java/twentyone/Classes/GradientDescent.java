@@ -9,8 +9,26 @@ import java.util.Arrays;
 
 public class GradientDescent {
 
+     /**
+     * Finding the best laounching coordiantes
+     * using coordinates and velocity
+     */
+
     public static int Count = 0;
     public static CelestialBody[] allBodies = new CelestialBody[12];
+
+     /**
+     * Gradient Descent is for flindong the best launching coordinates and velocity It uses the 
+     * following formula: {@code XCoor = xCoor -xVelo * LearingRate}.
+     * @param xCoor x.
+     * @param yCoor y.
+     * @param zCoor z.
+     * @param xVelo x1.
+     * @param yVelo y2.
+     * @param zVelo z3.     
+     * @param allBodies as a {@code CelestialBody[]}.
+     * @return a double array of x,y,z coordinates and x,y,z nad the distance to the Titan from rocket .
+     */
 
     public static double[] GradientDescentMethod(double xCoor, double yCoor, double zCoor, double xVelo, double yVelo,
             double zVelo, CelestialBody[] allBodies) {
@@ -21,6 +39,8 @@ public class GradientDescent {
 
         int LoopTimes = 100;
         double LearingRate = 0.1;
+
+                //Starting values
 
         double prevOutput = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
         double OutputVelo = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
@@ -46,12 +66,18 @@ public class GradientDescent {
 
             for (int j = 0; j <= 11; j++) {
 
+                // applaying the gradient descant for coordiantes
+
                 euler.Eulers(allBodies, j, 10);
                 xCoor = xCoor - LearingRate * dfdx;
                 yCoor = yCoor - LearingRate * dfdy;
                 zCoor = zCoor - LearingRate * dfdz;
 
+                //calculating the distance
+
                 OutputCoor = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
+
+                //cheching if the new distance is smaller then the previus one
 
                 if (prevOutput > OutputCoor) {
 
@@ -88,6 +114,8 @@ public class GradientDescent {
                 double dfdydy = euler.sumOf_Forces(allBodies, 11).getY() / allBodies[11].getMass();
                 double dfdzdz = euler.sumOf_Forces(allBodies, 11).getZ() / allBodies[11].getMass();
 
+                // applaying the gradient descant for velocity
+
                 dfdx = dfdx - LearingRate * dfdxdx;
                 dfdy = dfdy - LearingRate * dfdydy;
                 dfdz = dfdz - LearingRate * dfdzdz;
@@ -111,10 +139,23 @@ public class GradientDescent {
 
     }
 
+     /**
+     * DataWriter saves the data in the data.txt file 
+     * @param xCoor x.
+     * @param yCoor y.
+     * @param zCoor z.
+     * @param xVelo x1.
+     * @param yVelo y2.
+     * @param zVelo z3.     
+    * @param allBodies as a {@code CelestialBody[]}.
+     */
+
     public static void DataWriter(double xCoor, double yCoor, double zCoor, double xVelo, double yVelo,
             double zVelo, CelestialBody[] allBodies) {
 
         double[] GradientDescentOutput = GradientDescentMethod(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo, allBodies);
+
+                //calculating the distance
 
         double XOutput = GradientDescentOutput[0];
         double YOutput = GradientDescentOutput[1];
@@ -152,9 +193,15 @@ public class GradientDescent {
         }
     }
 
+
+     /**
+     * DataReader reads the data from the data.txt file and saves the the smallest distance from rocket to Titan
+     * it reads every 7th line as the distance from rocket to Titan because only in every 7th line is the distance recorded
+     * @return LowestValue lowestvalue.
+     */
+
     public static double DataReader() {
 
-        // Reading and keeping the lowest value of the distance
 
         double LowestValue = Double.MAX_VALUE;
 
@@ -170,6 +217,8 @@ public class GradientDescent {
 
                     double Value = Double.parseDouble(Line);
 
+                     // Reading and keeping the lowest value of the distance
+
                     if (Value < LowestValue) {
 
                         LowestValue = Value;
@@ -184,6 +233,19 @@ public class GradientDescent {
 
         return LowestValue;
     }
+
+     /**
+     * MethodConnection is for easier way to input data and get the the best output 
+     * it merges the classes GradientDescent,DataReader,DataWriter
+     * @param xCoor x.
+     * @param yCoor y.
+     * @param zCoor z.
+     * @param xVelo x1.
+     * @param yVelo y2.
+     * @param zVelo z3.     
+     * @param allBodies as a {@code CelestialBody[]}.
+     * @return a distance to the Titan from rocket as double.
+     */
 
     public static double MethodConnection(double xCoor, double yCoor, double zCoor, double xVelo, double yVelo,
             double zVelo, CelestialBody[] allBodies) {
@@ -212,6 +274,18 @@ public class GradientDescent {
             return DataReader();
         }
     }
+
+     /**
+     * initiateCB is for user to put x,y,z coordinates and x,y,z velocity for the rocket 
+     * @param xCoor x.
+     * @param yCoor y.
+     * @param zCoor z.
+     * @param xVelo x1.
+     * @param yVelo y2.
+     * @param zVelo z3.
+    * Initiates all the {@code Celestial Bodies}. It gives the correct {@code positions}, {@code velocities} and {@code masses}.
+     * @see Vector3d
+     */
 
     public static void initiateCB(double x, double y, double z, double xVelo, double yVelo, double zVelo) {
 
@@ -268,6 +342,8 @@ public class GradientDescent {
     }
 
     public static void main(String[] args) {
+
+//example of coordinates
 
         double xCoor = -148186906.893642 + 6370;
         double yCoor = -27823158.5715694;
