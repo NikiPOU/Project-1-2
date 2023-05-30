@@ -17,18 +17,21 @@ public class GradientDescent {
         Euler euler = new Euler();
         initiateCB(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo);
 
-        int LoopTimes = 100000;
+        int LoopTimes = 100;
         double LearingRate = 0.1;
 
         double prevOutput = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
         double OutputVelo = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
         double OutputCoor = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
+
         double XOutput = xCoor;
         double YOutput = yCoor;
         double ZOutput = zCoor;
-        double dfdx = xVelo;
+
+        double dfdx =xCoor;
         double dfdy = yVelo;
         double dfdz = zVelo;
+
         double dfdxOutput = dfdx;
         double dfdyOutput = dfdy;
         double dfdzOutput = dfdz;
@@ -47,25 +50,18 @@ public class GradientDescent {
                 OutputCoor = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
 
                 if (prevOutput > OutputCoor) {
-                    // if (Math.sqrt(xCoor * xCoor + yCoor * yCoor + zCoor * zCoor) >= 5733.9 // check is the coordniates are on the surface of earthn however does not work becuse ypu need to put the earth coordniates instead of the coordniates where sun is 000
-                    //         && Math.sqrt(xCoor * xCoor + yCoor * yCoor + zCoor * zCoor) <= 7008.1) {
+
+                     if (Math.sqrt(xCoor * xCoor + yCoor * yCoor + zCoor * zCoor) >=148108199.283 && Math.sqrt(xCoor * xCoor + yCoor * yCoor + zCoor * zCoor) <= 151100284.117){ // check is the coordniates are on the surface of earth with error of 1%
 
                         prevOutput = OutputCoor;
                         XOutput = xCoor;
                         YOutput = yCoor;
                         ZOutput = zCoor;
 
-                    // }
+                    }
                 }
             }
         }
-
-        // double dfdxdx = euler.sumOf_Forces(allBodies, 11).getX() /
-        // allBodies[11].getMass();
-        // double dfdydy = euler.sumOf_Forces(allBodies, 11).getY() /
-        // allBodies[11].getMass();
-        // double dfdzdz = euler.sumOf_Forces(allBodies, 11).getZ() /
-        // allBodies[11].getMass();
 
         for (int y = 0; y < LoopTimes; y++) {
 
@@ -256,18 +252,13 @@ public class GradientDescent {
         double xCoor = -148186906.893642 + 6370;
         double yCoor =  -27823158.5715694;
         double zCoor =  33746.8987977113;
+
         double xVelo = 8.99593229549645;
         double yVelo = 11.1085713608453;
         double zVelo = -2.25130986174761;
-        //System.out.println((Math.sqrt(xCoor * xCoor + yCoor * yCoor + zCoor * zCoor) >= 5733.9
-        //&& Math.sqrt(xCoor * xCoor + yCoor * yCoor + zCoor * zCoor) <= 7008.1));
         
-        System.out.println(Arrays.toString(GradientDescentMethod(xCoor, yCoor, zCoor,
-        xVelo, yVelo, zVelo, allBodies)));
-
-        // System.out.println(Arrays.toString(GradientDescentMethod(xCoor,yCoor,zCoor,allBodies)));
-
-        // System.out.println(Arrays.toString(GradientDescentMethodForVelocity(xVelo,yVelo,zVelo,allBodies)));
+       System.out.println(Arrays.toString(GradientDescentMethod(xCoor, yCoor, zCoor,
+       xVelo, yVelo, zVelo, allBodies)));
 
     }
 }
