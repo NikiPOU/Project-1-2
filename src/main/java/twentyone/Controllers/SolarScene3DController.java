@@ -787,6 +787,7 @@ public class SolarScene3DController implements Initializable {
                 for (int j = 0; j < bodies.length; j++) {
                     bodies = solvers(bodies, j, stepsize);
                 }
+                bodies = rocketTrajectory(bodies, stepsize, 0);
 
                 //Keep track of the time
                 seconds += stepsize;
@@ -894,7 +895,9 @@ public class SolarScene3DController implements Initializable {
             double spax = spaps.getX();
             double spay = spaps.getY();
             double spaz = spaps.getZ();
-            probeCoords.setText("Currect probe coords: [x " + spax + ",y " + spay + ",z " + spaz + "]");
+            probeCoords.setText("Currect rocket coords: [x " + spax + ",y " + spay + ",z " + spaz + "]");
+            launchVelocity.setText("Currect rocket velocity: [x " + bodies[11].getVelocity().getX() + ", y " + bodies[11].getVelocity().getY() + ", z " + bodies[11].getVelocity().getZ() + "]");
+            
             double titandis = spaps.dist(bodies[8].getPosition());
             distanceTitan.setText("Distance to Titan: " + titandis + " km");
             if (closestTitan > titandis) {
@@ -1178,4 +1181,20 @@ public class SolarScene3DController implements Initializable {
         stepsize = App.chosenStepsize;
     }
 
+    private CelestialBody[] rocketTrajectory(CelestialBody[] bodies, double stepSize, double startTime) {
+        double s = 0;
+        double e = stepSize;
+
+        Vector3d dis = bodies[11].getPosition().sub(bodies[8].getPosition());
+        Vector3d force = dis.mul(-1/dis.norm());
+
+        if (dis.norm() < 8.5e8) {
+            force = bodies[11].getVelocity();
+            force = force.mul(-1/force.norm());
+        }
+        
+        ((Rocket) bodies[11]).boostedVelo(force, s, e);
+        
+        return bodies;
+    }
 }
