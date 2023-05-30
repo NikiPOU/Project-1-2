@@ -1,181 +1,242 @@
 package twentyone.Classes;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+
 public class GradientDescent {
     public static int Count = 0;
- public static CelestialBody[] allBodies  = new CelestialBody[12];
+    public static CelestialBody[] allBodies = new CelestialBody[12];
 
-public static double [] GradientDescentMethod(double x , double y , double z, CelestialBody[] allBodies) {
-    Euler euler = new Euler();
+    public static double[] GradientDescentMethod(double xCoor, double yCoor, double zCoor, double xVelo, double yVelo,
+            double zVelo, CelestialBody[] allBodies) {
 
-    double LearingRate = 0.1;
-    int LoopTimes= 1000000;
-    double prevOutput = 999999999999.9999999;
-    double XOutput =x; 
-    double YOutput = y;
-    double ZOutput = z;
-    for(int i =0;i<=LoopTimes;i++ ) {
-         double dfdx = allBodies[11].getVelocity().getX() ;
-         double dfdy = allBodies[11].getVelocity().getY() ; 
-         double dfdz = allBodies[11].getVelocity().getZ() ;
-        x -= LearingRate * dfdx ;
-        y -= LearingRate * dfdy ;
-        z -= LearingRate * dfdz ; 
+        Euler euler = new Euler();
+        initiateCB(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo);
 
-for(int j =0;j<11;j++){
-euler.Eulers( allBodies, j , 10);
+        int LoopTimes = 100000;
+        double LearingRate = 0.1;
 
-double Output = (allBodies[8].getPosition().dist(allBodies[11].getPosition()));
- if(prevOutput> Output){
-    prevOutput= Output;
-    XOutput =x ; 
-     YOutput = y ;
-     ZOutput = z ;
- }}
-    }   
-    return new double[]{XOutput,YOutput,ZOutput,prevOutput}; 
-}
+        double prevOutput = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
+        double OutputVelo = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
+        double OutputCoor = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
+        double XOutput = xCoor;
+        double YOutput = yCoor;
+        double ZOutput = zCoor;
+        double dfdx = xVelo;
+        double dfdy = yVelo;
+        double dfdz = zVelo;
+        double dfdxOutput = dfdx;
+        double dfdyOutput = dfdy;
+        double dfdzOutput = dfdz;
 
-public static double [] GradientDescentMethodForVelocity(double x , double y , double z, CelestialBody[] allBodies) {
-    Euler euler = new Euler();
+        for (int i = 0; i < LoopTimes; i++) {
 
-    double LearingRate = 0.1;
-    int LoopTimes= 1000000000;
-    double prevOutput = 999999999999.9999999;
+            initiateCB(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo);
 
-        double dfdx = x;
-         double dfdy = y ; 
-         double dfdz = z ;
-    double dfdxOutput =dfdx; 
-    double dfdyOutput = dfdy;
-    double dfdzOutput =dfdz;
-    for(int i =0;i<=LoopTimes;i++ ) {
-      double   dfdxdx=euler.sumOf_Forces(allBodies, 11).getX()/allBodies[11].getMass();
-        double dfdydy =euler.sumOf_Forces(allBodies, 11).getY()/allBodies[11].getMass();
-        double dfdzdz=euler.sumOf_Forces(allBodies, 11).getZ()/allBodies[11].getMass();
+            for (int j = 0; j <= 11; j++) {
 
-        dfdx -= LearingRate * dfdxdx ;
-        dfdy -= LearingRate * dfdydy ;
-        dfdz -= LearingRate * dfdzdz ; 
+                euler.Eulers(allBodies, j, 10);
+                xCoor = xCoor - LearingRate * dfdx;
+                yCoor = yCoor - LearingRate * dfdy;
+                zCoor = zCoor - LearingRate * dfdz;
 
-for(int j =0;j<11;j++){
-euler.Eulers( allBodies, j , 10);
+                OutputCoor = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
 
-double Output = (allBodies[8].getPosition().dist(allBodies[11].getPosition()));
- if(prevOutput> Output){
-    prevOutput= Output;
-   dfdxOutput =dfdx ; 
-   dfdyOutput = dfdx ;
-   dfdzOutput = dfdz;
- }}
-    }   
-    return new double[]{dfdxOutput,dfdyOutput,dfdzOutput,prevOutput}; 
-}
+                if (prevOutput > OutputCoor) {
+                    // if (Math.sqrt(xCoor * xCoor + yCoor * yCoor + zCoor * zCoor) >= 5733.9 // check is the coordniates are on the surface of earthn however does not work becuse ypu need to put the earth coordniates instead of the coordniates where sun is 000
+                    //         && Math.sqrt(xCoor * xCoor + yCoor * yCoor + zCoor * zCoor) <= 7008.1) {
 
-    public static void DataWriter( double x , double y , double z ) {
+                        prevOutput = OutputCoor;
+                        XOutput = xCoor;
+                        YOutput = yCoor;
+                        ZOutput = zCoor;
 
-        double[] GradientDescentOutput  = GradientDescentMethod(x, y, z, null);
-        double XOutput  = GradientDescentOutput[0];
-        double YOutput= GradientDescentOutput[1];
-        double zOutput= GradientDescentOutput[2]; 
-        double OutputOutput = GradientDescentOutput[3];
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Data.txt", true))) {
-
-             writer.write(String.valueOf(XOutput)); // write Coordinate X
-             writer.newLine();
-             writer.write(String.valueOf(YOutput)); // write Coordinate Y
-             writer.newLine();
-             writer.write(String.valueOf(zOutput)); // write Coordinate Z
-             writer.newLine();
-             writer.write(String.valueOf(OutputOutput));  // write the distance 
-             writer.newLine(); 
-      
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static double DataReader() {
-
-        double LowestValue = Double.MAX_VALUE;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader("D.txt"))) {
-            String Line;
-
-                while ((Line = reader.readLine()) != null) {
-                    Count=Count+1; 
-                    
-                    if (Count % 4  == 0) {
-                    double Value = Double.parseDouble(Line);
-
-                    if (Value < LowestValue) {
-                        LowestValue = Value;        
-
-                    }
-               }
+                    // }
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        return LowestValue;
+
+        // double dfdxdx = euler.sumOf_Forces(allBodies, 11).getX() /
+        // allBodies[11].getMass();
+        // double dfdydy = euler.sumOf_Forces(allBodies, 11).getY() /
+        // allBodies[11].getMass();
+        // double dfdzdz = euler.sumOf_Forces(allBodies, 11).getZ() /
+        // allBodies[11].getMass();
+
+        for (int y = 0; y < LoopTimes; y++) {
+
+            initiateCB(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo);
+
+            for (int z = 0; z <= 11; z++) {
+
+                euler.Eulers(allBodies, z, 10);
+
+                double dfdxdx = euler.sumOf_Forces(allBodies, 11).getX() / allBodies[11].getMass();
+                double dfdydy = euler.sumOf_Forces(allBodies, 11).getY() / allBodies[11].getMass();
+                double dfdzdz = euler.sumOf_Forces(allBodies, 11).getZ() / allBodies[11].getMass();
+
+                dfdx = dfdx - LearingRate * dfdxdx;
+                dfdy = dfdy - LearingRate * dfdydy;
+                dfdz = dfdz - LearingRate * dfdzdz;
+
+                OutputVelo = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
+
+                if (prevOutput > OutputVelo) {
+
+                    prevOutput = OutputVelo;
+                    dfdxOutput = dfdx;
+                    dfdyOutput = dfdy;
+                    dfdzOutput = dfdz;
+
+                }
+            }
+        }
+
+        return new double[] { XOutput, YOutput, ZOutput, dfdxOutput, dfdyOutput, dfdzOutput, OutputCoor, OutputVelo };
+
     }
 
-    public static double MethodConnection(double x, double y, double z,CelestialBody[] allBodies) {
+    // public static double [] GradientDescentMethodForVelocity(double x , double y
+    // , double z, CelestialBody[] allBodies) {
+    // Euler euler = new Euler();
 
-    double[] GradientDescentOutput  = GradientDescentMethod(x, y, z, allBodies);
-    double XOutput  = GradientDescentOutput[0];
-    double YOutput= GradientDescentOutput[1];
-    double zOutput= GradientDescentOutput[2];
-    double OutputOutput = GradientDescentOutput[3];
+    // double LearingRate = 0.1;
+    // int LoopTimes= 1;
+    // double prevOutput = 999999999999.9999999;
 
-    if(OutputOutput<DataReader()){
-    DataWriter(XOutput,YOutput,zOutput);
-    return OutputOutput;
-        }else{
-        return DataReader();
-}
-}
-    public static void initiateCB(){
-        Vector3d sunvel = new Vector3d(0,0,0);
-        Vector3d sunpos = new Vector3d(0,0,0);
+    // double dfdx = x;
+    // double dfdy = y ;
+    // double dfdz = z ;
+    // double dfdxOutput =dfdx;
+    // double dfdyOutput = dfdy;
+    // double dfdzOutput =dfdz;
 
-        Vector3d merpos = new Vector3d( 7833268.43923962,  44885949.3703908,  2867693.20054382);
+    // for(int i =0;i<LoopTimes;i++ ) {
+
+    // for(int j =0;j<=11;j++){
+    // euler.Eulers( allBodies, j , 10);
+
+    // double dfdxdx=euler.sumOf_Forces(allBodies,
+    // 11).getX()/allBodies[11].getMass();
+    // double dfdydy =euler.sumOf_Forces(allBodies,
+    // 11).getY()/allBodies[11].getMass();
+    // double dfdzdz=euler.sumOf_Forces(allBodies,
+    // 11).getZ()/allBodies[11].getMass();
+
+    // dfdx -= LearingRate * dfdxdx ;
+    // dfdy -= LearingRate * dfdydy ;
+    // dfdz -= LearingRate * dfdzdz ;
+
+    // double Output =
+    // (allBodies[8].getPosition().dist(allBodies[11].getPosition()));
+    // if(prevOutput> Output){
+    // prevOutput= Output;
+    // dfdxOutput =dfdx ;
+    // dfdyOutput = dfdy ;
+    // dfdzOutput = dfdz;
+    // }}
+    // }
+    // return new double[]{dfdxOutput,dfdyOutput,dfdzOutput,prevOutput};
+    // }
+
+    // public static void DataWriter( double x , double y , double z ) {
+
+    // double[] GradientDescentOutput = GradientDescentMethod(x, y, z, allBodies);
+    // double XOutput = GradientDescentOutput[0];
+    // double YOutput= GradientDescentOutput[1];
+    // double zOutput= GradientDescentOutput[2];
+    // double OutputOutput = GradientDescentOutput[3];
+    // double [] GradientDescentMethodForVelocityOutput =
+    // GradientDescentMethodForVelocity(XOutput, YOutput, zOutput, allBodies);
+
+    // if(OutputOutput<DataReader()){
+
+    // DataWriter(XOutput,YOutput,zOutput);
+    // try (BufferedWriter writer = new BufferedWriter(new FileWriter("Data.txt",
+    // true))) {
+
+    // writer.write(String.valueOf(XOutput)); // write Coordinate X
+    // writer.newLine();
+    // writer.newLine();
+    // writer.write(String.valueOf(zOutput)); // write Coordinate Z
+    // writer.newLine();
+    // writer.write(String.valueOf(OutputOutput)); // write the distance
+    // writer.newLine();
+
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // }
+    // }
+    // }
+
+    // public static double DataReader() {
+
+    // double LowestValue = Double.MAX_VALUE;
+
+    // try (BufferedReader reader = new BufferedReader(new FileReader("Data.txt")))
+    // {
+    // String Line;
+
+    // while ((Line = reader.readLine()) != null) {
+    // Count=Count+1;
+
+    // if (Count % 4 == 0) {
+    // double Value = Double.parseDouble(Line);
+
+    // if (Value < LowestValue) {
+    // LowestValue = Value;
+
+    // }
+    // }
+    // }
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // }
+    // return LowestValue;
+    // }
+
+    public static void initiateCB(double x, double y, double z, double xVelo, double yVelo, double zVelo) {
+
+        Vector3d sunvel = new Vector3d(0, 0, 0);
+        Vector3d sunpos = new Vector3d(0, 0, 0);
+
+        Vector3d merpos = new Vector3d((long) 7833268.43923962, (long) 44885949.3703908, (long) 2867693.20054382);
         Vector3d mervel = new Vector3d(-57.4967480139828, 11.52095127176, 6.21695374334136);
 
         Vector3d venusvel = new Vector3d(-34.0236737066136, -8.96521274688838, 1.84061735279188);
-        Vector3d venuspos = new Vector3d( -28216773.9426889,  103994008.541512,  3012326.64296788);
-        
-        Vector3d earthvel = new Vector3d(5.05251577575409, -29.3926687625899,  0.00170974277401292);
-        Vector3d earthpos = new Vector3d( -148186906.893642,  -27823158.5715694,  33746.8987977113);
+        Vector3d venuspos = new Vector3d((long) -28216773.9426889, (long) 103994008.541512, (long) 3012326.64296788);
+
+        Vector3d earthvel = new Vector3d(5.05251577575409, -29.3926687625899, 0.00170974277401292);
+        Vector3d earthpos = new Vector3d((long) -148186906.893642, (long) -27823158.5715694, (long) 33746.8987977113);
 
         Vector3d moonvel = new Vector3d(4.34032634654904, -30.0480834180741, -0.0116103535014229);
-        Vector3d moonpos = new Vector3d( -148458048.395164,  -27524868.1841142,  70233.6499287411);
+        Vector3d moonpos = new Vector3d((long) -148458048.395164, (long) -27524868.1841142, (long) 70233.6499287411);
 
         Vector3d marsvel = new Vector3d(-17.6954469224752, -13.4635253412947, 0.152331928200531);
-        Vector3d marspos = new Vector3d( -159116303.422552,  189235671.561057,  7870476.08522969);
+        Vector3d marspos = new Vector3d((long) -159116303.422552, (long) 189235671.561057, (long) 7870476.08522969);
 
         Vector3d jupivel = new Vector3d(-4.71443059866156, 12.8555096964427, 0.0522118126939208);
-        Vector3d jupipos = new Vector3d( 692722875.928222,  258560760.813524,  -16570817.7105996);
+        Vector3d jupipos = new Vector3d((long) 692722875.928222, (long) 258560760.813524, (long) -16570817.7105996);
 
-        Vector3d satuvel = new Vector3d(4.46781341335014, 8.23989540475628,  -0.320745376969732);
-        Vector3d satupos = new Vector3d( 1253801723.95465,  -760453007.810989,  -36697431.1565206);
+        Vector3d satuvel = new Vector3d(4.46781341335014, 8.23989540475628, -0.320745376969732);
+        Vector3d satupos = new Vector3d((long) 1253801723.95465, (long) -760453007.810989, (long) -36697431.1565206);
 
         Vector3d titvel = new Vector3d(8.99593229549645, 11.1085713608453, -2.25130986174761);
-        Vector3d titpos = new Vector3d( 1254501624.95946,  -761340299.067828,  -36309613.8378104);
+        Vector3d titpos = new Vector3d((long) 1254501624.95946, (long) -761340299.067828, (long) -36309613.8378104);
 
         Vector3d nepvel = new Vector3d(0.447991656952326, 5.44610697514907, -0.122638125365954);
-        Vector3d neppos = new Vector3d( 4454487339.09447,  -397895128.763904,  -94464151.3421107);
+        Vector3d neppos = new Vector3d((long) 4454487339.09447, (long) -397895128.763904, (long) -94464151.3421107);
 
         Vector3d uravel = new Vector3d(-5.12766216337626, 4.22055347264457, 0.0821190336403063);
-        Vector3d urapos = new Vector3d( 1958732435.99338,  2191808553.21893,  -17235283.8321992);
+        Vector3d urapos = new Vector3d((long) 1958732435.99338, (long) 2191808553.21893, (long) -17235283.8321992);
 
-        Vector3d probeposs = new Vector3d(-148186906.893642, -27823158.5715694 + 6370, 33746.8987977113);
-        Vector3d probevelo = new Vector3d(1,1,1);
+        Vector3d probeposs = new Vector3d(x, y, z);
+        Vector3d probevelo = new Vector3d(xVelo, yVelo, zVelo);
+
         allBodies[0] = new CelestialBody(sunvel, sunpos, 1.991E30);
         allBodies[1] = new CelestialBody(mervel, merpos, 3.302E+23);
         allBodies[2] = new CelestialBody(venusvel, venuspos, 4.8685E+24);
@@ -192,10 +253,22 @@ double Output = (allBodies[8].getPosition().dist(allBodies[11].getPosition()));
 
     public static void main(String[] args) {
 
-        initiateCB();
-        //System.out.println(Arrays.toString(GradientDescentMethodForVelocity(allBodies[11].getVelocity().getX(),allBodies[11].getVelocity().getY(),allBodies[11].getVelocity().getZ(),allBodies)));
-        System.out.println(Arrays.toString(GradientDescentMethod(allBodies[11].getPosition().getX(),allBodies[11].getPosition().getY(),allBodies[11].getPosition().getZ(),allBodies)));
-     
+        double xCoor = -148186906.893642 + 6370;
+        double yCoor =  -27823158.5715694;
+        double zCoor =  33746.8987977113;
+        double xVelo = 8.99593229549645;
+        double yVelo = 11.1085713608453;
+        double zVelo = -2.25130986174761;
+        //System.out.println((Math.sqrt(xCoor * xCoor + yCoor * yCoor + zCoor * zCoor) >= 5733.9
+        //&& Math.sqrt(xCoor * xCoor + yCoor * yCoor + zCoor * zCoor) <= 7008.1));
+        
+        System.out.println(Arrays.toString(GradientDescentMethod(xCoor, yCoor, zCoor,
+        xVelo, yVelo, zVelo, allBodies)));
+
+        // System.out.println(Arrays.toString(GradientDescentMethod(xCoor,yCoor,zCoor,allBodies)));
+
+        // System.out.println(Arrays.toString(GradientDescentMethodForVelocity(xVelo,yVelo,zVelo,allBodies)));
+
     }
 }
 
