@@ -49,19 +49,10 @@ public class App extends Application {
         stage.setFullScreen(true);
         stage.setFullScreenExitHint("");
 
-        // initialPosProbe = new Vector3d(-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113);
-        // initialVelProbe = new Vector3d(48, -45, 0);
-
-        // stepSize = 10;
-
-        // DisplayMode mode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
-
         Rectangle2D bounds = Screen.getPrimary().getBounds();
         resolution = Toolkit.getDefaultToolkit().getScreenResolution()/100;
         width = bounds.getWidth();
         height = bounds.getHeight();
-        // width = mode.getWidth();
-        // height = mode.getHeight();
         System.out.println("width: " + width + " height: " + height);
         stage.setScene(scene);
         stage.setTitle("Titanic Space Odyssey"); 

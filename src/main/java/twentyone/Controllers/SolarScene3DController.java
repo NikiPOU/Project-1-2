@@ -460,10 +460,6 @@ public class SolarScene3DController implements Initializable {
 
         stepsizeButton.setText(stepsizeButton.getText() + App.chosenStepsize);
 
-        double resizer = App.width / 1920;
-        double actualResize = Math.pow(resizer, 2);
-        divider /= resizer;
-
         lastSpacePos[0] = 5E40;
 
         sunPos[0] = (App.width)/2;
@@ -478,10 +474,6 @@ public class SolarScene3DController implements Initializable {
         pGroup.setTranslateZ(sunPos[2]);
         milkyway.setFitWidth(App.width);
         milkyway.setFitHeight(App.height);
-        // menu.setScaleX(menu.getScaleX() * resizer);
-        // menu.setScaleY(menu.getScaleY() * resizer);
-        // data.setScaleX(data.getScaleX() * resizer);
-        // data.setScaleY(data.getScaleY() * resizer);
         launchCoords.sceneProperty().addListener((Observable, oldScene, newScene) -> {
             if(newScene != null){
                 scene = launchCoords.getScene();
@@ -598,6 +590,7 @@ public class SolarScene3DController implements Initializable {
      * @param x as a {@code double}
      * @param y as a {@code double}
      * @param z as a {@code double}
+     * @see {@link twentyone.Controllers.SolarScene3DController#pGroup pGroup}
      */
     public void setCameraPos(double x, double y, double z){
         pGroup.setTranslateX(x);
@@ -640,7 +633,7 @@ public class SolarScene3DController implements Initializable {
 
     /**
      * When a key gets pressed, only "w", "a", "s", "d", "r", "v", "." and ","
-     * @param ke as a {@code KeyEvent}
+     * @param ke as a {@link KeyEvent}
      */
     @FXML
     public void keyPress(KeyEvent ke) {
@@ -700,6 +693,7 @@ public class SolarScene3DController implements Initializable {
 
     /**
      * Initiates all the {@code Celestial Bodies}. It gives the correct {@code positions}, {@code velocities} and {@code masses}.
+     * @see Vector3d
      */
     private void initiateCB(){
         Vector3d sunvel = new Vector3d(0,0,0);
@@ -760,6 +754,7 @@ public class SolarScene3DController implements Initializable {
      * Returns to the start screen when pressed.
      * @throws IOException
      * @see javafx.scene.control.Button
+     * @see musicPlayer
      */
     @FXML
     public void onReturnButton() throws IOException{
@@ -944,6 +939,14 @@ public class SolarScene3DController implements Initializable {
             lastSpacePos[2] = probe.getTranslateZ();
         }
 
+        /**
+         * Get the last and current position of the rocket. Then make a line ({@code Cylinder}) between those points.
+         * @param origin as a {@code Point3D}
+         * @param target as a {@code Point3D}
+         * @return a {@code Cylinder}
+         * @see Cylinder
+         * @see Point3D
+         */
         public Cylinder createConnection(Point3D origin, Point3D target) {
             Point3D yAxis = new Point3D(0, 1, 0);
             Point3D diff = target.subtract(origin);
@@ -1206,10 +1209,10 @@ public class SolarScene3DController implements Initializable {
         Vector3d dis = bodies[11].getPosition().sub(bodies[8].getPosition());
         Vector3d force = dis.mul(-1/dis.norm());
 
-        // if (dis.norm() < 8.5e8) {
-        //     force = bodies[11].getVelocity();
-        //     force = force.mul(-1/force.norm());
-        // }
+        if (dis.norm() < 8.5e8) {
+            force = bodies[11].getVelocity();
+            force = force.mul(-1/force.norm());
+        }
         
         ((Rocket) bodies[11]).boostedVelo(force, s, e);
         
