@@ -28,6 +28,20 @@ public class RungeKuttaTest {
         assertTrue(Math.abs(res.getX()) < THRESHOLD && Math.abs(res.getY()) < THRESHOLD && Math.abs(res.getZ()) < THRESHOLD, earth2sec.toString());
     }
 
+    @Test
+    public void testDerivativeFormula() {
+        RungeKutta r = new RungeKutta();
+
+        Vector3d oldy = new Vector3d(0,0,0);
+        Vector3d newy = new Vector3d(0,0,0);
+        Vector3d y = new Vector3d(0,0,0);
+
+        Vector3d res = r.derivativeFormula(oldy, newy, 1, y);
+
+        assertTrue(res.equals(res));
+
+    }
+
     public void initiateCB(){
         Vector3d sunvel = new Vector3d(0,0,0);
         Vector3d sunpos = new Vector3d(0,0,0);
