@@ -21,9 +21,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
@@ -442,6 +444,12 @@ public class SolarScene3DController implements Initializable {
     private AnchorPane mainScreen;
     @FXML
     private Group path;
+    @FXML
+    private ImageView milkyway;
+    @FXML
+    private VBox data;
+    @FXML
+    private VBox menu;
     
 
     /**
@@ -452,10 +460,17 @@ public class SolarScene3DController implements Initializable {
 
         stepsizeButton.setText(stepsizeButton.getText() + App.chosenStepsize);
 
+        double resizer = App.width / 1920;
+        double actualResize = Math.pow(resizer, 2);
+        divider /= resizer;
+
         lastSpacePos[0] = 5E40;
 
-        sunPos[0] = (App.width)/2;
-        sunPos[1] = (App.height)/2;
+        mainScreen.setLayoutX(0);
+        mainScreen.setLayoutY(0);
+
+        sunPos[0] = (App.width)/2 - 100;
+        sunPos[1] = (App.height)/2 - 60;
         sunPos[2] = 0;
         focused = false;
         resetCheck = false;
@@ -464,6 +479,14 @@ public class SolarScene3DController implements Initializable {
         pGroup.setTranslateX(sunPos[0]);
         pGroup.setTranslateY(sunPos[1]); 
         pGroup.setTranslateZ(sunPos[2]);
+        milkyway.setFitWidth(App.width);
+        milkyway.setFitHeight(App.height);
+        // menu.setScaleX(menu.getScaleX() * resizer);
+        // menu.setScaleY(menu.getScaleY() * resizer);
+        // data.setScaleX(data.getScaleX() * resizer);
+        // data.setScaleY(data.getScaleY() * resizer);
+        data.setLayoutX(15);
+        data.setLayoutY(App.height - 201);
         launchCoords.sceneProperty().addListener((Observable, oldScene, newScene) -> {
             if(newScene != null){
                 scene = launchCoords.getScene();

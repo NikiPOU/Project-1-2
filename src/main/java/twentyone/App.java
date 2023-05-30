@@ -1,11 +1,13 @@
 package twentyone;
 
+import java.awt.Toolkit;
+import java.awt.DisplayMode;
+import java.awt.GraphicsEnvironment;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import twentyone.Classes.Vector3d;
 import twentyone.Classes.musicPlayer;
@@ -25,6 +27,7 @@ public class App extends Application {
 
     public static double width;
     public static double height;
+    public static double resolution;
 
     public static Vector3d initialPosProbe;
     public static Vector3d initialVelProbe;
@@ -49,11 +52,15 @@ public class App extends Application {
 
         // stepSize = 10;
 
+        DisplayMode mode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
 
-        Rectangle2D bounds = Screen.getPrimary().getBounds();
-        width = bounds.getWidth();
-        height = bounds.getHeight();
-        // System.out.println("width: " + width + " height: " + height);
+        // Rectangle2D bounds = Screen.getPrimary().getBounds();
+        resolution = Toolkit.getDefaultToolkit().getScreenResolution()/100;
+        // width = bounds.getWidth();
+        // height = bounds.getHeight();
+        width = mode.getWidth();
+        height = mode.getHeight();
+        System.out.println("width: " + width + " height: " + height);
         stage.setScene(scene);
         stage.setTitle("Titanic Space Odyssey"); 
         stage.show();
