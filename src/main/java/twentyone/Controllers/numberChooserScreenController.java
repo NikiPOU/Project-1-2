@@ -45,7 +45,6 @@ public class numberChooserScreenController {
     @FXML
     public void onNextButton() throws IOException {
         App.initialPosProbe = setPosition();
-        App.initialVelProbe = setVelocity();
         App.chosenStepsize = setStepsize();
         App.stepSize = App.chosenStepsize;
         App.timeStamp = setTimestamp();
@@ -90,34 +89,6 @@ public class numberChooserScreenController {
             z = Double.parseDouble(positionZ.getText());
         }
         return setVector(positions[0] + x, positions[1] + y, positions[2] + z);
-    }
-
-    /**
-     * Sets the {@code velocity} of the {@code Probe} by checking which values were entered. If no values were entered or some were skipped, the value will be set to {@code 0}.
-     * @return A {@code Vector3d Class} of the {@code position} of the {@code Probe}
-     * @see TextField
-     * @see Vector3d
-     */
-    private Vector3d setVelocity(){
-        double x;
-        double y;
-        double z;
-        if(velocityX.getText() == null || velocityX.getText().trim().isEmpty()){
-            x = 0;
-        } else {
-            x = Double.parseDouble(velocityX.getText());
-        }
-        if(velocityY.getText() == null || velocityY.getText().trim().isEmpty()){
-            y = 0;
-        } else {
-            y = Double.parseDouble(velocityY.getText());
-        }
-        if(velocityZ.getText() == null || velocityZ.getText().trim().isEmpty()){
-            z = 0;
-        } else {
-            z = Double.parseDouble(velocityZ.getText());
-        }
-        return setVector(x, y, z);
     }
 
     /**

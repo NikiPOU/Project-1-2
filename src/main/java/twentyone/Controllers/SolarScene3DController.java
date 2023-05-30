@@ -734,7 +734,7 @@ public class SolarScene3DController implements Initializable {
         Vector3d uravel = new Vector3d(-5.12766216337626, 4.22055347264457, 0.0821190336403063);
         Vector3d urapos = new Vector3d( 1958732435.99338,  2191808553.21893,  -17235283.8321992);
 
-        Vector3d probevel = initialVelProbe;
+        Vector3d probevel = new Vector3d(0,0,0);
         Vector3d probepos = initialPosProbe;
 
         firstprobepos = initialPosProbe;
