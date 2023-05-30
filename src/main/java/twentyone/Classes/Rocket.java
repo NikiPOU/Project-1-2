@@ -108,6 +108,7 @@ public class Rocket extends CelestialBody{
         return finalVelo;
     }
 
+    /*
     public void autopilot(CelestialBody[] celBodies){
         super.getPosition().dist(celBodies[1].getPosition());
         double currentDistTit = super.getPosition().dist(celBodies[2].getPosition()); //use titan index
@@ -118,7 +119,7 @@ public class Rocket extends CelestialBody{
 
         }
     }
-
+    */
     public double gettime(){
         return time;
     }
