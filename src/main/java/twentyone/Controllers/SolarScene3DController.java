@@ -50,6 +50,11 @@ import twentyone.Classes.musicPlayer;
 public class SolarScene3DController implements Initializable {
 
     /**
+     * Is true if the rocket has been around Titan already.
+     */
+    private boolean titanOrbit = false;
+
+    /**
      * The {@code Adams-Bashforth Solver}
      * @see twentyone.Classes.AdamsBashforth
      */
@@ -1206,12 +1211,30 @@ public class SolarScene3DController implements Initializable {
         double s = 0;
         double e = stepSize;
 
-        Vector3d dis = bodies[11].getPosition().sub(bodies[8].getPosition());
-        Vector3d force = dis.mul(-1/dis.norm());
+        Vector3d dis = null;
+        Vector3d force = null;
 
-        if (dis.norm() < 8.5e8) {
-            force = bodies[11].getVelocity();
-            force = force.mul(-1/force.norm());
+        if (!titanOrbit) {
+            dis = bodies[11].getPosition().sub(bodies[8].getPosition());
+            force = dis.mul(-1.5/dis.norm());
+
+            if (dis.norm() < 2.5e8 && dis.norm() > 1.4e7) {
+                force = bodies[11].getVelocity();
+                force = force.mul(-10/force.norm());
+            } 
+            else if (dis.norm() < 1.3e7) {
+                titanOrbit = true;
+            }
+        }
+
+        if (titanOrbit) {
+            dis = bodies[11].getPosition().sub(bodies[3].getPosition());
+            force = dis.mul(-1.5/dis.norm());
+
+            if (dis.norm() < 2.5e8 && dis.norm() > 1.4e7) {
+                force = bodies[11].getVelocity();
+                force = force.mul(-10/force.norm());
+            } 
         }
         
         ((Rocket) bodies[11]).boostedVelo(force, s, e);

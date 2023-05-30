@@ -2,9 +2,6 @@ package twentyone;
 
 import java.awt.Toolkit;
 import javafx.geometry.Rectangle2D;
-import java.awt.DisplayMode;
-import java.awt.GraphicsEnvironment;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

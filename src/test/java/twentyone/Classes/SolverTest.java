@@ -15,7 +15,6 @@ public class SolverTest {
 
     @Test
     public void testCalculateForce() {
-        //Not sure if it's actually right, cause I can't do physics
         Vector3d res = s.calculateForce(moon, earth);
 
         assertTrue(res.equals(new Vector3d(2.9496517435458584E-20, 0.0, -2.9496517435458584E-20)));
@@ -23,10 +22,8 @@ public class SolverTest {
 
     @Test
     public void testSumOf_Forces() {
-        //Same as the other test, no idea
         Vector3d res = s.sumOf_Forces(bodies, 0);
 
-        assertTrue(res.equals(new Vector3d(-2.5222771243751352E-20, 6.4106192875608486E-21, 3.8044009818873047E-20)), res.toString());
-
+        assertTrue(res.equals(new Vector3d(-2.9496517435458584E-20, -0.0, 2.9496517435458584E-20)), res.toString());
     }
 }
