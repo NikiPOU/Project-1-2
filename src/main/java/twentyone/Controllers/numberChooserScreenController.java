@@ -9,7 +9,7 @@ import twentyone.Classes.Vector3d;
 
 public class numberChooserScreenController {
 
-    private double[] positions = {-148186906.893642, -27823158.5715694, 33746.8987977113};
+    private double[] positions = {-148186906.893642, -27823158.5715694, 33746.8987977114};
 
     @FXML
     private TextField stepsizeTextfield;
