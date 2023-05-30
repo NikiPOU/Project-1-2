@@ -28,7 +28,7 @@ public class GradientDescent {
         double YOutput = yCoor;
         double ZOutput = zCoor;
 
-        double dfdx = xCoor;
+        double dfdx =xCoor;
         double dfdy = yVelo;
         double dfdz = zVelo;
 
@@ -51,17 +51,7 @@ public class GradientDescent {
 
                 if (prevOutput > OutputCoor) {
 
-                    if (Math.sqrt(xCoor * xCoor + yCoor * yCoor + zCoor * zCoor) >= 148108199.283
-                            && Math.sqrt(xCoor * xCoor + yCoor * yCoor + zCoor * zCoor) <= 151100284.117) { // check is
-                                                                                                            // the
-                                                                                                            // coordniates
-                                                                                                            // are on
-                                                                                                            // the
-                                                                                                            // surface
-                                                                                                            // of earth
-                                                                                                            // with
-                                                                                                            // error of
-                                                                                                            // 1%
+                     if (Math.sqrt(xCoor * xCoor + yCoor * yCoor + zCoor * zCoor) >=148108199.283 && Math.sqrt(xCoor * xCoor + yCoor * yCoor + zCoor * zCoor) <= 151100284.117){ // check is the coordniates are on the surface of earth with error of 1%
 
                         prevOutput = OutputCoor;
                         XOutput = xCoor;
@@ -260,15 +250,16 @@ public class GradientDescent {
     public static void main(String[] args) {
 
         double xCoor = -148186906.893642 + 6370;
-        double yCoor = -27823158.5715694;
-        double zCoor = 33746.8987977113;
+        double yCoor =  -27823158.5715694;
+        double zCoor =  33746.8987977113;
 
         double xVelo = 8.99593229549645;
         double yVelo = 11.1085713608453;
         double zVelo = -2.25130986174761;
-
-        System.out.println(Arrays.toString(GradientDescentMethod(xCoor, yCoor, zCoor,
-                xVelo, yVelo, zVelo, allBodies)));
+        
+       System.out.println(Arrays.toString(GradientDescentMethod(xCoor, yCoor, zCoor,
+       xVelo, yVelo, zVelo, allBodies)));
 
     }
 }
+
