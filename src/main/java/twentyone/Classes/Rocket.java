@@ -109,7 +109,7 @@ public class Rocket extends CelestialBody{
     }
 
     public void autopilot(CelestialBody[] celBodies){
-        double currentDistSat = super.getPosition().dist(celBodies[1].getPosition()); //use saturn index
+        super.getPosition().dist(celBodies[1].getPosition());
         double currentDistTit = super.getPosition().dist(celBodies[2].getPosition()); //use titan index
         if(currentDistTit > 100000){
             System.out.println("not close");

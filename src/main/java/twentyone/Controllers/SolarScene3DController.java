@@ -50,6 +50,11 @@ import twentyone.Classes.musicPlayer;
 public class SolarScene3DController implements Initializable {
 
     /**
+     * Is true if the rocket has been around Titan already.
+     */
+    private boolean titanOrbit = false;
+
+    /**
      * The {@code Adams-Bashforth Solver}
      * @see twentyone.Classes.AdamsBashforth
      */

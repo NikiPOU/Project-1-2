@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 public class hill_climb{
-    public static Euler eu = new Euler();
+    public Euler eu = new Euler();
     public static List<Vector3d> create_RandneighboorVector(Vector3d ourVelo, int quantity){
         ArrayList<Vector3d> neigsVect = new ArrayList<Vector3d>();
         Vector3d vex = ourVelo;
@@ -39,7 +39,7 @@ public class hill_climb{
         return b;
     }
 
-    public static CelestialBody[] initializeSpace(Vector3d initialVelProbe, Vector3d initialPosProbe){
+    public CelestialBody[] initializeSpace(Vector3d initialVelProbe, Vector3d initialPosProbe){
         CelestialBody[] bodies = new CelestialBody[12];
         Vector3d sunvel = new Vector3d(0,0,0);
         Vector3d sunpos = new Vector3d(0,0,0);
@@ -93,7 +93,7 @@ public class hill_climb{
     }
 
 
-    public static Vector3d hllClimb(Vector3d ourforce, CelestialBody[] celo){
+    public Vector3d hllClimb(Vector3d ourforce, CelestialBody[] celo){
         boolean x = true;
         CelestialBody[] dupa = celo;
         ((Rocket) dupa[11]).simulateEngine(ourforce   ,1, 0);
@@ -133,7 +133,7 @@ public class hill_climb{
 
 
 
-    public static CelestialBody hllClimb2(Vector3d ourforce, CelestialBody[] celo){
+    public CelestialBody hllClimb2(Vector3d ourforce, CelestialBody[] celo){
         
         //the setup
         boolean x = true;
@@ -195,11 +195,10 @@ public class hill_climb{
         return finala;
     }
 
-    public static void main(String[] args) {
-        long spaceloops = Integer.MAX_VALUE;
+    public void main(String[] args) {
+        //long spaceloops = Integer.MAX_VALUE;
         double k = 0;
         int crossgen = 0;
-        double ans = 0;
         Vector3d pos = new Vector3d(-1.48186916893642E8, -2.78168419715694E7, 33693.2987977113);
         hill_climb a = new hill_climb();
         Vector3d initForce = new Vector3d(-90,11.5, 1.7);
@@ -210,7 +209,6 @@ public class hill_climb{
             if(k>1000){
                 kk[11] = a.hllClimb2(initForce, kk);
                 ((Rocket) kk[11]).boostedVelo(initForce, ((Rocket) kk[11]).gettime(), 0);
-                ans = k/365;
                 k = 0;
             }
             for (int j = 0; j < kk.length; j++) {

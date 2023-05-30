@@ -7,18 +7,35 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+ * Finding the best launching coordinates
+ * using coordinates and velocity
+ */
 public class GradientDescent {
-
-     /**
-     * Finding the best laounching coordiantes
-     * using coordinates and velocity
-     */
 
     public static int Count = 0;
     public static CelestialBody[] allBodies = new CelestialBody[12];
 
+    public static void main(String[] args) {
+
+        //example of coordinates
+
+        double xCoor = -148186906.893642 + 6370;
+        double yCoor = -27823158.5715694;
+        double zCoor = 33746.8987977113;
+
+        double xVelo = 8.99593229549645;
+        double yVelo = 11.1085713608453;
+        double zVelo = -2.25130986174761;
+
+        System.out.println(Arrays.toString(GradientDescentMethod(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo, allBodies)));
+
+        System.out.println(MethodConnection(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo, allBodies));
+
+    }
+
      /**
-     * Gradient Descent is for flindong the best launching coordinates and velocity It uses the 
+     * Gradient descent is for finding the best launching coordinates and velocity. It uses the 
      * following formula: {@code XCoor = xCoor -xVelo * LearingRate}.
      * @param xCoor x.
      * @param yCoor y.
@@ -29,7 +46,6 @@ public class GradientDescent {
      * @param allBodies as a {@code CelestialBody[]}.
      * @return a double array of x,y,z coordinates and x,y,z nad the distance to the Titan from rocket .
      */
-
     public static double[] GradientDescentMethod(double xCoor, double yCoor, double zCoor, double xVelo, double yVelo,
             double zVelo, CelestialBody[] allBodies) {
 
@@ -66,7 +82,7 @@ public class GradientDescent {
 
             for (int j = 0; j <= 11; j++) {
 
-                // applaying the gradient descant for coordiantes
+                // applying the gradient descent for coordinates
 
                 euler.Eulers(allBodies, j, 10);
                 xCoor = xCoor - LearingRate * dfdx;
@@ -77,14 +93,14 @@ public class GradientDescent {
 
                 OutputCoor = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
 
-                //cheching if the new distance is smaller then the previus one
+                //checking if the new distance is smaller then the previous one
 
                 if (prevOutput > OutputCoor) {
 
                     if (Math.sqrt(xCoor * xCoor + yCoor * yCoor + zCoor * zCoor) >= 148108199.283
                             && Math.sqrt(xCoor * xCoor + yCoor * yCoor + zCoor * zCoor) <= 151100284.117) {
 
-                        // check is the coordniates are on the surface of earth with error of 1%
+                        // check if the coordinates are on the surface of earth with error of 1%
 
                         // Saving the lowest value
 
@@ -108,13 +124,13 @@ public class GradientDescent {
 
                 euler.Eulers(allBodies, z, 10);
 
-                // Second derivative of coordinates and first coordinate of velocity
+                // Second derivative of coordinates and first derivative of velocity
 
                 double dfdxdx = euler.sumOf_Forces(allBodies, 11).getX() / allBodies[11].getMass();
                 double dfdydy = euler.sumOf_Forces(allBodies, 11).getY() / allBodies[11].getMass();
                 double dfdzdz = euler.sumOf_Forces(allBodies, 11).getZ() / allBodies[11].getMass();
 
-                // applaying the gradient descant for velocity
+                // applying the gradient descent for velocity
 
                 dfdx = dfdx - LearingRate * dfdxdx;
                 dfdy = dfdy - LearingRate * dfdydy;
@@ -149,7 +165,6 @@ public class GradientDescent {
      * @param zVelo z3.     
     * @param allBodies as a {@code CelestialBody[]}.
      */
-
     public static void DataWriter(double xCoor, double yCoor, double zCoor, double xVelo, double yVelo,
             double zVelo, CelestialBody[] allBodies) {
 
@@ -165,7 +180,7 @@ public class GradientDescent {
         double zVeloOutput = GradientDescentOutput[5];
         double OutputOutput = GradientDescentOutput[6];
 
-        // Writing the info when it is smalller then ones recored 
+        // Writing the info when it is smalller then the ones recored 
 
         if (OutputOutput < DataReader()) {
 
@@ -213,7 +228,7 @@ public class GradientDescent {
 
                 if (Count % 7 == 0) { 
 
-                    // 7 because 1-6 are the coordiantes and velocity and the 7th is the distance 
+                    // 7 because 1-6 are the coordinates and velocity and the 7th is the distance 
 
                     double Value = Double.parseDouble(Line);
 
@@ -246,7 +261,6 @@ public class GradientDescent {
      * @param allBodies as a {@code CelestialBody[]}.
      * @return a distance to the Titan from rocket as double.
      */
-
     public static double MethodConnection(double xCoor, double yCoor, double zCoor, double xVelo, double yVelo,
             double zVelo, CelestialBody[] allBodies) {
 
@@ -256,8 +270,8 @@ public class GradientDescent {
 
         double OutputOutput = GradientDescentOutput[6];
 
-                //  Compreing if the values in Data.txt file are smaller then the outcome of gradient descant
-                // if yes then it returns the gradient descant values and saves them in Data.txt file
+                // Checking if the values in Data.txt file are smaller then the outcome of gradient descent
+                // if yes then it returns the gradient descent values and saves them in Data.txt file
 
         if (OutputOutput < DataReader()) {
 
@@ -269,7 +283,7 @@ public class GradientDescent {
 
         } else {
 
-            //if the gradient descant values are bigger then it returns the smallest values in Data.txt file
+            //if the gradient descent values are bigger, it returns the (smallest) values in Data.txt file
 
             return DataReader();
         }
@@ -286,7 +300,6 @@ public class GradientDescent {
     * Initiates all the {@code Celestial Bodies}. It gives the correct {@code positions}, {@code velocities} and {@code masses}.
      * @see Vector3d
      */
-
     public static void initiateCB(double x, double y, double z, double xVelo, double yVelo, double zVelo) {
 
         //(double x, double y, double z, double xVelo, double yVelo, double zVelo)  are for user to put and check
@@ -339,23 +352,5 @@ public class GradientDescent {
         allBodies[9] = new CelestialBody(nepvel, neppos, 1.02409E+26);
         allBodies[10] = new CelestialBody(uravel, urapos, 86.813E+24);
         allBodies[11] = new Rocket(probevelo, probeposs);
-    }
-
-    public static void main(String[] args) {
-
-//example of coordinates
-
-        double xCoor = -148186906.893642 + 6370;
-        double yCoor = -27823158.5715694;
-        double zCoor = 33746.8987977113;
-
-        double xVelo = 8.99593229549645;
-        double yVelo = 11.1085713608453;
-        double zVelo = -2.25130986174761;
-
-        System.out.println(Arrays.toString(GradientDescentMethod(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo, allBodies)));
-
-        System.out.println(MethodConnection(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo, allBodies));
-
     }
 }
