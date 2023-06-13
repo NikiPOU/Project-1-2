@@ -18,7 +18,8 @@ public class StartSceneController implements Initializable{
      */
     @FXML
     private void switchToSolar() throws IOException {
-        App.setRoot("fxml/solverChooserScreen");
+        // App.setRoot("fxml/solverChooserScreen");
+        App.setRoot("fxml/LandingScreen");
     }
 
     /**

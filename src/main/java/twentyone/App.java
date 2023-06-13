@@ -22,6 +22,8 @@ import java.io.IOException;
  */
 public class App extends Application {
 
+    public static int totalSeconds;
+
     private static Scene scene;
 
     public static double width;

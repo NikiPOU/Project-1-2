@@ -642,7 +642,7 @@ public class SolarScene3DController implements Initializable {
      */
     @FXML
     public void keyPress(KeyEvent ke) {
-        if(ke.getCode().equals(KeyCode.PERIOD) || ke.getCode().equals(KeyCode.COMMA) || ke.getCode().equals(KeyCode.F) || ke.getCode().equals(KeyCode.V)){
+        if(ke.getCode().equals(KeyCode.PERIOD) || ke.getCode().equals(KeyCode.COMMA) || ke.getCode().equals(KeyCode.F) || ke.getCode().equals(KeyCode.V) || ke.getCode().equals(KeyCode.Q)){
             if(ke.getCode().equals(KeyCode.PERIOD)){
                 if(eulerLoops == 5000){
                     eulerLoops = 10000;
@@ -670,6 +670,13 @@ public class SolarScene3DController implements Initializable {
                     path.setVisible(false); 
                 } else {
                     path.setVisible(true);
+                }
+            } else if(ke.getCode().equals(KeyCode.Q)){
+                try {
+                    App.setRoot("fxml/LandingScreen");
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }
             }
         } else {
@@ -810,6 +817,7 @@ public class SolarScene3DController implements Initializable {
                 //Keep track of the time
                 seconds += stepsize;
                 k += stepsize;
+                App.totalSeconds = k;
                 if(k >= TimeStamp && timestampCheck && TimeStamp != -1){
                     String timeStampString = "Time Stamp: " + k + " seconds (" + getTime(TimeStamp) + ")";
                     String positionString = "Position of the probe: x: " + bodies[11].getPosition().getX() + " y: " + bodies[11].getPosition().getY() + " z: " + bodies[11].getPosition().getZ();

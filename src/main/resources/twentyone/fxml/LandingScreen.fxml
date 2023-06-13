@@ -1,0 +1,928 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.ArcTo?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.shape.LineTo?>
+<?import javafx.scene.shape.MoveTo?>
+<?import javafx.scene.shape.Path?>
+<?import javafx.scene.shape.QuadCurveTo?>
+<?import javafx.scene.shape.Rectangle?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.Controllers.LandingScreenController">
+  <children>
+    <MenuBar style="-fx-background-color: BLACK;" VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="Exit">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#onExit" text="Exit" />
+            <MenuItem mnemonicParsing="false" text="Cancel" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Solver Chooser">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Undo" />
+            <MenuItem mnemonicParsing="false" text="Redo" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Cut" />
+            <MenuItem mnemonicParsing="false" text="Copy" />
+            <MenuItem mnemonicParsing="false" text="Paste" />
+            <MenuItem mnemonicParsing="false" text="Delete" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Select All" />
+            <MenuItem mnemonicParsing="false" text="Unselect All" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Stepsize">
+          <items>
+            <MenuItem mnemonicParsing="false" text="1" />
+                  <MenuItem mnemonicParsing="false" text="10" />
+                  <MenuItem mnemonicParsing="false" text="100" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <children>
+            <ImageView fx:id="Milkyway" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/milkywayMap.jpg" />
+               </image>
+            </ImageView>
+            <Group fx:id="Saturn" rotate="40.0" scaleX="2.0" scaleY="2.0" scaleZ="2.0" translateX="169.0" translateY="103.0">
+               <children>
+                  <Path fill="#1f93ff00" layoutX="-131.0" layoutY="-148.0" rotate="180.0" stroke="#808080cc" strokeType="INSIDE" strokeWidth="20.0">
+                     <elements>
+                        <MoveTo x="-14.0" y="100.0" />
+                        <ArcTo radiusX="30.0" radiusY="10.0" x="276.0" y="100.0" />
+                     </elements>
+                  </Path>
+                  <StackPane layoutX="-215.0" layoutY="-120.0" prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <Circle fill="#9a5302" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+                        <ImageView fitHeight="400.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/SaturnNoRings.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+                  <Path fill="#1f93ff00" layoutX="-131.0" layoutY="-100.0" stroke="#808080cc" strokeType="INSIDE" strokeWidth="20.0">
+                      <elements>
+                          <MoveTo x="-14.0" y="100.0" />
+                          <ArcTo radiusX="30.0" radiusY="10.0" x="276.0" y="100.0" />
+                      </elements>
+                  </Path>
+               </children>
+            </Group>
+            <Group fx:id="Titan" AnchorPane.bottomAnchor="-3800.0">
+               <children>
+                  <StackPane layoutX="-3900.0" layoutY="-2000.0" prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <Circle fill="DODGERBLUE" radius="2000.0" stroke="BLACK" strokeType="INSIDE" />
+                        <ImageView fitHeight="7800.0" fitWidth="7800.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/HomeMadeTitan.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+                  <Group fx:id="City" layoutX="1780.0" rotate="90.0" scaleX="0.5" scaleY="0.5">
+                     <children>
+                        <Ellipse fill="TEAL" layoutX="200.0" layoutY="200.0" radiusX="250.0" radiusY="80.0" stroke="TEAL" strokeType="INSIDE" />
+                        <Group layoutX="160.0" layoutY="-40.0">
+                           <children>
+                              <Path fill="#808080" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0">
+                                 <elements>
+                                    <MoveTo />
+                                    <LineTo y="200.0" />
+                                    <LineTo x="100.0" y="200.0" />
+                                    <LineTo x="100.0" />
+                                    <LineTo />
+                                 </elements>
+                              </Path>
+                              <Group>
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="30.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="60.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="90.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="120.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="150.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                           </children>
+                        </Group>
+                        <Group layoutX="50.0" layoutY="-20.0">
+                           <children>
+                              <Path fill="#808080" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0">
+                                 <elements>
+                                    <MoveTo />
+                                    <LineTo y="200.0" />
+                                    <LineTo x="100.0" y="200.0" />
+                                    <LineTo x="100.0" />
+                                    <LineTo />
+                                 </elements>
+                              </Path>
+                              <Group>
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="30.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="60.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="90.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="120.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="150.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                           </children>
+                        </Group>
+                        <Group layoutX="100.0" layoutY="10.0">
+                           <children>
+                              <Path fill="#808080" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0">
+                                 <elements>
+                                    <MoveTo />
+                                    <LineTo y="200.0" />
+                                    <LineTo x="100.0" y="200.0" />
+                                    <LineTo x="100.0" />
+                                    <LineTo />
+                                 </elements>
+                              </Path>
+                              <Group>
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="30.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="60.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="90.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="120.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="150.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                           </children>
+                        </Group>
+                        <Group layoutY="20.0">
+                           <children>
+                              <Path fill="#808080" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0">
+                                  <elements>
+                                      <MoveTo />
+                                      <LineTo y="200.0" />
+                                    <LineTo x="100.0" y="200.0" />
+                                    <LineTo x="100.0" />
+                                    <LineTo />
+                                  </elements>
+                              </Path>
+                              <Group>
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="30.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="60.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="90.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="120.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="150.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                           </children>
+                        </Group>
+                        <Group layoutX="240.0">
+                           <children>
+                              <Path fill="#808080" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0">
+                                 <elements>
+                                    <MoveTo />
+                                    <LineTo y="200.0" />
+                                    <LineTo x="100.0" y="200.0" />
+                                    <LineTo x="100.0" />
+                                    <LineTo />
+                                 </elements>
+                              </Path>
+                              <Group>
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="30.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="60.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="90.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="120.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="150.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                           </children>
+                        </Group>
+                        <Group layoutX="190.0" layoutY="40.0">
+                           <children>
+                              <Path fill="#808080" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0">
+                                 <elements>
+                                    <MoveTo />
+                                    <LineTo y="200.0" />
+                                    <LineTo x="100.0" y="200.0" />
+                                    <LineTo x="100.0" />
+                                    <LineTo />
+                                 </elements>
+                              </Path>
+                              <Group>
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="30.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="60.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="90.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="120.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="150.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                           </children>
+                        </Group>
+                        <Group layoutX="20.0" layoutY="70.0">
+                           <children>
+                              <Path fill="#808080" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0">
+                                 <elements>
+                                    <MoveTo />
+                                    <LineTo y="200.0" />
+                                    <LineTo x="100.0" y="200.0" />
+                                    <LineTo x="100.0" />
+                                    <LineTo />
+                                 </elements>
+                              </Path>
+                              <Group>
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="30.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="60.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="90.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="120.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="150.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                           </children>
+                        </Group>
+                        <Group layoutX="300.0" layoutY="60.0">
+                           <children>
+                              <Path fill="#808080" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0">
+                                 <elements>
+                                    <MoveTo />
+                                    <LineTo y="200.0" />
+                                    <LineTo x="100.0" y="200.0" />
+                                    <LineTo x="100.0" />
+                                    <LineTo />
+                                 </elements>
+                              </Path>
+                              <Group>
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="30.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="60.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="90.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="120.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                              <Group layoutY="150.0">
+                                 <children>
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="12.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="34.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="56.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                    <Rectangle arcHeight="1.0" arcWidth="1.0" height="20.0" layoutX="78.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+                                 </children>
+                              </Group>
+                           </children>
+                        </Group>
+                     </children>
+                  </Group>
+                  <Group layoutX="1100.0" layoutY="-950.0" rotate="45.0" scaleX="0.2" scaleY="0.2">
+                     <children>
+                        <Group fx:id="Forest11" layoutY="-190.0">
+                           <children>
+                              <Group fx:id="Tree211" layoutX="100.0" layoutY="-30.0">
+                                 <children>
+                                    <Path fill="#807262" stroke="#7b6a56" strokeType="INSIDE" strokeWidth="2.0">
+                                       <elements>
+                                          <MoveTo />
+                                          <LineTo x="200.0" />
+                                          <QuadCurveTo controlX="150.0" x="150.0" y="-200.0" />
+                                          <MoveTo />
+                                          <QuadCurveTo controlX="50.0" x="50.0" y="-200.0" />
+                                          <LineTo x="150.0" y="-200.0" />
+                                       </elements>
+                                    </Path>
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-200.0" radiusX="120.0" radiusY="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="120.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="-10.0" stroke="#3977b1" strokeType="INSIDE" />
+                                 </children>
+                              </Group>
+                              <Group fx:id="Tree11">
+                                 <children>
+                                    <Path fill="#807262" stroke="#7b6a56" strokeType="INSIDE" strokeWidth="2.0">
+                                       <elements>
+                                          <MoveTo />
+                                          <LineTo x="200.0" />
+                                          <QuadCurveTo controlX="150.0" x="150.0" y="-200.0" />
+                                          <MoveTo />
+                                          <QuadCurveTo controlX="50.0" x="50.0" y="-200.0" />
+                                          <LineTo x="150.0" y="-200.0" />
+                                       </elements>
+                                    </Path>
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-200.0" radiusX="120.0" radiusY="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="120.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="-10.0" stroke="#3977b1" strokeType="INSIDE" />
+                                 </children>
+                              </Group>
+                              <Group fx:id="Tree311" layoutX="240.0" layoutY="20.0">
+                                 <children>
+                                    <Path fill="#807262" stroke="#7b6a56" strokeType="INSIDE" strokeWidth="2.0">
+                                       <elements>
+                                          <MoveTo />
+                                          <LineTo x="200.0" />
+                                          <QuadCurveTo controlX="150.0" x="150.0" y="-200.0" />
+                                          <MoveTo />
+                                          <QuadCurveTo controlX="50.0" x="50.0" y="-200.0" />
+                                          <LineTo x="150.0" y="-200.0" />
+                                       </elements>
+                                    </Path>
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-200.0" radiusX="120.0" radiusY="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="120.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="-10.0" stroke="#3977b1" strokeType="INSIDE" />
+                                 </children>
+                              </Group>
+                              <Group fx:id="Tree111" layoutX="60.0" layoutY="30.0">
+                                 <children>
+                                    <Path fill="#807262" stroke="#7b6a56" strokeType="INSIDE" strokeWidth="2.0">
+                                       <elements>
+                                          <MoveTo />
+                                          <LineTo x="200.0" />
+                                          <QuadCurveTo controlX="150.0" x="150.0" y="-200.0" />
+                                          <MoveTo />
+                                          <QuadCurveTo controlX="50.0" x="50.0" y="-200.0" />
+                                          <LineTo x="150.0" y="-200.0" />
+                                       </elements>
+                                    </Path>
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-200.0" radiusX="120.0" radiusY="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="120.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="-10.0" stroke="#3977b1" strokeType="INSIDE" />
+                                 </children>
+                              </Group>
+                           </children>
+                        </Group>
+                        <Group fx:id="Forest1" layoutX="300.0" layoutY="-60.0" rotate="5.0">
+                           <children>
+                              <Group fx:id="Tree21" layoutX="100.0" layoutY="-30.0">
+                                 <children>
+                                    <Path fill="#807262" stroke="#7b6a56" strokeType="INSIDE" strokeWidth="2.0">
+                                       <elements>
+                                          <MoveTo />
+                                          <LineTo x="200.0" />
+                                          <QuadCurveTo controlX="150.0" x="150.0" y="-200.0" />
+                                          <MoveTo />
+                                          <QuadCurveTo controlX="50.0" x="50.0" y="-200.0" />
+                                          <LineTo x="150.0" y="-200.0" />
+                                       </elements>
+                                    </Path>
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-200.0" radiusX="120.0" radiusY="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="120.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="-10.0" stroke="#3977b1" strokeType="INSIDE" />
+                                 </children>
+                              </Group>
+                              <Group fx:id="Tree1">
+                                 <children>
+                                    <Path fill="#807262" stroke="#7b6a56" strokeType="INSIDE" strokeWidth="2.0">
+                                       <elements>
+                                          <MoveTo />
+                                          <LineTo x="200.0" />
+                                          <QuadCurveTo controlX="150.0" x="150.0" y="-200.0" />
+                                          <MoveTo />
+                                          <QuadCurveTo controlX="50.0" x="50.0" y="-200.0" />
+                                          <LineTo x="150.0" y="-200.0" />
+                                       </elements>
+                                    </Path>
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-200.0" radiusX="120.0" radiusY="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="120.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="-10.0" stroke="#3977b1" strokeType="INSIDE" />
+                                 </children>
+                              </Group>
+                              <Group fx:id="Tree31" layoutX="240.0" layoutY="20.0">
+                                 <children>
+                                    <Path fill="#807262" stroke="#7b6a56" strokeType="INSIDE" strokeWidth="2.0">
+                                       <elements>
+                                          <MoveTo />
+                                          <LineTo x="200.0" />
+                                          <QuadCurveTo controlX="150.0" x="150.0" y="-200.0" />
+                                          <MoveTo />
+                                          <QuadCurveTo controlX="50.0" x="50.0" y="-200.0" />
+                                          <LineTo x="150.0" y="-200.0" />
+                                       </elements>
+                                    </Path>
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-200.0" radiusX="120.0" radiusY="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="120.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="-10.0" stroke="#3977b1" strokeType="INSIDE" />
+                                 </children>
+                              </Group>
+                              <Group fx:id="Tree11" layoutX="60.0" layoutY="30.0">
+                                 <children>
+                                    <Path fill="#807262" stroke="#7b6a56" strokeType="INSIDE" strokeWidth="2.0">
+                                       <elements>
+                                          <MoveTo />
+                                          <LineTo x="200.0" />
+                                          <QuadCurveTo controlX="150.0" x="150.0" y="-200.0" />
+                                          <MoveTo />
+                                          <QuadCurveTo controlX="50.0" x="50.0" y="-200.0" />
+                                          <LineTo x="150.0" y="-200.0" />
+                                       </elements>
+                                    </Path>
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-200.0" radiusX="120.0" radiusY="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="120.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="-10.0" stroke="#3977b1" strokeType="INSIDE" />
+                                 </children>
+                              </Group>
+                           </children>
+                        </Group>
+                        <Group fx:id="Forest">
+                           <children>
+                              <Group fx:id="Tree2" layoutX="100.0" layoutY="-30.0">
+                                 <children>
+                                    <Path fill="#807262" stroke="#7b6a56" strokeType="INSIDE" strokeWidth="2.0">
+                                       <elements>
+                                          <MoveTo />
+                                          <LineTo x="200.0" />
+                                          <QuadCurveTo controlX="150.0" x="150.0" y="-200.0" />
+                                          <MoveTo />
+                                          <QuadCurveTo controlX="50.0" x="50.0" y="-200.0" />
+                                          <LineTo x="150.0" y="-200.0" />
+                                       </elements>
+                                    </Path>
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-200.0" radiusX="120.0" radiusY="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="120.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="-10.0" stroke="#3977b1" strokeType="INSIDE" />
+                                 </children>
+                              </Group>
+                              <Group fx:id="Tree">
+                                 <children>
+                                    <Path fill="#807262" stroke="#7b6a56" strokeType="INSIDE" strokeWidth="2.0">
+                                        <elements>
+                                            <MoveTo />
+                                          <LineTo x="200.0" />
+                                          <QuadCurveTo controlX="150.0" x="150.0" y="-200.0" />
+                                          <MoveTo />
+                                          <QuadCurveTo controlX="50.0" x="50.0" y="-200.0" />
+                                          <LineTo x="150.0" y="-200.0" />
+                                        </elements>
+                                    </Path>
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-200.0" radiusX="120.0" radiusY="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="120.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="-10.0" stroke="#3977b1" strokeType="INSIDE" />
+                                 </children>
+                              </Group>
+                              <Group fx:id="Tree3" layoutX="240.0" layoutY="20.0">
+                                 <children>
+                                    <Path fill="#807262" stroke="#7b6a56" strokeType="INSIDE" strokeWidth="2.0">
+                                       <elements>
+                                          <MoveTo />
+                                          <LineTo x="200.0" />
+                                          <QuadCurveTo controlX="150.0" x="150.0" y="-200.0" />
+                                          <MoveTo />
+                                          <QuadCurveTo controlX="50.0" x="50.0" y="-200.0" />
+                                          <LineTo x="150.0" y="-200.0" />
+                                       </elements>
+                                    </Path>
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-200.0" radiusX="120.0" radiusY="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="120.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="-10.0" stroke="#3977b1" strokeType="INSIDE" />
+                                 </children>
+                              </Group>
+                              <Group fx:id="Tree1" layoutX="60.0" layoutY="30.0">
+                                 <children>
+                                    <Path fill="#807262" stroke="#7b6a56" strokeType="INSIDE" strokeWidth="2.0">
+                                       <elements>
+                                          <MoveTo />
+                                          <LineTo x="200.0" />
+                                          <QuadCurveTo controlX="150.0" x="150.0" y="-200.0" />
+                                          <MoveTo />
+                                          <QuadCurveTo controlX="50.0" x="50.0" y="-200.0" />
+                                          <LineTo x="150.0" y="-200.0" />
+                                       </elements>
+                                    </Path>
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-200.0" radiusX="120.0" radiusY="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="120.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="-10.0" stroke="#3977b1" strokeType="INSIDE" />
+                                 </children>
+                              </Group>
+                           </children>
+                        </Group>
+                        <Group fx:id="Forest12" layoutX="550.0" layoutY="20.0" rotate="5.0">
+                           <children>
+                              <Group fx:id="Tree212" layoutX="100.0" layoutY="-30.0">
+                                 <children>
+                                    <Path fill="#807262" stroke="#7b6a56" strokeType="INSIDE" strokeWidth="2.0">
+                                       <elements>
+                                          <MoveTo />
+                                          <LineTo x="200.0" />
+                                          <QuadCurveTo controlX="150.0" x="150.0" y="-200.0" />
+                                          <MoveTo />
+                                          <QuadCurveTo controlX="50.0" x="50.0" y="-200.0" />
+                                          <LineTo x="150.0" y="-200.0" />
+                                       </elements>
+                                    </Path>
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-200.0" radiusX="120.0" radiusY="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="120.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="-10.0" stroke="#3977b1" strokeType="INSIDE" />
+                                 </children>
+                              </Group>
+                              <Group fx:id="Tree11">
+                                 <children>
+                                    <Path fill="#807262" stroke="#7b6a56" strokeType="INSIDE" strokeWidth="2.0">
+                                       <elements>
+                                          <MoveTo />
+                                          <LineTo x="200.0" />
+                                          <QuadCurveTo controlX="150.0" x="150.0" y="-200.0" />
+                                          <MoveTo />
+                                          <QuadCurveTo controlX="50.0" x="50.0" y="-200.0" />
+                                          <LineTo x="150.0" y="-200.0" />
+                                       </elements>
+                                    </Path>
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-200.0" radiusX="120.0" radiusY="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="120.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="-10.0" stroke="#3977b1" strokeType="INSIDE" />
+                                 </children>
+                              </Group>
+                              <Group fx:id="Tree312" layoutX="240.0" layoutY="20.0">
+                                 <children>
+                                    <Path fill="#807262" stroke="#7b6a56" strokeType="INSIDE" strokeWidth="2.0">
+                                       <elements>
+                                          <MoveTo />
+                                          <LineTo x="200.0" />
+                                          <QuadCurveTo controlX="150.0" x="150.0" y="-200.0" />
+                                          <MoveTo />
+                                          <QuadCurveTo controlX="50.0" x="50.0" y="-200.0" />
+                                          <LineTo x="150.0" y="-200.0" />
+                                       </elements>
+                                    </Path>
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-200.0" radiusX="120.0" radiusY="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="120.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="-10.0" stroke="#3977b1" strokeType="INSIDE" />
+                                 </children>
+                              </Group>
+                              <Group fx:id="Tree112" layoutX="60.0" layoutY="30.0">
+                                 <children>
+                                    <Path fill="#807262" stroke="#7b6a56" strokeType="INSIDE" strokeWidth="2.0">
+                                       <elements>
+                                          <MoveTo />
+                                          <LineTo x="200.0" />
+                                          <QuadCurveTo controlX="150.0" x="150.0" y="-200.0" />
+                                          <MoveTo />
+                                          <QuadCurveTo controlX="50.0" x="50.0" y="-200.0" />
+                                          <LineTo x="150.0" y="-200.0" />
+                                       </elements>
+                                    </Path>
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-200.0" radiusX="120.0" radiusY="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="120.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="30.0" stroke="#3977b1" strokeType="INSIDE" />
+                                    <Ellipse fill="#3977b1" layoutX="100.0" layoutY="-220.0" radiusX="120.0" radiusY="30.0" rotate="-10.0" stroke="#3977b1" strokeType="INSIDE" />
+                                 </children>
+                              </Group>
+                           </children>
+                        </Group>
+                     </children>
+                  </Group>
+                  <Group />
+                  <ImageView fitHeight="450.0" fitWidth="600.0" layoutX="1000.0" layoutY="1400.0" pickOnBounds="true" preserveRatio="true" rotate="135.0">
+                     <image>
+                        <Image url="@../Images/Mountain1.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>
