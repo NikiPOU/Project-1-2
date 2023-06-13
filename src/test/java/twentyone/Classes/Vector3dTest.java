@@ -15,8 +15,7 @@ public class Vector3dTest {
     @Test
     public void testAdd() {
         Vector3d a = new Vector3d(1, 2, 3);
-        Vector2d a2 = new Vector2d(4, 5);
-        Vector3d b = new Vector3d(a2, 6);
+        Vector3d b = new Vector3d(4, 5, 6);
 
         Vector3d res = a.add(b);
         assertTrue(res.equals(new Vector3d(5, 7, 9)));
@@ -25,8 +24,7 @@ public class Vector3dTest {
     @Test
     public void testAddMul() {
         Vector3d a = new Vector3d(1, 2, 3);
-        Vector2d a2 = new Vector2d(4, 5);
-        Vector3d b = new Vector3d(a2, 6);
+        Vector3d b = new Vector3d(4, 5, 6);
 
         Vector3d res = a.addMul(2, b);
         assertTrue(res.equals(new Vector3d(9, 12, 15)));
@@ -42,19 +40,10 @@ public class Vector3dTest {
     @Test
     public void testDist() {
         Vector3d a = new Vector3d(1, 2, 3);
-        Vector2d a2 = new Vector2d(4, 5);
-        Vector3d b = new Vector3d(a2, 6);
+        Vector3d b = new Vector3d(4, 5, 6);
 
         double res = a.dist(b);
         assertTrue(Math.abs(res - 5.196152) < 0.0001);
-    }
-
-    @Test
-    public void testGetVector2d() {
-        Vector3d a = new Vector3d(1, 2, 3);
-
-        Vector2d res = a.getVector2d();
-        assertTrue(res.equals(new Vector2d(1,2), 0.0001));
     }
 
     @Test
@@ -81,8 +70,7 @@ public class Vector3dTest {
     @Test
     public void testMulVector() {
         Vector3d a = new Vector3d(1, 2, 3);
-        Vector2d a2 = new Vector2d(4, 5);
-        Vector3d b = new Vector3d(a2, 6);
+        Vector3d b = new Vector3d(4, 5, 6);
 
         Vector3d res = a.mulVector(b);
         assertTrue(res.equals(new Vector3d(4, 10, 18)));
@@ -110,8 +98,7 @@ public class Vector3dTest {
     @Test
     public void testSub() {
         Vector3d a = new Vector3d(1, 2, 3);
-        Vector2d a2 = new Vector2d(4, 5);
-        Vector3d b = new Vector3d(a2, 6);
+        Vector3d b = new Vector3d(4, 5, 6);
 
         Vector3d res = b.sub(a);
         assertTrue(res.equals(new Vector3d(3, 3, 3)));

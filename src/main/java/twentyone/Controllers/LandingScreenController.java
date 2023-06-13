@@ -1,6 +1,5 @@
 package twentyone.Controllers;
 
-import java.awt.Point;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -10,10 +9,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import twentyone.App;
