@@ -31,6 +31,8 @@ public class LandingScreenController implements Initializable {
 
     @FXML
     private ImageView Milkyway;
+    @FXML
+    private ImageView rocket;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
