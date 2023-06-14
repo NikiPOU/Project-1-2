@@ -1,11 +1,9 @@
 package twentyone.Classes;
 
-import twentyone.Interfaces.Vector3dInterface;
-
 /**
  * The <code>Vector3d Class</code> is a 3D array of positions used to calculate the next positions and velocities.
  */
-public class Vector3d implements Vector3dInterface{
+public class Vector3d{
 
     private double x;
     private double y;
@@ -23,18 +21,6 @@ public class Vector3d implements Vector3dInterface{
         this.z=z;
     }
 
-    /**
-     * Constructor to initialize the x, y and z coordinates. The x and y coordinates will be drawn from the <code>Vector2d Class</code> whereas the z value will be given.
-     * @param v as a {@code Vector2d Class}
-     * @param z as a {@code double}
-     * @see twentyone.Classes.Vector2d#Vector2d(Vector2d)
-     * @see twentyone.Classes.Vector2d#Vector2d(double, double)
-     */
-    public Vector3d(Vector2d v, double z){ //get the x and y coordinates
-        this.x= v.getX();
-        this.y= v.getY();
-        this.z=z;
-    }
     /**
      * Set the x value for the <code>Vector3d Class</code>.
      * @param x as a {@code double}
@@ -76,16 +62,6 @@ public class Vector3d implements Vector3dInterface{
      */
     public double getZ(){
         return z;
-    }
-    
-    /**
-     * Get a {@code Vector2d Class}. The {@code Vector2d Class} includes the x and y values of the <code>Vector3d Class</code>.
-     * @return a new {@code Vector2d Class}
-     * @see twentyone.Classes.Vector2d#Vector2d(Vector2d)
-     * @see twentyone.Classes.Vector2d#Vector2d(double, double)
-     */
-    public Vector2d getVector2d(){
-        return new Vector2d(x,y);
     }
 
     /**
