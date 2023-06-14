@@ -121,8 +121,8 @@
                <children>
                   <StackPane layoutX="-3900.0" layoutY="-2000.0" prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <Circle fill="DODGERBLUE" radius="2000.0" stroke="BLACK" strokeType="INSIDE" />
-                        <ImageView fitHeight="7800.0" fitWidth="7800.0" pickOnBounds="true" preserveRatio="true">
+                        <Circle fill="#aaaaaa" radius="2000.0" stroke="BLACK" strokeType="INSIDE" />
+                        <ImageView fitHeight="4100.0" fitWidth="7800.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Images/HomeMadeTitan.png" />
                            </image>
@@ -918,6 +918,11 @@
                   <ImageView fitHeight="450.0" fitWidth="600.0" layoutX="1000.0" layoutY="1400.0" pickOnBounds="true" preserveRatio="true" rotate="135.0">
                      <image>
                         <Image url="@../Images/Mountain1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="-2000.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/Spaceprobe.png" />
                      </image>
                   </ImageView>
                </children>

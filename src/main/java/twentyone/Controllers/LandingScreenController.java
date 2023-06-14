@@ -10,10 +10,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import twentyone.App;
@@ -24,6 +22,8 @@ public class LandingScreenController implements Initializable {
 
     private double screenCenterX;
     private double screenCenterY;
+
+    private double rotationSpeed = 2;
 
     @FXML
     private Group Titan;
@@ -63,9 +63,11 @@ public class LandingScreenController implements Initializable {
 
         @Override
         public void handle(ActionEvent event) {
-            Titan.rotateProperty().set(Titan.getRotate() - 1);
+            Titan.rotateProperty().set(Titan.getRotate() - rotationSpeed);
             Saturn.setLayoutX(Saturn.getLayoutX() - 0.5);
             Saturn.rotateProperty().set(Saturn.getRotate() - 0.05);
+
+            rotationSpeed -= 0.01;
         }
 
     }
