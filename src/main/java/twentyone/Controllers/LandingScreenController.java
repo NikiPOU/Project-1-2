@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import twentyone.App;
+import twentyone.Classes.UnidentifiedFlyingObject;
 
 public class LandingScreenController implements Initializable {
 
@@ -34,8 +35,12 @@ public class LandingScreenController implements Initializable {
     @FXML
     private ImageView rocket;
 
+    private UnidentifiedFlyingObject ufo;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        ufo = new UnidentifiedFlyingObject();
+
         screenCenterX = App.width/2;
         screenCenterY = App.height/2;
         Titan.setLayoutX(screenCenterX);
@@ -64,11 +69,17 @@ public class LandingScreenController implements Initializable {
 
         @Override
         public void handle(ActionEvent event) {
-            Titan.rotateProperty().set(Titan.getRotate() - rotationSpeed);
-            Saturn.setLayoutX(Saturn.getLayoutX() - 0.5);
+            ufo.feedbackController();
+            Titan.rotateProperty().set(-ufo.getVelocity().getX()*100);
+            Saturn.setLayoutX(Saturn.getLayoutX() - ufo.getVelocity().getX()*5);
             Saturn.rotateProperty().set(Saturn.getRotate() - 0.05);
 
-            rotationSpeed -= 0.01;
+            rocket.setLayoutX(screenCenterX - ufo.getPosition().getX());
+            System.out.println(rocket.getLayoutX());
+            rocket.setLayoutY(screenCenterY - ufo.getPosition().getY());
+            System.out.println(rocket.getLayoutY());
+            rocket.rotateProperty().set(ufo.getRotation()*180/Math.PI);
+            System.out.println(rocket.getRotate());
         }
 
     }

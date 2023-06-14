@@ -22,8 +22,8 @@ public class UnidentifiedFlyingObject {
 
     //Starting from the orbit, we need x, y position and velocity
     Vector3d position = new Vector3d(200, 200, 0);
-    double rotation = 0;
-    Vector3d velocity = new Vector3d(5.570, 0, 0); //in meters per sec
+    double rotation = Math.PI/2;
+    Vector3d velocity = new Vector3d(5.570e-3, 0, 0); //in kilometers per sec
     double rotationVelocity = 0;
     double fuel;
 
@@ -31,7 +31,55 @@ public class UnidentifiedFlyingObject {
     double stepSize = 1;
     // in km / s
 
-    //final 0,0, 1/2 pi
+    public static void main(String[] args) {
+        UnidentifiedFlyingObject ufo = new UnidentifiedFlyingObject();
+        
+        while (ufo.getPosition().getY() > 0) {
+            ufo.feedbackController();
+        }
+    }
+
+    //final 0,0, 0
+
+    public Vector3d getPosition() {
+        return position;
+    }
+
+    public void setPosition(Vector3d position) {
+        this.position = position;
+    }
+
+    public double getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(double rotation) {
+        this.rotation = rotation;
+    }
+
+    public Vector3d getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(Vector3d velocity) {
+        this.velocity = velocity;
+    }
+
+    public double getRotationVelocity() {
+        return rotationVelocity;
+    }
+
+    public void setRotationVelocity(double rotationVelocity) {
+        this.rotationVelocity = rotationVelocity;
+    }
+
+    public double getFuel() {
+        return fuel;
+    }
+
+    public void setFuel(double fuel) {
+        this.fuel = fuel;
+    }
 
     //For now just Euler
     public void solver(double stepSize, double mainThrust, double miniThrust) {
@@ -51,17 +99,28 @@ public class UnidentifiedFlyingObject {
         rotation = rotation + rotationVelocity*stepSize; 
 
         //update rotation velocity with torqe formula = length rocket * force (either + or -) * sin(rotation)
-        rotationVelocity = rotationVelocity + 30 * miniThrust * Math.sin(rotation) * stepSize;
+        rotationVelocity = rotationVelocity + 0.03 * miniThrust * Math.sin(Math.PI/2) * stepSize;
     }
 
     public void feedbackController() {
-        while (position.getY() > 0) {
-            double u = 0;
-            double miniThrust = 0;
-            if (u < 10 * g && 30 * miniThrust * Math.sin(rotation) < 1) {
-                solver(stepSize, u, miniThrust);
-            }
+        double u = 0;
+        double miniThrust = 0;
+
+        if (position.getX() > 0) {
+            u = 1e-3;
         }
+        else {
+            u = -1e-3;
+        }
+
+        if (rotation > 0) {
+            miniThrust = -5e-3;
+        }
+        else {
+            miniThrust = 5e-3;
+        }
+
+        solver(stepSize, u, miniThrust);
     }
 
     public void openLoopController() {
