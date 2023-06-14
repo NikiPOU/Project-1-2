@@ -675,7 +675,6 @@ public class SolarScene3DController implements Initializable {
                 try {
                     App.setRoot("fxml/LandingScreen");
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
