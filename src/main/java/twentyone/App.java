@@ -8,6 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import twentyone.Classes.CelestialBody;
+import twentyone.Classes.PositionCalculationThread;
 import twentyone.Classes.Vector3d;
 import twentyone.Classes.musicPlayer;
 
@@ -21,6 +23,12 @@ import java.io.IOException;
  * @see Application
  */
 public class App extends Application {
+
+    //Needed for PositionCalculationThread.java
+    public static int eulerLoops = 5000;
+    public static CelestialBody[] bodies;
+    public static PositionCalculationThread PCT;
+    //Needed for PositionCalculationThread.java
 
     public static int totalSeconds;
 

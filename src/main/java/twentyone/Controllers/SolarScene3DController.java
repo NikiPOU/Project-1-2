@@ -15,6 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point3D;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
@@ -41,6 +42,7 @@ import twentyone.Classes.AdamsBashforth;
 import twentyone.Classes.AdamsMoulton;
 import twentyone.Classes.CelestialBody;
 import twentyone.Classes.Euler;
+import twentyone.Classes.PositionCalculationThread;
 import twentyone.Classes.Rocket;
 import twentyone.Classes.RungeKutta;
 import twentyone.Classes.Vector3d;
@@ -673,6 +675,9 @@ public class SolarScene3DController implements Initializable {
                 }
             } else if(ke.getCode().equals(KeyCode.Q)){
                 try {
+                    App.PCT = new PositionCalculationThread(bodies, stepsize);
+                    Thread thread = new Thread(App.PCT);
+                    thread.start();
                     App.setRoot("fxml/LandingScreen");
                 } catch (IOException e) {
                     e.printStackTrace();

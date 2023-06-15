@@ -71,7 +71,8 @@ public class LandingScreenController implements Initializable {
         public void handle(ActionEvent event) {
             ufo.feedbackController();
             Titan.rotateProperty().set(-ufo.getPosition().getX());
-            Saturn.setLayoutX(Saturn.getLayoutX() + ufo.getPosition().getX()*5e-3);
+            // Saturn.setLayoutX(Saturn.getLayoutX() + ufo.getPosition().getX()*5e-3);
+            Saturn.setLayoutX(Saturn.getLayoutX() - 0.5);
             Saturn.rotateProperty().set(Saturn.getRotate() - 0.05);
 
             rocket.setLayoutX(screenCenterX-100);
