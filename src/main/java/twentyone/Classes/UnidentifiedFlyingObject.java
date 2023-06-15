@@ -22,7 +22,7 @@ public class UnidentifiedFlyingObject {
 
     //Starting from the orbit, we need x, y position and velocity
     Vector3d position = new Vector3d(200, 200, 0);
-    double rotation = Math.PI/2;
+    double rotation = -Math.PI/2;
     Vector3d velocity = new Vector3d(5.570e-3, 0, 0); //in kilometers per sec
     double rotationVelocity = 0;
     double fuel;
@@ -103,24 +103,34 @@ public class UnidentifiedFlyingObject {
     }
 
     public void feedbackController() {
-        double u = 0;
-        double miniThrust = 0;
-
-        if (position.getX() > 0) {
-            u = 1e-3;
+        if (position.getY() <= 0) {
+            rotationVelocity = 0;
+            velocity.setX(0);
+            velocity.setY(0);
         }
         else {
-            u = -1e-3;
-        }
+            double u = 0;
+            double miniThrust = 0;
 
-        if (rotation > 0) {
-            miniThrust = -5e-3;
-        }
-        else {
-            miniThrust = 5e-3;
-        }
+            if (position.getX() > 50 && velocity.getX() > 5e-3) {
+                u = 1.5;
+            }
+            if (Math.abs(velocity.getX()) > 10e-3 && position.getX() < 17){
+                u = velocity.getX()/10;
+            }
+            if (position.getX() < 20e-4){
+                u = velocity.getX();
+            }
 
-        solver(stepSize, u, miniThrust);
+            if (position.getX() < 0.1 && rotation == -90*Math.PI/180) {
+                miniThrust = 0.5;
+            }
+            else if (rotation > -2*Math.PI/180 && rotation < -0.1*Math.PI/180) {
+                miniThrust = -rotationVelocity/0.03;
+            }
+
+            solver(stepSize, u, miniThrust);
+        }
     }
 
     public void openLoopController() {

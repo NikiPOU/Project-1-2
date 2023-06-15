@@ -1,5 +1,6 @@
 package twentyone.Controllers;
 
+import java.beans.VetoableChangeSupport;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,7 +24,7 @@ public class LandingScreenController implements Initializable {
     private double screenCenterX;
     private double screenCenterY;
 
-    private double rotationSpeed = 2;
+    private UnidentifiedFlyingObject ufo;
 
     @FXML
     private Group Titan;
@@ -35,7 +36,6 @@ public class LandingScreenController implements Initializable {
     @FXML
     private ImageView rocket;
 
-    private UnidentifiedFlyingObject ufo;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -44,6 +44,7 @@ public class LandingScreenController implements Initializable {
         screenCenterX = App.width/2;
         screenCenterY = App.height/2;
         Titan.setLayoutX(screenCenterX);
+        Titan.rotateProperty().set(1);
         Saturn.setLayoutX(screenCenterX+200);
         Saturn.setLayoutY(screenCenterY-120);
 
@@ -70,18 +71,18 @@ public class LandingScreenController implements Initializable {
         @Override
         public void handle(ActionEvent event) {
             ufo.feedbackController();
-            Titan.rotateProperty().set(-ufo.getVelocity().getX()*100);
-            Saturn.setLayoutX(Saturn.getLayoutX() - ufo.getVelocity().getX()*5);
+            Titan.rotateProperty().set(-ufo.getPosition().getX());
+            Saturn.setLayoutX(Saturn.getLayoutX() + ufo.getPosition().getX()*5e-3);
             Saturn.rotateProperty().set(Saturn.getRotate() - 0.05);
 
-            rocket.setLayoutX(screenCenterX - ufo.getPosition().getX());
-            System.out.println(rocket.getLayoutX());
-            rocket.setLayoutY(screenCenterY - ufo.getPosition().getY());
-            System.out.println(rocket.getLayoutY());
+            rocket.setLayoutX(screenCenterX-100);
+            //System.out.println(ufo.getPosition().getX());
+            System.out.println(ufo.getVelocity().getY());
+            rocket.setLayoutY(screenCenterY + 50 - ufo.getPosition().getY());
+            //System.out.println(ufo.getPosition().getY());
             rocket.rotateProperty().set(ufo.getRotation()*180/Math.PI);
-            System.out.println(rocket.getRotate());
+            //System.out.println(ufo.getRotation()*180/Math.PI);
+            //System.out.println();
         }
-
     }
-    
 }
