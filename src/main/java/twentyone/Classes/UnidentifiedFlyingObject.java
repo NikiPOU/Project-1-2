@@ -1,24 +1,50 @@
 package twentyone.Classes;
 
 public class UnidentifiedFlyingObject {
+
     //Main thruster class
-    // x position 
-    // y position
-    // g ≈ 1.352 m s-2
-    // x¨ = u sin(θ)
-    // y¨ = u cos(θ) − g
-    // umax = 10g
-    // four smaller side thrusters
-    // theta is rotation 
-    // θ¨ = v
-    //  vmax = 1
+    // x is the horizontal position 
+    // y is the vertical position
+    // θ is the angle of rotation
+    // u is the acceleration provided by the main thruster
+    // v is the total torque provided by the side thrusters
+    // g ≈ 1.352e-3 km s^(-2), is the acceleration due to gravity on titan.
+    // uMax = 10g, is the maximum acceleration provided by the main thruster.
+    // vMax = 1 rad s^2, is the maximum torque.
+
+    // The differential equations describing the motion are:
+    // x" (acceleration x) = u sin(θ)
+    // y" (acceleration y) = u cos(θ) − g
+    // θ" = v
+
+    // Tolerance values:
     // |x| ≤ δx
     // |θ mod 2π| ≤ δθ
-    // |x˙| ≤ εx
-    // |y˙| ≤ εy
-    // |θ˙| = εθ
-    //Take tolerance values δx = 0.1 m = 10−4 km, δθ = 0.02 ε
-    //decided length of the rocket: 30m
+    // |x'| ≤ εx
+    // |y'| ≤ εy
+    // |θ'| = εθ
+
+    // Where:
+    // δx = 10^(−4) km 
+    // δθ = 0.02 (stops here?)
+    // εx = 10^(−4) km s^(-1)
+    // εy = 10^(−4) km s^(-1)
+    // εθ = 0.01 rad s^(-1)
+
+    //Rocket length: 30m
+
+    
+    //Maybe here we can do like this:
+    private double theta; // Angle
+    private double thetaDerivative; // Angular velocity (angle derivative)
+
+   // Vector3d position = new Vector3d(200, 200, theta);
+   // Vector3d velocity = new Vector3d(starting?velocityX, starting?velocityY, thetaDerivative);
+   
+// or silmply
+
+    // Vector3d position = new Vector3d(200, 200, rotation);
+   // Vector3d velocity = new Vector3d(starting?velocityX, starting?velocityY, rotationVelocity);
 
     //Starting from the orbit, we need x, y position and velocity
     Vector3d position = new Vector3d(200, 200, 0);
@@ -27,7 +53,24 @@ public class UnidentifiedFlyingObject {
     double rotationVelocity = 0;
     double fuel;
 
-    double g = 1.352e-3;
+
+    // OUR CONSTANTS
+
+    private static final double g = 1.352e-3;
+    // Maximum acceleration provided by the main thruster.
+    private static final double uMax = 10*g; // km s^(-2)
+    // Maximum torque.
+    private static final double vMax = 1; // rad s^2
+    // Tolerance values (upper bound)
+    private static final double deltaX = 1e-4; // km ≥ |x|
+    private static final double deltaTheta = 0.02; // ≥ |θ mod 2π|
+    private static final double epsilonX = 1e-4; // km s^(-1) ≥ |x'|
+    private static final double epsilonY = 1e-4; // km s^(-1) ≥ |y'|
+    private static final double epsilonTheta = 0.01; // rad s^(-1) = |θ'|
+
+
+
+
     double stepSize = 1;
     // in km / s
 
