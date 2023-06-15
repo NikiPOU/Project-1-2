@@ -1,6 +1,5 @@
 package twentyone.Controllers;
 
-import java.beans.VetoableChangeSupport;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -77,7 +76,7 @@ public class LandingScreenController implements Initializable {
 
             rocket.setLayoutX(screenCenterX-100);
             //System.out.println(ufo.getPosition().getX());
-            System.out.println(ufo.getVelocity().getY());
+            //System.out.println(ufo.getVelocity().getY());
             rocket.setLayoutY(screenCenterY + 50 - ufo.getPosition().getY());
             //System.out.println(ufo.getPosition().getY());
             rocket.rotateProperty().set(ufo.getRotation()*180/Math.PI);

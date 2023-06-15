@@ -33,18 +33,13 @@ public class UnidentifiedFlyingObject {
 
     //Rocket length: 30m
 
-    
-    //Maybe here we can do like this:
-    private double theta; // Angle
-    private double thetaDerivative; // Angular velocity (angle derivative)
-
-   // Vector3d position = new Vector3d(200, 200, theta);
-   // Vector3d velocity = new Vector3d(starting?velocityX, starting?velocityY, thetaDerivative);
+    // Vector3d position = new Vector3d(200, 200, theta);
+    // Vector3d velocity = new Vector3d(starting?velocityX, starting?velocityY, thetaDerivative);
    
-// or silmply
+    // or silmply
 
     // Vector3d position = new Vector3d(200, 200, rotation);
-   // Vector3d velocity = new Vector3d(starting?velocityX, starting?velocityY, rotationVelocity);
+    // Vector3d velocity = new Vector3d(starting?velocityX, starting?velocityY, rotationVelocity);
 
     //Starting from the orbit, we need x, y position and velocity
     Vector3d position = new Vector3d(200, 200, 0);
@@ -52,6 +47,7 @@ public class UnidentifiedFlyingObject {
     Vector3d velocity = new Vector3d(5.570e-3, 0, 0); //in kilometers per sec
     double rotationVelocity = 0;
     double fuel;
+    boolean hasLanded = false;
 
 
     // OUR CONSTANTS
@@ -146,33 +142,44 @@ public class UnidentifiedFlyingObject {
     }
 
     public void feedbackController() {
-        if (position.getY() <= 0) {
-            rotationVelocity = 0;
-            velocity.setX(0);
-            velocity.setY(0);
-        }
-        else {
-            double u = 0;
-            double miniThrust = 0;
+        if (!hasLanded) {
+            if (position.getY() <= 0) {
+                rotationVelocity = 0;
+                velocity.setX(0);
+                velocity.setY(0);
+                hasLanded = true;
+                //The rocket doesn't launch from Titan yet despite this below
+                solver(stepSize, 1, 0);
+            }
+            else {
+                double u = 0;
+                double miniThrust = 0;
 
-            if (position.getX() > 50 && velocity.getX() > 5e-3) {
-                u = 1.5;
-            }
-            if (Math.abs(velocity.getX()) > 10e-3 && position.getX() < 17){
-                u = velocity.getX()/10;
-            }
-            if (position.getX() < 20e-4){
-                u = velocity.getX();
-            }
+                if (position.getX() > 50 && velocity.getX() > 5e-3) {
+                    u = 1.5;
+                }
+                if (Math.abs(velocity.getX()) > 10e-3 && position.getX() < 17){
+                    u = velocity.getX()/10;
+                }
+                if (position.getX() < 20e-4){
+                    u = velocity.getX();
+                }
 
-            if (position.getX() < 0.1 && rotation == -90*Math.PI/180) {
-                miniThrust = 0.5;
-            }
-            else if (rotation > -2*Math.PI/180 && rotation < -0.1*Math.PI/180) {
-                miniThrust = -rotationVelocity/0.03;
-            }
+                if (position.getX() < 0.1 && rotation == -90*Math.PI/180) {
+                    miniThrust = 0.5;
+                }
+                else if (rotation > -2*Math.PI/180 && rotation < -0.1*Math.PI/180) {
+                    miniThrust = -rotationVelocity/0.03;
+                }
 
-            solver(stepSize, u, miniThrust);
+                if (Math.abs(rotation) < 0.1 && position.getY() < 10) {
+                    u = -velocity.getY()/10;
+                }
+                if (position.getY() < 10e-4) {
+                    u = velocity.getY();
+                }
+                solver(stepSize, u, miniThrust);
+            }
         }
     }
 
