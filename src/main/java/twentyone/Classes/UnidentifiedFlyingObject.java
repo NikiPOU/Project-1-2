@@ -52,7 +52,7 @@ public class UnidentifiedFlyingObject {
 
     // OUR CONSTANTS
 
-    private static final double g = 1.352e-3;
+    static final double g = 1.352e-3;
     // Maximum acceleration provided by the main thruster.
     private static final double uMax = 10*g; // km s^(-2)
     // Maximum torque.
@@ -64,14 +64,18 @@ public class UnidentifiedFlyingObject {
     private static final double epsilonY = 1e-4; // km s^(-1) ≥ |y'|
     private static final double epsilonTheta = 0.01; // rad s^(-1) = |θ'|
 
+    public UnidentifiedFlyingObject(Vector3d position, Vector3d velocity){
+        this.position = position;
+        this.velocity = velocity;
+    }
 
+    UnidentifiedFlyingObject ufo;
 
 
     double stepSize = 1;
     // in km / s
-
     public static void main(String[] args) {
-        UnidentifiedFlyingObject ufo = new UnidentifiedFlyingObject();
+        UnidentifiedFlyingObject ufo = new UnidentifiedFlyingObject(new Vector3d(200, 200, -Math.PI/2),new Vector3d(5.570e-3, 0, 0));
         
         while (ufo.getPosition().getY() > 0) {
             ufo.feedbackController();
@@ -142,6 +146,7 @@ public class UnidentifiedFlyingObject {
     }
 
     public void feedbackController() {
+        Euler euler = new Euler();
         if (!hasLanded) {
             if (position.getY() <= 0) {
                 rotationVelocity = 0;
@@ -150,19 +155,20 @@ public class UnidentifiedFlyingObject {
                 hasLanded = true;
                 //The rocket doesn't launch from Titan yet despite this below
                 solver(stepSize, 1, 0);
+                euler.landing(this, stepSize, 1, 0);
             }
             else {
-                double u = 0;
+                double mainThrust = 0;
                 double miniThrust = 0;
 
                 if (position.getX() > 50 && velocity.getX() > 5e-3) {
-                    u = 1.5;
+                    mainThrust = 1.5;
                 }
                 if (Math.abs(velocity.getX()) > 10e-3 && position.getX() < 17){
-                    u = velocity.getX()/10;
+                    mainThrust = velocity.getX()/10;
                 }
                 if (position.getX() < 20e-4){
-                    u = velocity.getX();
+                    mainThrust = velocity.getX();
                 }
 
                 if (position.getX() < 0.1 && rotation == -90*Math.PI/180) {
@@ -173,12 +179,14 @@ public class UnidentifiedFlyingObject {
                 }
 
                 if (Math.abs(rotation) < 0.1 && position.getY() < 10) {
-                    u = -velocity.getY()/10;
+                    mainThrust = -velocity.getY()/10;
                 }
                 if (position.getY() < 10e-4) {
-                    u = velocity.getY();
+                    mainThrust = velocity.getY();
                 }
-                solver(stepSize, u, miniThrust);
+                
+            //solver(stepSize, mainThrust, miniThrust);
+            euler.landing(this, stepSize, mainThrust, miniThrust);
             }
         }
     }

@@ -36,4 +36,28 @@ public class Euler extends Solver{
         
         return theCelBodies;
     }
+
+        //Euler solver for landing
+        public void landing(UnidentifiedFlyingObject ufo, double stepSize, double mainThrust, double miniThrust) {
+            
+            Vector3d pos = ufo.getPosition(); 
+            Vector3d vel = ufo.getVelocity();
+
+            double x = pos.getX() + pos.getX()*stepSize;
+            double y = pos.getY() + pos.getY()*stepSize;
+            double o = pos.getZ() + ufo.getVelocity().getZ()*stepSize;
+
+            Vector3d newPosition = new Vector3d(x,y,o); // x, y, θ
+
+            double xV = vel.getX() + mainThrust * Math.sin(vel.getZ()) * stepSize;
+            double yV = vel.getY() + mainThrust * (Math.cos(vel.getZ()) - UnidentifiedFlyingObject.g) * stepSize;
+            double oV = vel.getZ() + 0.03 * miniThrust * Math.sin(Math.PI/2) * stepSize;
+
+            Vector3d newVelocity = new Vector3d(xV,yV,oV); // x',y',θ'
+
+
+            ufo.setPosition(newPosition);
+            ufo.setVelocity(newVelocity);
+        }
 }
+
