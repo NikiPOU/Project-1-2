@@ -39,7 +39,7 @@ public class LandingScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        UnidentifiedFlyingObject ufo = new UnidentifiedFlyingObject(new Vector3d(200, 200, -Math.PI/2),new Vector3d(5.570e-3, 0, 0));
+        ufo = new UnidentifiedFlyingObject(new Vector3d(200, 200, -Math.PI/2),new Vector3d(5.570e-3, 0, 0));
 
         screenCenterX = App.width/2;
         screenCenterY = App.height/2;

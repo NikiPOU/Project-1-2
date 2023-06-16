@@ -48,8 +48,8 @@ public class Lagrange{
 
 
     public static void main(String[] args) {
-        double[] xar = [2, 2.5, 4];
-        double[] yar = [0.5, 0.4, 0.25];
+        double[] xar = {2, 2.5, 4};
+        double[] yar = {0.5, 0.4, 0.25};
         System.out.println(lagrange(xar, yar, 3));
     }
 }
