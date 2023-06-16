@@ -15,6 +15,7 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import twentyone.App;
 import twentyone.Classes.UnidentifiedFlyingObject;
+import twentyone.Classes.Vector3d;
 
 public class LandingScreenController implements Initializable {
 
@@ -38,7 +39,7 @@ public class LandingScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ufo = new UnidentifiedFlyingObject();
+        UnidentifiedFlyingObject ufo = new UnidentifiedFlyingObject(new Vector3d(200, 200, -Math.PI/2),new Vector3d(5.570e-3, 0, 0));
 
         screenCenterX = App.width/2;
         screenCenterY = App.height/2;
