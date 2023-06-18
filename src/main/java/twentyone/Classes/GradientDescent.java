@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 /**
  * Finding the best launching coordinates
@@ -30,8 +31,10 @@ public class GradientDescent {
 
         System.out.println(Arrays.toString(GradientDescentMethod(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo, allBodies)));
 
-        System.out.println(MethodConnection(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo, allBodies));
-
+        //System.out.println(MethodConnection(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo, allBodies));
+        double[] xar = {0, 13, 160};
+        double[] yar = {1.08, 122.4, 432};
+        //System.out.println(lagrange(xar, yar, 100) + " this is in km/h");
     }
 
      /**
@@ -50,13 +53,23 @@ public class GradientDescent {
             double zVelo, CelestialBody[] allBodies) {
 
         Euler euler = new Euler();
+                // jaime don't focus on removing unneccessary lines focus on fixing the assumptions
+        initiateCB(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo); 
 
-        initiateCB(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo);
-
-        int LoopTimes = 100;
-        double LearingRate = 0.1;
+        int LoopTimes = 100000; // does it truly affect it
+        double LearingRate = 0.0001; //does step size affect what happens
 
                 //Starting values
+
+        //jaime's testers
+        double finCordx = 0;
+        double finCordy = 0;
+        double finCordz = 0;
+        double findistCord = 0;
+        double findistCord2 = 0;
+        int ticks = 0;
+
+        //ends here
 
         double prevOutput = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
         double OutputVelo = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
@@ -103,8 +116,16 @@ public class GradientDescent {
                         // check if the coordinates are on the surface of earth with error of 1%
 
                         // Saving the lowest value
-
+                        if(!(ticks > 100)){
+                            findistCord = prevOutput;
+                        }
+                        
                         prevOutput = OutputCoor;
+                        findistCord2 = OutputCoor;
+                        finCordx = xCoor;
+                        finCordy = yCoor;
+                        finCordz = zCoor;
+
                         XOutput = xCoor;
                         YOutput = yCoor;
                         ZOutput = zCoor;
@@ -112,6 +133,7 @@ public class GradientDescent {
                     }
                 }
             }
+            ticks++;
         }
 
          //Gradient Descent for velocity 
@@ -150,8 +172,13 @@ public class GradientDescent {
                 }
             }
         }
-
-        return new double[] { XOutput, YOutput, ZOutput, dfdxOutput, dfdyOutput, dfdzOutput, OutputCoor, OutputVelo };
+        System.out.println("\n" + "from finals...  \n"  +  "x : " + finCordx + "\n" +
+                                "y : " + finCordy + "\n" +  
+                                 "z : " + finCordz + "\n" +
+                                 "fin dist1 NOT ticks > 100 : " + findistCord + "\n" + 
+                                 "fin dist2 : " + findistCord2 + "\n" +
+                                  "fin prevOutput : " +prevOutput+"\n" + "\n");
+        return new double[] { XOutput, YOutput, ZOutput, dfdxOutput, dfdyOutput, dfdzOutput, OutputCoor, OutputVelo }; // where 
 
     }
 
@@ -353,4 +380,86 @@ public class GradientDescent {
         allBodies[10] = new CelestialBody(uravel, urapos, 86.813E+24);
         allBodies[11] = new Rocket(probevelo, probeposs);
     }
+
+
+
+
+
+        public static double lagrange(double[] xAra, double[] yAra, double x){
+        ArrayList<ArrayList<Double>> liX = new ArrayList<>();
+        
+        //generate li(x)
+        for(int i = 0; i<xAra.length; i++){
+            liX.add(generate_lix(xAra, yAra, i));
+        }
+        
+
+        //get reult of p(x)
+        double apex = 1;
+        double eden = 0;
+        for(int i = 0; i<liX.size(); i++){
+            for(int j = 0; j<liX.get(i).size(); j++){
+                if(j == (liX.get(i).size()-1)){
+                    apex = apex / liX.get(i).get(j);
+                    apex = apex * yAra[i];
+                    eden = eden + apex;
+                    apex = 1;
+                }else if(j != 0){
+                    apex = apex * (x - liX.get(i).get(j));
+                }
+            }
+        }
+        return eden;
+    }
+
+
+    public static ArrayList<Double> generate_lix(double[] xAra, double[] yAra, int focusL){
+        ArrayList<Double> returnMe = new ArrayList<Double>();
+        returnMe.add(0.0);
+
+        double denom = 1;
+        double rahal = 1;
+        for(int i = 0; i<xAra.length; i++){
+            if(i != focusL){
+                returnMe.add(xAra[i]);
+                denom = denom*(xAra[focusL] - xAra[i]);
+            }
+        }
+        returnMe.add(denom);
+        return returnMe;
+    }
+
+
+
+        public static double lagrangeRandom(double[] xAra, double[] yAra, double x){
+        ArrayList<ArrayList<Double>> liX = new ArrayList<>();
+        
+        //generate li(x)
+        for(int i = 0; i<xAra.length; i++){
+            liX.add(generate_lix(xAra, yAra, i));
+        }
+        
+
+        //get reult of p(x)
+        double apex = 1;
+        double eden = 0;
+        for(int i = 0; i<liX.size(); i++){
+            for(int j = 0; j<liX.get(i).size(); j++){
+                if(j == (liX.get(i).size()-1)){
+                    apex = apex / liX.get(i).get(j);
+                    apex = apex * yAra[i];
+                    eden = eden + apex;
+                    apex = 1;
+                }else if(j != 0){
+                    apex = apex * (x - liX.get(i).get(j));
+                }
+            }
+        }
+        double s = (Math.random()) + 0.5;
+        eden = eden * s;
+        return eden;
+    }
+
+
+
 }
