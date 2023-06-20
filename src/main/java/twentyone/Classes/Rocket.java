@@ -51,6 +51,12 @@ public class Rocket extends CelestialBody{
         return new Vector3d(0,0,0);
     }
 
+    public void newEngine(Vector3d newVelocity, double start, double end) {
+        Vector3d impulse = newVelocity.sub(super.getVelocity());
+        fuel += impulse.norm() * end-start;
+        super.setNewVelocity(newVelocity);
+    }
+
     /**
      * The velocity of the rocket with the impulse added to it
      * @param force the force decided to give the rocket

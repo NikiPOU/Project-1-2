@@ -10,6 +10,7 @@ import twentyone.Classes.Vector3d;
 public class numberChooserScreenController {
 
     private double[] positions = {-148186906.893642, -27823158.5715694, 33746.8987977114};
+    //optimized starting coordinates gradient descent: {1.4843244380630633E8, -2.7823180807563744E7, 33751.40524464205} should x coord be negative?
 
     @FXML
     private TextField stepsizeTextfield;
