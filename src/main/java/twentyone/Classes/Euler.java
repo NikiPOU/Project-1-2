@@ -47,6 +47,9 @@ public class Euler extends Solver{
             System.out.println("Mini thrust is too high");
             miniThrust = 1/0.03;
         }
+
+        ufo.fuel += mainThrust*stepSize;
+        ufo.fuel += miniThrust* stepSize;
         
         Vector3d position = ufo.getPosition();
         Vector3d velocity = ufo.getVelocity();

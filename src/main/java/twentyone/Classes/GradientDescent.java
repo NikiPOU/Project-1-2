@@ -385,7 +385,7 @@ public class GradientDescent {
 
 
 
-        public static double lagrange(double[] xAra, double[] yAra, double x){
+    public static double lagrange(double[] xAra, double[] yAra, double x){
         ArrayList<ArrayList<Double>> liX = new ArrayList<>();
         
         //generate li(x)

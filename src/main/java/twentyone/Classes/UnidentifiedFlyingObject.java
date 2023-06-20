@@ -45,7 +45,7 @@ public class UnidentifiedFlyingObject {
     //Starting from the orbit, we need x, y position and velocity
     Vector3d position;
     Vector3d velocity;
-    double fuel;
+    double fuel = 0;
     boolean hasLanded = false;
 
     // OUR CONSTANTS
@@ -178,6 +178,7 @@ public class UnidentifiedFlyingObject {
 
                 if (position.getY() < 1e-4) {
                     boundChecks();
+                    System.out.println("Total used fuel: " + fuel);
                     hasLanded = true;
                     velocity.setZ(0);
                     velocity.setX(0);
