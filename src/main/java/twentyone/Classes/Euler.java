@@ -43,8 +43,8 @@ public class Euler extends Solver{
             Vector3d pos = ufo.getPosition(); 
             Vector3d vel = ufo.getVelocity();
 
-            double x = pos.getX() + pos.getX()*stepSize;
-            double y = pos.getY() + pos.getY()*stepSize;
+            double x = pos.getX() + vel.getX()*stepSize;
+            double y = pos.getY() + vel.getY()*stepSize;
             double o = pos.getZ() + ufo.getVelocity().getZ()*stepSize;
 
             Vector3d newPosition = new Vector3d(x,y,o); // x, y, θ

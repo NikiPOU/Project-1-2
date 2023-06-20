@@ -154,7 +154,7 @@ public class UnidentifiedFlyingObject {
                 velocity.setY(0);
                 hasLanded = true;
                 //The rocket doesn't launch from Titan yet despite this below
-                solver(stepSize, 1, 0);
+                //solver(stepSize, 1, 0);
                 euler.landing(this, stepSize, 1, 0);
             }
             else {

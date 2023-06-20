@@ -7,6 +7,9 @@ package twentyone.Classes;
  */
 public class VerletSolver extends Solver {
 
+    private double oldMainThrust = 0;
+    private double oldMiniThrust = 0;
+
     public CelestialBody[] verlet(CelestialBody[] allBodies, int bodyIndex, double stepsize) {
 
         // take values from the rest of the program (CelestialBody)
@@ -46,6 +49,31 @@ public class VerletSolver extends Solver {
 
         // return allBodies
 
+    }
+
+    public void landing(UnidentifiedFlyingObject ufo, double stepSize, double mainThrust, double miniThrust) {
+            
+        Vector3d pos = ufo.getPosition(); 
+        Vector3d vel = ufo.getVelocity();
+
+        //Vector3d newPos = prevPos.add(prevVel.mul(dt)).add(prevA.mul(0.5 * dt * dt));
+
+        double x = pos.getX() + vel.getX()*stepSize + mainThrust * Math.sin(vel.getZ()) * stepSize * stepSize * 0.5;
+        double y = pos.getY() + vel.getY()*stepSize + mainThrust * (Math.cos(vel.getZ()) - UnidentifiedFlyingObject.g) * stepSize * stepSize * 0.5;
+        double o = pos.getZ() + ufo.getVelocity().getZ()*stepSize + 0.03 * miniThrust * Math.sin(Math.PI/2) * stepSize * stepSize * 0.5;
+
+        Vector3d newPosition = new Vector3d(x,y,o); // x, y, θ
+
+        //Vector3d newVel = prevVel.add(newA.add(prevA).mul(0.5 * dt));
+        double xV = vel.getX() + (mainThrust * Math.sin(vel.getZ()) +  oldMainThrust * Math.sin(o)) * 0.5 * stepSize;
+        double yV = vel.getY() + (mainThrust * (Math.cos(vel.getZ()) - UnidentifiedFlyingObject.g) + oldMainThrust * (Math.cos(o) - UnidentifiedFlyingObject.g)) * 0.5 * stepSize;
+        double oV = vel.getZ() + (0.03 * miniThrust * Math.sin(Math.PI/2) + 0.03 * oldMiniThrust * Math.sin(Math.PI/2)) * stepSize * 0.5;
+
+        Vector3d newVelocity = new Vector3d(xV,yV,oV); // x',y',θ'
+
+
+        ufo.setPosition(newPosition);
+        ufo.setVelocity(newVelocity);
     }
 
 }
