@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import twentyone.App;
+import twentyone.Classes.Euler;
 import twentyone.Classes.UnidentifiedFlyingObject;
 import twentyone.Classes.Vector3d;
 
@@ -25,6 +26,7 @@ public class LandingScreenController implements Initializable {
     private double screenCenterY;
 
     private UnidentifiedFlyingObject ufo;
+    private Euler e;
 
     @FXML
     private Group Titan;
@@ -40,6 +42,7 @@ public class LandingScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ufo = new UnidentifiedFlyingObject(new Vector3d(200, 200, -Math.PI/2),new Vector3d(5.570e-3, 0, 0));
+        e = new Euler();
 
         screenCenterX = App.width/2;
         screenCenterY = App.height/2;
@@ -70,10 +73,10 @@ public class LandingScreenController implements Initializable {
 
         @Override
         public void handle(ActionEvent event) {
-            ufo.feedbackController();
+            ufo.feedbackController(e);
             Titan.rotateProperty().set(-ufo.getPosition().getX());
-            // Saturn.setLayoutX(Saturn.getLayoutX() + ufo.getPosition().getX()*5e-3);
-            Saturn.setLayoutX(Saturn.getLayoutX() - 0.5);
+            Saturn.setLayoutX(Saturn.getLayoutX() + ufo.getPosition().getX()*5e-3);
+            //Saturn.setLayoutX(Saturn.getLayoutX() - 0.5);
             Saturn.rotateProperty().set(Saturn.getRotate() - 0.05);
 
             rocket.setLayoutX(screenCenterX-100);
@@ -81,7 +84,7 @@ public class LandingScreenController implements Initializable {
             //System.out.println(ufo.getVelocity().getY());
             rocket.setLayoutY(screenCenterY + 50 - ufo.getPosition().getY());
             //System.out.println(ufo.getPosition().getY());
-            rocket.rotateProperty().set(ufo.getRotation()*180/Math.PI);
+            rocket.rotateProperty().set(ufo.getPosition().getZ()*180/Math.PI);
             //System.out.println(ufo.getRotation()*180/Math.PI);
             //System.out.println();
         }

@@ -35,7 +35,7 @@ public class Lagrange{
         returnMe.add(0.0);
 
         double denom = 1;
-        double rahal = 1;
+        //double rahal = 1;
         for(int i = 0; i<xAra.length; i++){
             if(i != focusL){
                 returnMe.add(xAra[i]);
@@ -189,7 +189,7 @@ public class Lagrange{
         }
 
         double goodSimulations = 0.0;
-        int fail = 0;
+        //int fail = 0;
         double jado = (i+j)/2.0;
         double averageBounder = lagrangeRandomGusted(xAra, yAra, jado);
         double gustDiscrepancy =  (1 + ((((averageBounder)/((i-j))) * Math.random())/100)) + (j/1000.0);
@@ -246,7 +246,7 @@ public class Lagrange{
     public static void main(String[] args) {
         double[] xar = {0, 13, 160};
         double[] yar = {1.08, 122.4, 432};
-        double vari = 0.25;
+        //double vari = 0.25;
         //System.out.println(lagrange(xar, yar, vari) + " NORMAL this is in km/h" + vari);
         //System.out.println(lagrangeRandom(xar, yar, 5) + " this is in km/h");
         //System.out.println("good simu % : " + simulation(xar, yar, 1000, 1));

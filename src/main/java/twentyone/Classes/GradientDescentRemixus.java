@@ -1,9 +1,5 @@
 package twentyone.Classes;
 
-import java.util.Arrays;
-
-import javafx.scene.chart.PieChart.Data;
-
 public class GradientDescentRemixus {
     
     public static CelestialBody[] allBodies = new CelestialBody[12];
@@ -180,7 +176,7 @@ public class GradientDescentRemixus {
         double yVelo = -11.1085713608453;
         double zVelo = -2.25130986174761;
         //FileHandler axax = new FileHandler();
-        int cont = 0;
+        //int cont = 0;
         initiateCB(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo);
         Euler euler = new Euler();
         Vector3d exos = new Vector3d(0, 0, 0);
