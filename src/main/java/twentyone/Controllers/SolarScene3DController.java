@@ -559,8 +559,12 @@ public class SolarScene3DController implements Initializable {
         KeyFrame keyFrame = new KeyFrame(Duration.millis(300), movement);
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
-        MP = new musicPlayer("Interstellar.mp3");
-        MP.run();
+        if(App.MP.isRunning()){
+
+        } else {
+            App.MP = new musicPlayer("Interstellar.mp3");
+            App.MP.run();
+        }
     }
 
     /**
@@ -818,7 +822,7 @@ public class SolarScene3DController implements Initializable {
                 bodies = rocketTrajectory(bodies, stepsize, 0);
 
                 //Keep track of the time
-                seconds += stepsize;
+                App.seconds += stepsize;
                 k += stepsize;
                 App.totalSeconds = k;
                 if(k >= TimeStamp && timestampCheck && TimeStamp != -1){
@@ -837,10 +841,10 @@ public class SolarScene3DController implements Initializable {
                     timestampGroup.setVisible(true);
                     timestampCheck = false;
                 }
-                if(seconds >= 60){
-                    minutes++;
-                    seconds = 0;
-                    if(minutes % 60 == 0){
+                if(App.seconds >= 60){
+                    App.minutes++;
+                    App.seconds = 0;
+                    if(App.minutes % 60 == 0){
                         //==================== Rotation of planets ====================
                         earthSphere.rotateProperty().set(earthSphere.getRotate() + 15);
                         mercurySphere.rotateProperty().set(mercurySphere.getRotate() + 0.256);
@@ -850,17 +854,17 @@ public class SolarScene3DController implements Initializable {
                         saturnSphere.rotateProperty().set(saturnSphere.getRotate() + 32.727);
                         sunSphere.rotateProperty().set(sunSphere.getRotate() + 0.556);
                         //==================== Rotation of planets ====================
-                        hours++;
-                        minutes = 0;
-                        if(hours % 24 == 0){
-                            days++;
-                            hours = 0;
-                            if(days % 30 == 0){
-                                months++;
-                                days = 0;
-                                if(months/12 == 1){
-                                    months = 0;
-                                    years++;
+                        App.hours++;
+                        App.minutes = 0;
+                        if(App.hours % 24 == 0){
+                            App.days++;
+                            App.hours = 0;
+                            if(App.days % 30 == 0){
+                                App.months++;
+                                App.days = 0;
+                                if(App.months/12 == 1){
+                                    App.months = 0;
+                                    App.years++;
                                 }
                             }
                         }
@@ -868,7 +872,7 @@ public class SolarScene3DController implements Initializable {
                 }
             }
 
-            TimeElapsed.setText("Time Elapsed: " + years + " years, " + months + " months, " + days + " days and " + hours + "hours");
+            TimeElapsed.setText("Time Elapsed: " + App.years + " years, " + App.months + " months, " + App.days + " days and " + App.hours + "hours");
             if(!selectedPlanet.equals(bodies[0])){
                 focusCamera(selectedPlanet);
             } else if(resetCheck){

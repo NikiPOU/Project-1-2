@@ -4,6 +4,36 @@ import twentyone.App;
 
 public class PositionCalculationThread implements Runnable{
 
+    /**
+     * Amount of {@code seconds} in the current {@code minute}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#minutes minutes}
+     */
+    int seconds = 0;
+    /**
+     * Amount of {@code minutes} in the current {@code hour}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#hours hours}
+     */
+    int minutes = 0;
+    /**
+     * Amount of {@code hours} in the current {@code day}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#days days}
+     */
+    int hours = 0;
+    /**
+     * Amount of {@code days} in the current {@code month}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#months months}
+     */
+    int days = 0;
+    /**
+     * Amount of {@code months} in the current {@code year}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#years years}
+     */
+    int months = 0;
+    /**
+     * Amount of {@code years}
+     */
+    int years = 0;
+
     private boolean isRunning;
 
     /**
@@ -74,7 +104,52 @@ public class PositionCalculationThread implements Runnable{
         this.bodies = bodies;
         this.stepsize = stepsize2;
         isRunning = true;
+        convertTime(App.totalSeconds);
     }
+
+    /**
+     * Transfers the time from seconds to the following format:<p>
+     * years, months, days, hours, minutes, seconds
+     * @param secs
+     */
+    private void convertTime(int secs){
+        int yea = 0;
+        int mont = 0;
+        int das = 0;
+        int hour = 0;
+        int minute = 0;
+        int sec = 0;
+        int temporary;
+        yea = secs / 31104000;
+        if(yea != 0){
+            years = yea;
+        }
+        temporary = (secs - (yea * 31104000));
+        mont = temporary / 2592000;
+        if(mont != 0){
+            months = mont;
+        }
+        temporary -= mont * 2592000;
+        das = temporary  / 86400;
+        if(das != 0){
+            days = das;
+        }
+        temporary -= das * 86400;
+        hour = temporary / 3600;
+        if(hour != 0){
+            hours = hour;
+        }
+        temporary -= hour * 3600;
+        minute = temporary / 60;
+        if(minute != 0){
+            minutes = minute;
+        }
+        temporary -= minute * 60;
+        sec = temporary;
+        if(sec != 0){
+            seconds = sec;
+        }
+        }
 
     private void positionCalculation(){
         for (int i = 0; i < eulerLoops; i++) {
@@ -83,8 +158,29 @@ public class PositionCalculationThread implements Runnable{
             }
 
             //Keep track of the time
+            App.seconds += stepsize;
             k += stepsize;
             App.totalSeconds = k;
+            if(App.seconds >= 60){
+                App.minutes++;
+                App.seconds = 0;
+                if(App.minutes % 60 == 0){
+                    App.hours++;
+                    App.minutes = 0;
+                    if(App.hours % 24 == 0){
+                        App.days++;
+                        App.hours = 0;
+                        if(App.days % 30 == 0){
+                            App.months++;
+                            App.days = 0;
+                            if(App.months/12 == 1){
+                                App.months = 0;
+                                App.years++;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

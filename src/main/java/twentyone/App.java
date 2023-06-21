@@ -31,6 +31,36 @@ public class App extends Application {
     //Needed for PositionCalculationThread.java
 
     public static int totalSeconds;
+    /**
+     * Amount of {@code seconds} in the current {@code minute}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#minutes minutes}
+     */
+    public static int seconds = 0;
+    /**
+     * Amount of {@code minutes} in the current {@code hour}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#hours hours}
+     */
+    public static int minutes = 0;
+    /**
+     * Amount of {@code hours} in the current {@code day}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#days days}
+     */
+    public static int hours = 0;
+    /**
+     * Amount of {@code days} in the current {@code month}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#months months}
+     */
+    public static int days = 0;
+    /**
+     * Amount of {@code months} in the current {@code year}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#years years}
+     */
+    public static int months = 0;
+    /**
+     * Amount of {@code years}
+     */
+    public static int years = 0;
+    
 
     private static Scene scene;
 

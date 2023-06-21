@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
@@ -18,6 +19,36 @@ import twentyone.Classes.UnidentifiedFlyingObject;
 import twentyone.Classes.Vector3d;
 
 public class LandingScreenController implements Initializable {
+
+    /**
+     * Amount of {@code seconds} in the current {@code minute}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#minutes minutes}
+     */
+    int seconds = 0;
+    /**
+     * Amount of {@code minutes} in the current {@code hour}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#hours hours}
+     */
+    int minutes = 0;
+    /**
+     * Amount of {@code hours} in the current {@code day}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#days days}
+     */
+    int hours = 0;
+    /**
+     * Amount of {@code days} in the current {@code month}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#months months}
+     */
+    int days = 0;
+    /**
+     * Amount of {@code months} in the current {@code year}.
+     * @see {@link twentyone.Controllers.SolarScene3DController#years years}
+     */
+    int months = 0;
+    /**
+     * Amount of {@code years}
+     */
+    int years = 0;
 
     private Timeline timeline;
 
@@ -36,10 +67,19 @@ public class LandingScreenController implements Initializable {
     @FXML
     private ImageView rocket;
 
+    @FXML
+    private Label timeLabel;
+    @FXML
+    private Label speedLabel;
+    @FXML
+    private Label heightLabel;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ufo = new UnidentifiedFlyingObject(new Vector3d(200, 200, -Math.PI/2),new Vector3d(5.570e-3, 0, 0));
+
+        // convertTime(App.totalSeconds);
 
         screenCenterX = App.width/2;
         screenCenterY = App.height/2;
@@ -66,6 +106,52 @@ public class LandingScreenController implements Initializable {
         System.exit(0);
     }
 
+    /**
+     * Transfers the time from seconds to the following format:<p>
+     * years, months, days, hours, minutes, seconds
+     * @param secs
+     */
+    private void convertTime(int secs){
+        String string = "";
+        
+        int yea = 0;
+        int mont = 0;
+        int das = 0;
+        int hour = 0;
+        int minute = 0;
+        int sec = 0;
+        int temporary;
+        yea = secs / 31104000;
+        if(yea != 0){
+            years = yea;
+        }
+        temporary = (secs - (yea * 31104000));
+        mont = temporary / 2592000;
+        if(mont != 0){
+            months = mont;
+        }
+        temporary -= mont * 2592000;
+        das = temporary  / 86400;
+        if(das != 0){
+            days = das;
+        }
+        temporary -= das * 86400;
+        hour = temporary / 3600;
+        if(hour != 0){
+            hours = hour;
+        }
+        temporary -= hour * 3600;
+        minute = temporary / 60;
+        if(minute != 0){
+            minutes = minute;
+        }
+        temporary -= minute * 60;
+        sec = temporary;
+        if(sec != 0){
+            seconds = sec;
+        }
+        }
+
     public class Movement implements EventHandler<ActionEvent>{
 
         @Override
@@ -84,6 +170,12 @@ public class LandingScreenController implements Initializable {
             rocket.rotateProperty().set(ufo.getRotation()*180/Math.PI);
             //System.out.println(ufo.getRotation()*180/Math.PI);
             //System.out.println();
+
+            // convertTime(App.totalSeconds);
+
+            timeLabel.setText("Time Elapsed: " + App.years + " years, " + App.months + " months, " + App.days + " days and " + App.hours + "hours");
+            speedLabel.setText("Speed: ");
+            heightLabel.setText("Height: ");
         }
     }
 }
