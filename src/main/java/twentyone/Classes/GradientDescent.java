@@ -32,8 +32,8 @@ public class GradientDescent {
         System.out.println(Arrays.toString(GradientDescentMethod(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo, allBodies)));
 
         //System.out.println(MethodConnection(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo, allBodies));
-        double[] xar = {0, 13, 160};
-        double[] yar = {1.08, 122.4, 432};
+        //double[] xar = {0, 13, 160};
+        //double[] yar = {1.08, 122.4, 432};
         //System.out.println(lagrange(xar, yar, 100) + " this is in km/h");
     }
 
@@ -385,7 +385,7 @@ public class GradientDescent {
 
 
 
-        public static double lagrange(double[] xAra, double[] yAra, double x){
+    public static double lagrange(double[] xAra, double[] yAra, double x){
         ArrayList<ArrayList<Double>> liX = new ArrayList<>();
         
         //generate li(x)
@@ -418,7 +418,7 @@ public class GradientDescent {
         returnMe.add(0.0);
 
         double denom = 1;
-        double rahal = 1;
+        //double rahal = 1;
         for(int i = 0; i<xAra.length; i++){
             if(i != focusL){
                 returnMe.add(xAra[i]);

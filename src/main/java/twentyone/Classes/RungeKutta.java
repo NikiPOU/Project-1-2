@@ -52,6 +52,4 @@ public class RungeKutta extends Solver{
         }
         return oldy.add(derivative.mulVector(y));
     }
-
-
 }

@@ -38,26 +38,39 @@ public class Euler extends Solver{
     }
 
         //Euler solver for landing
-        public void landing(UnidentifiedFlyingObject ufo, double stepSize, double mainThrust, double miniThrust) {
-            
-            Vector3d pos = ufo.getPosition(); 
-            Vector3d vel = ufo.getVelocity();
-
-            double x = pos.getX() + vel.getX()*stepSize;
-            double y = pos.getY() + vel.getY()*stepSize;
-            double o = pos.getZ() + ufo.getVelocity().getZ()*stepSize;
-
-            Vector3d newPosition = new Vector3d(x,y,o); // x, y, θ
-
-            double xV = vel.getX() + mainThrust * Math.sin(vel.getZ()) * stepSize;
-            double yV = vel.getY() + mainThrust * (Math.cos(vel.getZ()) - UnidentifiedFlyingObject.g) * stepSize;
-            double oV = vel.getZ() + 0.03 * miniThrust * Math.sin(Math.PI/2) * stepSize;
-
-            Vector3d newVelocity = new Vector3d(xV,yV,oV); // x',y',θ'
-
-
-            ufo.setPosition(newPosition);
-            ufo.setVelocity(newVelocity);
+    public void landing(UnidentifiedFlyingObject ufo, double stepSize, double mainThrust, double miniThrust) {
+        if (mainThrust > UnidentifiedFlyingObject.uMax) {
+            //System.out.println("Main thrust too high");
+            //mainThrust = UnidentifiedFlyingObject.uMax;
         }
+        if (0.03 * miniThrust > 1) {
+            System.out.println("Mini thrust is too high");
+            miniThrust = 1/0.03;
+        }
+
+        ufo.fuel += mainThrust*stepSize;
+        ufo.fuel += miniThrust* stepSize;
+        
+        Vector3d position = ufo.getPosition();
+        Vector3d velocity = ufo.getVelocity();
+    
+        double newX = position.getX() + velocity.getX() * stepSize;
+        double newY = position.getY() + velocity.getY() * stepSize;
+    
+        double newVelocityX = velocity.getX() + mainThrust * Math.sin(position.getZ()) * stepSize;
+        double newVelocityY = velocity.getY() + (mainThrust * Math.cos(position.getZ()) - UnidentifiedFlyingObject.g) * stepSize;
+
+        double newRotation = position.getZ() + velocity.getZ() * stepSize;
+        
+        double newRotationVelocity = velocity.getZ() + 0.03 * miniThrust * Math.sin(Math.PI / 2) * stepSize;
+    
+        Vector3d newPosition = new Vector3d(newX, newY, newRotation);
+        Vector3d newVelocity = new Vector3d(newVelocityX, newVelocityY, newRotationVelocity);
+    
+        ufo.setPosition(newPosition);
+        ufo.setVelocity(newVelocity);
+    }
+
+        
 }
 

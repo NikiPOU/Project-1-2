@@ -15,7 +15,7 @@ public class Rocket extends CelestialBody{
      * 
      * velocity with a 90 degrees angle from the earths surface
      */
-    private double fuel = 100000000;
+    private double fuel = 0;
     /**
      * Constructor for the {@code Rocket Class}.
      * @param initialVelocity as a {@code Vector3d Class}
@@ -49,6 +49,12 @@ public class Rocket extends CelestialBody{
             return impulse;
         }
         return new Vector3d(0,0,0);
+    }
+
+    public void newEngine(Vector3d newVelocity, double start, double end) {
+        Vector3d impulse = newVelocity.sub(super.getVelocity());
+        fuel += impulse.norm() * end-start;
+        super.setNewVelocity(newVelocity);
     }
 
     /**
@@ -132,5 +138,31 @@ public class Rocket extends CelestialBody{
         time = 1;
     }
 
+    
+    public double consumeImpulseSimu(Vector3d imp, double timeInterval){
+        double foir = norm_Two(imp)*timeInterval;
+        return foir;
+        //to consume fuel multiply with 1 m/s
+        //our velocity is in km/s so what we could do is convert the final velo of boosted to 
+        //m/s so then we can use it to consume 
+    }
 
+    /**
+     * Subtracts the fuel used during a force
+     * @param force the force
+     * @param timeInterval the time the force took
+     */
+    public double consumeForceSimu(Vector3d force, double timeInterval){
+        double foir = norm_Two(force)*timeInterval;
+        return foir;
+    }
+
+    public double boostedVeloSimulation(Vector3d force, double start, double end){
+        double x = 0;
+        Vector3d currentVelo = super.getVelocity();
+        Vector3d impulse = getAnImpulse(force, start, end);
+        Vector3d finalVelo = currentVelo.add(impulse.mul(1/super.getMass()));
+        super.setNewVelocity(finalVelo);
+        return x;
+    }  
 }
