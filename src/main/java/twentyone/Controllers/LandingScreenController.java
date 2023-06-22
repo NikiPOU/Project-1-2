@@ -115,52 +115,6 @@ public class LandingScreenController implements Initializable {
         System.exit(0);
     }
 
-    /**
-     * Transfers the time from seconds to the following format:<p>
-     * years, months, days, hours, minutes, seconds
-     * @param secs
-     */
-    private void convertTime(int secs){
-        String string = "";
-        
-        int yea = 0;
-        int mont = 0;
-        int das = 0;
-        int hour = 0;
-        int minute = 0;
-        int sec = 0;
-        int temporary;
-        yea = secs / 31104000;
-        if(yea != 0){
-            years = yea;
-        }
-        temporary = (secs - (yea * 31104000));
-        mont = temporary / 2592000;
-        if(mont != 0){
-            months = mont;
-        }
-        temporary -= mont * 2592000;
-        das = temporary  / 86400;
-        if(das != 0){
-            days = das;
-        }
-        temporary -= das * 86400;
-        hour = temporary / 3600;
-        if(hour != 0){
-            hours = hour;
-        }
-        temporary -= hour * 3600;
-        minute = temporary / 60;
-        if(minute != 0){
-            minutes = minute;
-        }
-        temporary -= minute * 60;
-        sec = temporary;
-        if(sec != 0){
-            seconds = sec;
-        }
-        }
-
     public class Movement implements EventHandler<ActionEvent>{
 
         @Override
