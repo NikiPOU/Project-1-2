@@ -17,6 +17,7 @@ public class musicPlayer {
     private File file;
     private String fileName;
     private MediaPlayer MP;
+    private boolean isRunning = false;
 
     /**
      * Creates a new musicPlayer.
@@ -44,6 +45,7 @@ public class musicPlayer {
      * Runs the music file.
      */
     public void run() {
+        isRunning = true;
         Media sound = new Media(file.toURI().toString());
 
         // Create a MediaPlayer object for the audio file
@@ -67,18 +69,17 @@ public class musicPlayer {
     /**
      * Stops the musicFile.
      */
-    public void stop(){MP.stop();}
+    public void stop(){
+        isRunning = false;
+        MP.stop();
+    }
 
     /**
      * Checks if the music Player is running.
      * @return true if running and false if not running
      */
     public boolean isRunning(){
-        if(MP.getStatus().equals(MediaPlayer.Status.PLAYING)){
-            return true;
-        } else {
-            return false;
-        }
+        return isRunning;
     }
 
     /**

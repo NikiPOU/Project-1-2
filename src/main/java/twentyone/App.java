@@ -60,8 +60,11 @@ public class App extends Application {
      * Amount of {@code years}
      */
     public static int years = 0;
-    
 
+    public static boolean titanChosen;
+    public static Vector3d titanPos;
+    public static Vector3d titanVel;
+    
     private static Scene scene;
 
     public static double width;

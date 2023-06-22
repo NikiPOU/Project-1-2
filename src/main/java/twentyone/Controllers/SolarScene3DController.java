@@ -678,10 +678,15 @@ public class SolarScene3DController implements Initializable {
                 }
             } else if(ke.getCode().equals(KeyCode.Q)){
                 try {
-                    App.PCT = new PositionCalculationThread(bodies, stepsize);
-                    Thread thread = new Thread(App.PCT);
-                    thread.start();
-                    App.setRoot("fxml/LandingScreen");
+                    if(App.titanChosen){
+                        App.PCT = new PositionCalculationThread(bodies, stepsize);
+                        Thread thread = new Thread(App.PCT);
+                        thread.start();
+                        App.setRoot("fxml/LandingScreen");
+                    } else {
+                        App.bodies = bodies;
+                        App.setRoot("fxml/TitanChooserScreen");
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

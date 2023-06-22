@@ -38,7 +38,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -68,23 +67,19 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Solver Chooser">
           <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
+            <MenuItem mnemonicParsing="false" onAction="#onAdamsButton" text="Adams-Bashfort" />
+            <MenuItem mnemonicParsing="false" onAction="#onMoultonButton" text="Adams-Moulton" />
+            <MenuItem mnemonicParsing="false" onAction="#onEulerButton" text="Euler" />
+            <MenuItem mnemonicParsing="false" onAction="#onVerletButton" text="Verlet" />
+            <MenuItem mnemonicParsing="false" onAction="#onRungeButton" text="Runge Kutta" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Stepsize">
           <items>
-            <MenuItem mnemonicParsing="false" text="1" />
-                  <MenuItem mnemonicParsing="false" text="10" />
-                  <MenuItem mnemonicParsing="false" text="100" />
+            <MenuItem mnemonicParsing="false" onAction="#onStepsize1" text="1" />
+                  <MenuItem mnemonicParsing="false" onAction="#onStepsize10" text="10" />
+                  <MenuItem mnemonicParsing="false" onAction="#onStepsize100" text="100" />
+                  <MenuItem fx:id="chosenStepsizeMenuItem" mnemonicParsing="false" onAction="#onStepsizeChosen" text="Chosen Stepsize: " />
           </items>
         </Menu>
       </menus>

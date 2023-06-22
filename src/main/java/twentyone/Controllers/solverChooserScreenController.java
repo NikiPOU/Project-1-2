@@ -17,6 +17,7 @@ public class solverChooserScreenController {
     @FXML
     public void onAdamsButton() throws IOException{
         App.chosenSolver = 0;
+        App.MP.fadeOut();
         App.setRoot("fxml/numberChooserScreen");
     }
 
@@ -30,6 +31,7 @@ public class solverChooserScreenController {
     @FXML
     public void onEulerButton() throws IOException{
         App.chosenSolver = 1;
+        App.MP.fadeOut();
         App.setRoot("fxml/numberChooserScreen");
     }
 
@@ -43,6 +45,7 @@ public class solverChooserScreenController {
     @FXML
     public void onVerletButton() throws IOException{
         App.chosenSolver = 2;
+        App.MP.fadeOut();
         App.setRoot("fxml/numberChooserScreen");
     }
 
@@ -56,6 +59,7 @@ public class solverChooserScreenController {
     @FXML
     public void onRungeButton() throws IOException{
         App.chosenSolver = 3;
+        App.MP.fadeOut();
         App.setRoot("fxml/numberChooserScreen");
     }
 
@@ -69,6 +73,7 @@ public class solverChooserScreenController {
     @FXML
     public void onMoultonButton() throws IOException{
         App.chosenSolver = 4;
+        App.MP.fadeOut();
         App.setRoot("fxml/numberChooserScreen");
     }
 }

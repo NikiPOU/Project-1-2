@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
@@ -76,6 +77,9 @@ public class LandingScreenController implements Initializable {
     @FXML
     private Label heightLabel;
 
+    @FXML
+    private MenuItem chosenStepsizeMenuItem;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -83,6 +87,8 @@ public class LandingScreenController implements Initializable {
         e = new Euler();
 
         // convertTime(App.totalSeconds);
+
+        chosenStepsizeMenuItem.setText(chosenStepsizeMenuItem.getText() + App.chosenStepsize);
 
         screenCenterX = App.width/2;
         screenCenterY = App.height/2;
@@ -177,8 +183,95 @@ public class LandingScreenController implements Initializable {
             // convertTime(App.totalSeconds);
 
             timeLabel.setText("Time Elapsed: " + App.years + " years, " + App.months + " months, " + App.days + " days and " + App.hours + "hours");
-            speedLabel.setText("Speed: ");
-            heightLabel.setText("Height: ");
+            speedLabel.setText("Speed: " + -ufo.getVelocity().getX() + " km/s");
+            heightLabel.setText("Height: " + ufo.getPosition().getY() + " km");
         }
+    }
+
+    /**
+     * Sets the used Solver method to Adams Bashfort.
+     * @see MenuItem
+     * @see twentyone.Classes.AdamsBashforth
+     */
+    @FXML
+    public void onAdamsButton(){
+        App.chosenSolver = 0;
+    }
+
+    /**
+     * Sets the used Solver method to the Euler method.
+     * @see MenuItem
+     * @see twentyone.Classes.Euler
+     */
+    @FXML
+    public void onEulerButton(){
+        App.chosenSolver = 1;
+    }
+
+    /**
+     * Sets the used Solver method to Verlet.
+     * @see MenuItem
+     * @see twentyone.Classes.VerletSolver
+     */
+    @FXML
+    public void onVerletButton(){
+        App.chosenSolver = 2;
+    }
+
+    /**
+     * Sets the used Solver method to Runge Kutta.
+     * @see MenuItem
+     * @see twentyone.Classes.RungeKutta
+     */
+    @FXML
+    public void onRungeButton(){
+        App.chosenSolver = 3;
+    }
+
+    /**
+     * Sets the used Solver method to Adams-Moulton.
+     * @see MenuItem
+     * @see twentyone.Classes.AdamsMoulton
+     */
+    @FXML
+    public void onMoultonButton(){
+        App.chosenSolver = 4;
+    }
+
+    /**
+     * Sets the stepsize to 1.
+     * @see MenuItem
+     * @see twentyone.Controllers.SolarScene3DController#stepsize
+     */
+    @FXML
+    public void onStepsize1(){
+        App.stepSize = 1;
+    }
+
+    /**
+     * Sets the stepsize to 10.
+     * @see MenuItem
+     */
+    @FXML
+    public void onStepsize10(){
+        App.stepSize = 10;
+    }
+
+    /**
+     * Sets the stepsize to 100.
+     * @see MenuItem
+     */
+    @FXML
+    public void onStepsize100(){
+        App.stepSize = 100;
+    }
+
+    /**
+     * Sets the stepsize to the initially chosen stepsize.
+     * @see MenuItem
+     */
+    @FXML
+    public void onStepsizeChosen(){
+        App.stepSize = App.chosenStepsize;
     }
 }

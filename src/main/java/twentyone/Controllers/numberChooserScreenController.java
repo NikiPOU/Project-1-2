@@ -3,6 +3,7 @@ package twentyone.Controllers;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import twentyone.App;
 import twentyone.Classes.Vector3d;
@@ -28,6 +29,8 @@ public class numberChooserScreenController {
     private TextField velocityY;
     @FXML
     private TextField velocityZ;
+    @FXML
+    private CheckBox titanNumbersCheck;
 
     /**
      * When the {@code Next Button} gets pressed in the GUI, this method will be called. The following will be done:
@@ -49,8 +52,14 @@ public class numberChooserScreenController {
         App.chosenStepsize = setStepsize();
         App.stepSize = App.chosenStepsize;
         App.timeStamp = setTimestamp();
-        App.MP.fadeOut();
-        App.setRoot("fxml/SolarScene3D");
+        App.MP.stop();
+        if(titanNumbersCheck.isSelected()){
+            App.titanChosen = true;
+            App.setRoot("fxml/TitanChooserScreen");
+        } else {
+            App.titanChosen = false;
+            App.setRoot("fxml/SolarScene3D");
+        }
     }
 
     /**
