@@ -3,6 +3,11 @@ import java.util.ArrayList;
 
 public class Lagrange{
 
+    public static void main(String[] args) {
+        double d = lagrangeRandomGusted(200);
+        System.out.println(d/60/60);
+    }
+
     public static double lagrange(double[] xAra, double[] yAra, double x){
         ArrayList<ArrayList<Double>> liX = new ArrayList<>();
         
@@ -78,8 +83,14 @@ public class Lagrange{
     }
 
 
-
-    public static double lagrangeRandomGusted(double[] xAra, double[] yAra, double x){
+    /**
+     * A lagrange formula with a random component and random gusts of wind
+     * @param x distance between rocket and surface Titan
+     * @return windspeed in km/h
+     */
+    public static double lagrangeRandomGusted(double x){
+        double[] xAra = {0, 13, 160};
+        double[] yAra = {1.08, 122.4, 432};
         ArrayList<ArrayList<Double>> liX = new ArrayList<>();
         
         //generate li(x)
@@ -191,10 +202,10 @@ public class Lagrange{
         double goodSimulations = 0.0;
         //int fail = 0;
         double jado = (i+j)/2.0;
-        double averageBounder = lagrangeRandomGusted(xAra, yAra, jado);
+        double averageBounder = lagrangeRandomGusted(jado);
         double gustDiscrepancy =  (1 + ((((averageBounder)/((i-j))) * Math.random())/100)) + (j/1000.0);
         for (int k = 0; k < amountOfSimulations; k++) {
-            double simulatedInterGustWind = lagrangeRandomGusted(xAra, yAra, distanceAwayFromSurface);
+            double simulatedInterGustWind = lagrangeRandomGusted(distanceAwayFromSurface);
             //System.out.println(simulatedInterGustWind + "gust of simulation" + (k+1));
             if(averageBounder >= simulatedInterGustWind){
                 goodSimulations = goodSimulations + 1;
@@ -243,7 +254,7 @@ public class Lagrange{
         return windium;
     }
 
-    public static void main(String[] args) {
+    public static void main2(String[] args) {
         double[] xar = {0, 13, 160};
         double[] yar = {1.08, 122.4, 432};
         //double vari = 0.25;

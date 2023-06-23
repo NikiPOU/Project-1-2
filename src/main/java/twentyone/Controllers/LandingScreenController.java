@@ -119,7 +119,13 @@ public class LandingScreenController implements Initializable {
 
         @Override
         public void handle(ActionEvent event) {
-            ufo.feedbackController(e);
+            //Choose in GUI which controller to use
+            if (false) {
+                ufo.feedbackController(e);
+            }
+            else {
+                ufo.openLoopController(e, null, null);
+            }
             Titan.rotateProperty().set(-ufo.getPosition().getX());
             Saturn.setLayoutX(Saturn.getLayoutX() + ufo.getPosition().getX()*5e-3);
             //Saturn.setLayoutX(Saturn.getLayoutX() - 0.5);
@@ -143,7 +149,7 @@ public class LandingScreenController implements Initializable {
     }
 
     /**
-     * Sets the used Solver method to Adams Bashfort.
+     * Sets the used Solver method to Adams-Bashforth.
      * @see MenuItem
      * @see twentyone.Classes.AdamsBashforth
      */

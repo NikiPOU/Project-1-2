@@ -1,5 +1,11 @@
 package twentyone.Classes;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class UnidentifiedFlyingObject {
 
     //Main thruster class
@@ -61,12 +67,16 @@ public class UnidentifiedFlyingObject {
     private static final double epsilonY = 1e-4; // km s^(-1) ≥ |y'|
     private static final double epsilonTheta = 0.01; // rad s^(-1) = |θ'|
 
+    List<Double> mainThrusts = new ArrayList<>();
+    List<Double> miniThrusts = new ArrayList<>();
+
+
     public UnidentifiedFlyingObject(Vector3d position, Vector3d velocity){
         this.position = position;
         this.velocity = velocity;
     }
 
-    UnidentifiedFlyingObject ufo;
+    //UnidentifiedFlyingObject ufo;
 
     double stepSize = 0.00001;
     // in km / s
@@ -149,6 +159,7 @@ public class UnidentifiedFlyingObject {
 
     public void feedbackController(Euler e) {
         if (!hasLanded) {
+            double wind = Lagrange.lagrangeRandomGusted(0);
             double mainThrust = 0;
             double miniThrust = 0;
 
@@ -174,7 +185,7 @@ public class UnidentifiedFlyingObject {
                     mainThrust = Math.abs(velocity.getY())/stepSize - g;
                 }
                 
-                e.landing(this, stepSize, mainThrust, miniThrust);
+                e.landing(this, stepSize, mainThrust-wind, miniThrust);
 
                 if (position.getY() < 1e-4) {
                     boundChecks();
@@ -223,8 +234,32 @@ public class UnidentifiedFlyingObject {
         }
     }
 
-    public void openLoopController() {
-        //create a file with all thrusts during the landing 
-        //while file has next line, run that line with those thrusts
+    public void openLoopController(Euler e, Vector3d initialPosition, Vector3d initialVelocity) {
+        if (mainThrusts.size() == 0) {
+            try {
+                File file = new File("src\\main\\resources\\twentyone\\testThrusts.txt");
+                Scanner sc = new Scanner(file);
+            while (sc.hasNextLine()) {
+                String thrusts = sc.nextLine();
+                String[] subthrusts = thrusts.split(" ");
+                double mainThrust = Double.parseDouble(subthrusts[0]);
+                double miniThrust = Double.parseDouble(subthrusts[1]);
+
+                mainThrusts.add(mainThrust);
+                miniThrusts.add(miniThrust);
+            }
+            sc.close();
+            } catch (FileNotFoundException ex) {
+                System.out.println("An error occurred.");
+                ex.printStackTrace();
+            }
+        }
+        double wind = Lagrange.lagrangeRandomGusted(0);
+        double main = mainThrusts.get(0);
+        double mini = miniThrusts.get(0);
+        e.landing(this, stepSize, main-wind, mini);
+        mainThrusts.remove(0);
+        miniThrusts.remove(0);
+
     }
 }
