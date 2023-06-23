@@ -1,14 +1,20 @@
 package twentyone.Controllers;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import twentyone.App;
 import twentyone.Classes.Vector3d;
 
-public class numberChooserScreenController {
+public class numberChooserScreenController implements Initializable {
 
     private double[] positions = {-148186906.893642, -27823158.5715694, 33746.8987977114};
     //optimized starting coordinates gradient descent: {1.4843244380630633E8, -2.7823180807563744E7, 33751.40524464205} should x coord be negative?
@@ -133,6 +139,22 @@ public class numberChooserScreenController {
         return timestamp;
     }
 
+    private void numbersOnly(TextField field){
+        if(field != null){
+            field.textProperty().addListener(new ChangeListener<String>() {
+
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    if (!newValue.matches("[A-Za-z]?")) {
+                        field.setText(newValue.replaceAll("[A-Za-z]?", ""));
+                    }
+                }
+            });
+        }
+    }
+
+
+
     /**
      * When the {@code MenuItem} "North Pole" gets clicked, this method will run. This will set the initial position of the {@code Rocket} to the North Pole.
      * @see {@link javafx.scene.control.MenuItem MenuItem}
@@ -197,6 +219,15 @@ public class numberChooserScreenController {
         positionY.setText("-6370");
         positionZ.setText("");
         positionX.setText("");
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        numbersOnly(stepsizeTextfield);
+        numbersOnly(timestampTextfield);
+        numbersOnly(positionX);
+        numbersOnly(positionY);
+        numbersOnly(positionZ);
     }
     
 }

@@ -25,7 +25,7 @@ import java.io.IOException;
 public class App extends Application {
 
     //Needed for PositionCalculationThread.java
-    public static int eulerLoops = 5000;
+    public static int eulerLoops;
     public static CelestialBody[] bodies;
     public static PositionCalculationThread PCT;
     //Needed for PositionCalculationThread.java
@@ -61,6 +61,8 @@ public class App extends Application {
      */
     public static int years = 0;
 
+    public static boolean goingBack;
+
     public static boolean titanChosen;
     public static Vector3d titanPos;
     public static Vector3d titanVel;
@@ -88,6 +90,8 @@ public class App extends Application {
         scene = new Scene(loadFXML("fxml/StartScene"));
         stage.setFullScreen(true);
         stage.setFullScreenExitHint("");
+
+        eulerLoops = 5000;
 
         Rectangle2D bounds = Screen.getPrimary().getBounds();
         resolution = Toolkit.getDefaultToolkit().getScreenResolution()/100;

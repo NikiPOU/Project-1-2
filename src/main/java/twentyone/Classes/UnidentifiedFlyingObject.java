@@ -52,7 +52,7 @@ public class UnidentifiedFlyingObject {
     Vector3d position;
     Vector3d velocity;
     double fuel = 0;
-    boolean hasLanded = false;
+    public boolean hasLanded = false;
 
     // OUR CONSTANTS
     static final double g = 1.352e-3;

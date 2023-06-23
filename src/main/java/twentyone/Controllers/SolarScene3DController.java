@@ -463,7 +463,6 @@ public class SolarScene3DController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         stepsizeButton.setText(stepsizeButton.getText() + App.chosenStepsize);
 
         lastSpacePos[0] = 5E40;
@@ -554,7 +553,12 @@ public class SolarScene3DController implements Initializable {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setAutoReverse(false);
         EventHandler<ActionEvent> movement = new Movement();
-        initiateCB();
+        if(App.goingBack){
+            App.PCT.stop();
+            bodies = App.bodies;
+        } else {
+            initiateCB();
+        }
         selectedPlanet = bodies[0];
         KeyFrame keyFrame = new KeyFrame(Duration.millis(300), movement);
         timeline.getKeyFrames().add(keyFrame);
@@ -679,12 +683,15 @@ public class SolarScene3DController implements Initializable {
             } else if(ke.getCode().equals(KeyCode.Q)){
                 try {
                     if(App.titanChosen){
-                        App.PCT = new PositionCalculationThread(bodies, stepsize);
+                        App.bodies = bodies;
+                        App.PCT = new PositionCalculationThread();
                         Thread thread = new Thread(App.PCT);
                         thread.start();
+                        timeline.stop();
                         App.setRoot("fxml/LandingScreen");
                     } else {
                         App.bodies = bodies;
+                        timeline.stop();
                         App.setRoot("fxml/TitanChooserScreen");
                     }
                 } catch (IOException e) {

@@ -55,54 +55,10 @@
 <?import javafx.scene.shape.QuadCurveTo?>
 <?import javafx.scene.shape.Rectangle?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.Controllers.LandingScreenController">
-  <children>
-    <MenuBar style="-fx-background-color: BLACK;" VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="Exit">
-          <items>
-            <MenuItem mnemonicParsing="false" onAction="#onExit" text="Exit" />
-            <MenuItem mnemonicParsing="false" text="Cancel" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Solver Chooser">
-          <items>
-            <MenuItem mnemonicParsing="false" onAction="#onAdamsButton" text="Adams-Bashfort" />
-            <MenuItem mnemonicParsing="false" onAction="#onMoultonButton" text="Adams-Moulton" />
-            <MenuItem mnemonicParsing="false" onAction="#onEulerButton" text="Euler" />
-            <MenuItem mnemonicParsing="false" onAction="#onVerletButton" text="Verlet" />
-            <MenuItem mnemonicParsing="false" onAction="#onRungeButton" text="Runge Kutta" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Stepsize">
-          <items>
-            <MenuItem mnemonicParsing="false" onAction="#onStepsize1" text="1" />
-                  <MenuItem mnemonicParsing="false" onAction="#onStepsize10" text="10" />
-                  <MenuItem mnemonicParsing="false" onAction="#onStepsize100" text="100" />
-                  <MenuItem fx:id="chosenStepsizeMenuItem" mnemonicParsing="false" onAction="#onStepsizeChosen" text="Chosen Stepsize: " />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
-      <GridPane>
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label fx:id="timeLabel" text="Time: " textFill="WHITE" />
-            <Label fx:id="speedLabel" text="Speed: " textFill="WHITE" GridPane.rowIndex="1" />
-            <Label fx:id="heightLabel" text="Height: " textFill="WHITE" GridPane.rowIndex="2" />
-         </children>
-         <VBox.margin>
-            <Insets left="20.0" top="10.0" />
-         </VBox.margin>
-      </GridPane>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+
+<AnchorPane fx:id="mainScreen" onKeyPressed="#keyPress" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twentyone.Controllers.LandingScreenController">
+   <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" onKeyPressed="#keyPress" prefHeight="-1.0" prefWidth="-1.0">
          <children>
             <ImageView fx:id="Milkyway" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -940,12 +896,61 @@
                   </ImageView>
                </children>
             </Group>
-            <ImageView fx:id="rocket" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="rocket" fitHeight="150.0" fitWidth="200.0" onKeyPressed="#keyPress" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/Spaceprobe.png" />
                </image>
             </ImageView>
          </children>
     </AnchorPane>
-  </children>
-</VBox>
+      <VBox layoutX="3900.0" layoutY="308.4963684082031" onKeyPressed="#keyPress" onKeyReleased="#keyPress" onKeyTyped="#keyPress" prefHeight="400.0" prefWidth="640.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <children>
+          <MenuBar onKeyPressed="#keyPress" style="-fx-background-color: BLACK;" VBox.vgrow="NEVER">
+            <menus>
+              <Menu mnemonicParsing="false" text="Exit">
+                <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onExit" text="Exit" />
+                  <MenuItem mnemonicParsing="false" text="Cancel" />
+                </items>
+              </Menu>
+              <Menu mnemonicParsing="false" text="Solver Chooser">
+                <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onAdamsButton" text="Adams-Bashfort" />
+                  <MenuItem mnemonicParsing="false" onAction="#onMoultonButton" text="Adams-Moulton" />
+                  <MenuItem mnemonicParsing="false" onAction="#onEulerButton" text="Euler" />
+                  <MenuItem mnemonicParsing="false" onAction="#onVerletButton" text="Verlet" />
+                  <MenuItem mnemonicParsing="false" onAction="#onRungeButton" text="Runge Kutta" />
+                </items>
+              </Menu>
+              <Menu mnemonicParsing="false" text="Stepsize">
+                <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onStepsize1" text="1" />
+                        <MenuItem mnemonicParsing="false" onAction="#onStepsize10" text="10" />
+                        <MenuItem mnemonicParsing="false" onAction="#onStepsize100" text="100" />
+                        <MenuItem fx:id="chosenStepsizeMenuItem" mnemonicParsing="false" onAction="#onStepsizeChosen" text="Chosen Stepsize: " />
+                </items>
+              </Menu>
+            </menus>
+          </MenuBar>
+            <GridPane onKeyPressed="#keyPress">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="timeLabel" text="Time: " textFill="WHITE" />
+                  <Label fx:id="speedLabel" text="Speed: " textFill="WHITE" GridPane.rowIndex="1" />
+                  <Label fx:id="heightLabel" text="Height: " textFill="WHITE" GridPane.rowIndex="2" />
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </GridPane>
+        </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -1,14 +1,20 @@
 package twentyone.Controllers;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import twentyone.App;
 import twentyone.Classes.PositionCalculationThread;
 import twentyone.Classes.Vector3d;
 
-public class TitanChooserScreenController {
+public class TitanChooserScreenController implements Initializable {
 
     @FXML
     private TextField positionX;
@@ -30,11 +36,23 @@ public class TitanChooserScreenController {
         if(App.titanChosen){
             App.setRoot("fxml/SolarScene3D");
         } else {
-            App.PCT = new PositionCalculationThread(App.bodies, App.stepSize);
+            App.PCT = new PositionCalculationThread();
             Thread thread = new Thread(App.PCT);
             thread.start();
             App.setRoot("fxml/LandingScreen");
         }
+    }
+
+    private void numbersOnly(TextField field){
+        field.textProperty().addListener(new ChangeListener<String>() {
+
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("[A-Za-z]?")) {
+                    field.setText(newValue.replaceAll("[A-Za-z]?", ""));
+                }
+            }
+        });
     }
 
     /**
@@ -59,17 +77,17 @@ public class TitanChooserScreenController {
         double y;
         double z;
         if(positionX.getText() == null || positionX.getText().trim().isEmpty()){
-            x = 0;
+            x = 200;
         } else {
             x = Double.parseDouble(positionX.getText());
         }
         if(positionY.getText() == null || positionY.getText().trim().isEmpty()){
-            y = 0;
+            y = 200;
         } else {
             y = Double.parseDouble(positionY.getText());
         }
         if(rotation.getText() == null || rotation.getText().trim().isEmpty()){
-            z = 0;
+            z = -Math.PI/2;
         } else {
             z = Double.parseDouble(rotation.getText());
         }
@@ -87,7 +105,7 @@ public class TitanChooserScreenController {
         double y;
         double z;
         if(velocityX.getText() == null || velocityX.getText().trim().isEmpty()){
-            x = 0;
+            x = 5.570e-3;
         } else {
             x = Double.parseDouble(velocityX.getText());
         }
@@ -102,6 +120,16 @@ public class TitanChooserScreenController {
             z = Double.parseDouble(velocityZ.getText());
         }
         return setVector(x, y, z);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        numbersOnly(positionX);
+        numbersOnly(positionY);
+        numbersOnly(rotation);
+        numbersOnly(velocityX);
+        numbersOnly(velocityY);
+        numbersOnly(velocityZ);
     }
 
 }
