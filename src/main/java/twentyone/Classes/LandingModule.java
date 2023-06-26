@@ -86,7 +86,7 @@ public class LandingModule {
         Euler e = new Euler();
 
         while (ufo.getPosition().getY() != 0.0) {
-            ufo.feedbackController(e);
+            ufo.openLoopController(e, new Vector3d(50, 200, -Math.PI/2),new Vector3d(-0.5, 0, 0));
             System.out.println(ufo.getPosition().toString());
             System.out.println(ufo.getVelocity().toString());
             System.out.println();
@@ -133,34 +133,9 @@ public class LandingModule {
         this.fuel = fuel;
     }
 
-    /*
-    //For now just Euler
-    public void solver(double stepSize, double mainThrust, double miniThrust) {
-        //update position x and y 
-        double newPosX = position.getX() + velocity.getX()*stepSize;
-        position.setX(newPosX);
-        double newPosY = position.getY() + velocity.getY()*stepSize;
-        position.setY(newPosY);
-        
-        //update velocity with given acceleration formulas
-        double newX = velocity.getX() + mainThrust * Math.sin(rotation) * stepSize;
-        velocity.setX(newX);
-        double newY = velocity.getY() + (mainThrust * Math.cos(rotation) - g) * stepSize;
-        //0.5 + (x * 1 - g) * stepSize = 0
-        //0.5/stepsize = x-g
-        //v/stepsize-g
-        velocity.setY(newY);
-
-        //update rotation
-        rotation = rotation + rotationVelocity*stepSize; 
-
-        //update rotation velocity with torqe formula = length rocket * force (either + or -) * sin(rotation)
-        rotationVelocity = rotationVelocity + 0.03 * miniThrust * Math.sin(Math.PI/2) * stepSize;
-    } */
-
     public void feedbackController(Euler e) {
         if (!hasLanded) {
-            double wind = WindModel.generateWind(0, 0.2);
+            //double wind = WindModel.generateWind(0, 0.2);
             double mainThrust = 0;
             double miniThrust = 0;
 
@@ -186,8 +161,7 @@ public class LandingModule {
                     mainThrust = Math.abs(velocity.getY())/stepSize - g;
                 }
                 
-                //writeToFile(mainThrust, miniThrust, "src\\main\\resources\\twentyone\\thrusts.txt");
-                e.landingEuler(this, stepSize, mainThrust-wind, miniThrust);
+                e.landingEuler(this, stepSize, mainThrust, miniThrust);
 
                 if (position.getY() < 1e-4) {
                     boundChecks();
@@ -200,46 +174,7 @@ public class LandingModule {
                     break;
                 }
             }
-        }
-    }
-
-    public void feedbackController2(Euler e) {
-        // max main thrust: 0.01352
-        if (!hasLanded) {
-            double mainThrust = 0;
-            double miniThrust = 0;
-
-            for (int i = 0; i < 1/stepSize; i++) {
-                double wind = WindModel.generateWind(0, 0.2)/60/60;
-                if (position.getX() > 100 && velocity.getX() > 0) {
-                    mainThrust = 0.00352;
-                }
-                else if (position.getX() < 100 && velocity.getX() < 0) {
-                    mainThrust = 0;
-                }
-
-                if (position.getZ() > 0 && Math.abs(position.getX()) < 50) {
-                    miniThrust = -0.1;
-                }
-                else if (position.getZ() < 0 && Math.abs(position.getX()) < 50) {
-                    miniThrust = 0.1;
-                }
-                
-                //writeToFile(mainThrust, miniThrust, "src\\main\\resources\\twentyone\\thrusts.txt");
-                //System.out.println("thrust-wind: " + d);
-                e.landingEuler(this, stepSize, mainThrust+wind, miniThrust);
-
-                if (position.getY() < 1e-4) {
-                    boundChecks();
-                    System.out.println("Total used fuel: " + fuel);
-                    hasLanded = true;
-                    velocity.setZ(0);
-                    velocity.setX(0);
-                    velocity.setY(0);
-                    position.setY(0);
-                    break;
-                }
-            }
+            writeToFile(mainThrust, miniThrust, "src\\main\\resources\\twentyone\\thrusts.txt");
         }
     }
 
@@ -279,7 +214,7 @@ public class LandingModule {
     public void openLoopController(Euler e, Vector3d initialPosition, Vector3d initialVelocity) {
         if (mainThrusts.size() == 0) {
             try {
-                File file = new File("src\\main\\resources\\twentyone\\testThrusts.txt");
+                File file = new File("src\\main\\resources\\twentyone\\thrusts.txt");
                 Scanner sc = new Scanner(file);
             while (sc.hasNextLine()) {
                 String thrusts = sc.nextLine();
