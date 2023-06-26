@@ -12,7 +12,7 @@ public class RungeKutta extends Solver{
         //getting the initial position and velocity of the desired object from the array of all objects
         Vector3d position0 = allBodies[bodyIndex].getPosition();
         Vector3d velocity0 = allBodies[bodyIndex].getVelocity();
-        Vector3d velocity0Derivative = sumOf_Forces(allBodies, bodyIndex); 
+        Vector3d velocity0Derivative = sumOfForces(allBodies, bodyIndex); 
 
         //next velocity
         Vector3d velocity1 = velocity0.add(velocity0Derivative.mul(stepSize));
@@ -30,7 +30,7 @@ public class RungeKutta extends Solver{
 
         allBodies[bodyIndex].setNewPostion(newPos);
         allBodies[bodyIndex].setNewVelocity(velocity1);
-        Vector3d velocity1Derivative = sumOf_Forces(allBodies, bodyIndex); 
+        Vector3d velocity1Derivative = sumOfForces(allBodies, bodyIndex); 
 
 
         Vector3d k1Velocity = velocity0Derivative.mul(stepSize);

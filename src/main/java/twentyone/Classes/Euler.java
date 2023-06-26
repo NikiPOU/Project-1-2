@@ -7,11 +7,11 @@ package twentyone.Classes;
  */
 public class Euler extends Solver{
 
-    public CelestialBody[] Eulers(CelestialBody[] theCelBodies, int theDesired, double stepSizer){
+    public CelestialBody[] eulers(CelestialBody[] theCelBodies, int theDesired, double stepSizer){
         //get the values you need bro and set up
 
             //our V' by this I mean first derivative of velocity
-        Vector3d derivativeOfVelo = sumOf_Forces(theCelBodies, theDesired); // no need to divide by Mi
+        Vector3d derivativeOfVelo = sumOfForces(theCelBodies, theDesired); // no need to divide by Mi
 
             //our Vn and Xn
         Vector3d velocityOfDesiredPlanet = theCelBodies[theDesired].getVelocity();
@@ -38,10 +38,10 @@ public class Euler extends Solver{
     }
 
         //Euler solver for landing
-    public void landing(LandingModule ufo, double stepSize, double mainThrust, double miniThrust) {
+    public void landingEuler(LandingModule ufo, double stepSize, double mainThrust, double miniThrust) {
         if (mainThrust > LandingModule.uMax) {
             //System.out.println("Main thrust too high");
-            //mainThrust = UnidentifiedFlyingObject.uMax;
+            //mainThrust = LandingModule.uMax;
         }
         if (0.03 * miniThrust > 1) {
             System.out.println("Mini thrust is too high");

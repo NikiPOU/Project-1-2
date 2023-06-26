@@ -22,7 +22,7 @@ public class SolverTest {
 
     @Test
     public void testSumOf_Forces() {
-        Vector3d res = s.sumOf_Forces(bodies, 0);
+        Vector3d res = s.sumOfForces(bodies, 0);
 
         assertTrue(res.equals(new Vector3d(-2.9496517435458584E-20, -0.0, 2.9496517435458584E-20)), res.toString());
     }

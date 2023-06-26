@@ -19,7 +19,7 @@ public class GradientDescentTrajectory {
         //System.out.println(bods[0].getPosition().toString());
         
         for (int i = 0; i < bods.length; i++) {
-            saveSpaceState = euler.Eulers(saveSpaceState, i, stepsizer);    
+            saveSpaceState = euler.eulers(saveSpaceState, i, stepsizer);    
         }
        
         double supposedBestdist = saveSpaceState[11].getPosition().dist(saveSpaceState[8].getPosition());
@@ -30,10 +30,10 @@ public class GradientDescentTrajectory {
         double newsupposedBestdist = 0;
         for (int i = 0; i < loopers; i++) {
             
-            currVeloClone = currVeloClone.sub(euler.sumOf_Forces(saveSpaceState, 11).mul(LearingRate));
+            currVeloClone = currVeloClone.sub(euler.sumOfForces(saveSpaceState, 11).mul(LearingRate));
             saveSpaceState[11].setNewVelocity(currVeloClone);
             for (int j = 0; j < bods.length; j++) {
-                saveSpaceState = euler.Eulers(saveSpaceState, j, stepsizer);
+                saveSpaceState = euler.eulers(saveSpaceState, j, stepsizer);
             }
             newsupposedBestdist = saveSpaceState[11].getPosition().dist(saveSpaceState[8].getPosition()); 
             saveSpaceState = copier(bods);
@@ -83,7 +83,7 @@ public class GradientDescentTrajectory {
         ((Rocket)saveSpaceState[11]).boostedVeloSimulation(force, 0, stepsizer);
 
         for (int i = 0; i < saveSpace.length; i++) {
-            saveSpaceState = lags.Eulers(saveSpaceState, i, stepsizer);    
+            saveSpaceState = lags.eulers(saveSpaceState, i, stepsizer);    
         }
 
         double supposedBestdist = saveSpaceState[11].getPosition().dist(saveSpaceState[8].getPosition());
@@ -94,7 +94,7 @@ public class GradientDescentTrajectory {
             ((Rocket)saveSpaceState[11]).boostedVeloSimulation(options[i], 0, stepsizer);
 
             for (int j = 0; j < saveSpace.length; j++) {
-                saveSpaceState = lags.Eulers(saveSpaceState, j, stepsizer);    
+                saveSpaceState = lags.eulers(saveSpaceState, j, stepsizer);    
             }
 
             newsupposedBestdist = saveSpaceState[11].getPosition().dist(saveSpaceState[8].getPosition());
@@ -199,7 +199,7 @@ public class GradientDescentTrajectory {
             ((Rocket) allBodies[11]).boostedVelo(exos, 0, 100);
 
                 for (int j = 0; j < allBodies.length; j++) {
-                    allBodies = euler.Eulers(allBodies, j, 100);
+                    allBodies = euler.eulers(allBodies, j, 100);
                 }          
             /*  
             cont++;

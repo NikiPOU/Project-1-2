@@ -96,7 +96,7 @@ public class PositionCalculationThread implements Runnable{
         if(App.chosenSolver == 0){
             return a.adams(celestialBodies, chosenBody, chosenStepsize);
         } else if(App.chosenSolver == 1){
-            return unreal.Eulers(celestialBodies, chosenBody, chosenStepsize);
+            return unreal.eulers(celestialBodies, chosenBody, chosenStepsize);
         } else if(App.chosenSolver == 2){
             return verlet.verlet(celestialBodies, chosenBody, chosenStepsize);
         } else if(App.chosenSolver == 3){

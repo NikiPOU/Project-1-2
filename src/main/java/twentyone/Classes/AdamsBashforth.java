@@ -24,7 +24,7 @@ public class AdamsBashforth extends Solver {
     public CelestialBody[] adams(CelestialBody[] allBodies, int bodyIndex, double stepsize) {
 
         //The derivative of velocity is the sum of all forces since a = V' and a = F/m (/m happens inside sumOf_Forces)
-        Vector3d velocity0Derivative = sumOf_Forces(allBodies, bodyIndex);
+        Vector3d velocity0Derivative = sumOfForces(allBodies, bodyIndex);
 
         Vector3d velocity0 = new Vector3d(0,0,0);
         //For the first run Vn is the initial velocity that is given, after that it is the velocity saved in the placeholder
@@ -59,7 +59,7 @@ public class AdamsBashforth extends Solver {
         }
         
         //Now that the velocity is updated, the Vn+1' can be calculated the same way as Vn'
-        Vector3d velocity1Derivative = sumOf_Forces(allBodies, bodyIndex); 
+        Vector3d velocity1Derivative = sumOfForces(allBodies, bodyIndex); 
         //The old velocity is now Vn+1 instead of Vn
         oldVelocity[bodyIndex] = velocity1;
         

@@ -176,7 +176,7 @@ public class SolarScene3DController implements Initializable {
 
     /**
      * The {@code times tamp} chosen by the user.
-     * @see {@link twentyone.Controllers.numberChooserScreenController#setTimestamp() setTimestamp()}
+     * @see {@link twentyone.Controllers.NumberScreenController#setTimestamp() setTimestamp()}
      */
     int TimeStamp = App.timeStamp;
     /**
@@ -815,7 +815,7 @@ public class SolarScene3DController implements Initializable {
         if(chosenSolver == 0){
             return a.adams(celestialBodies, chosenBody, chosenStepsize);
         } else if(chosenSolver == 1){
-            return unreal.Eulers(celestialBodies, chosenBody, chosenStepsize);
+            return unreal.eulers(celestialBodies, chosenBody, chosenStepsize);
         } else if(chosenSolver == 2){
             return verlet.verlet(celestialBodies, chosenBody, chosenStepsize);
         } else if(chosenSolver == 3){

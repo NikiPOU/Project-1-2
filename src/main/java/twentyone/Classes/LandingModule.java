@@ -162,7 +162,7 @@ public class LandingModule {
 
     public void feedbackController(Euler e) {
         if (!hasLanded) {
-            double wind = WindModel.lagrangeRandomGusted(0, 0.2);
+            double wind = WindModel.generateWind(0, 0.2);
             double mainThrust = 0;
             double miniThrust = 0;
 
@@ -189,7 +189,7 @@ public class LandingModule {
                 }
                 
                 //writeToFile(mainThrust, miniThrust, "src\\main\\resources\\twentyone\\thrusts.txt");
-                e.landing(this, stepSize, mainThrust-wind, miniThrust);
+                e.landingEuler(this, stepSize, mainThrust-wind, miniThrust);
 
                 if (position.getY() < 1e-4) {
                     boundChecks();
@@ -212,7 +212,7 @@ public class LandingModule {
             double miniThrust = 0;
 
             for (int i = 0; i < 1/stepSize; i++) {
-                double wind = WindModel.lagrangeRandomGusted(0, 0.2)/60/60;
+                double wind = WindModel.generateWind(0, 0.2)/60/60;
                 if (position.getX() > 100 && velocity.getX() > 0) {
                     mainThrust = 0.00352;
                 }
@@ -229,7 +229,7 @@ public class LandingModule {
                 
                 //writeToFile(mainThrust, miniThrust, "src\\main\\resources\\twentyone\\thrusts.txt");
                 //System.out.println("thrust-wind: " + d);
-                e.landing(this, stepSize, mainThrust+wind, miniThrust);
+                e.landingEuler(this, stepSize, mainThrust+wind, miniThrust);
 
                 if (position.getY() < 1e-4) {
                     boundChecks();
@@ -298,10 +298,10 @@ public class LandingModule {
                 ex.printStackTrace();
             }
         }
-        double wind = WindModel.lagrangeRandomGusted(0, 0.2);
+        double wind = WindModel.generateWind(0, 0.2);
         double main = mainThrusts.get(0);
         double mini = miniThrusts.get(0);
-        e.landing(this, stepSize, main-wind, mini);
+        e.landingEuler(this, stepSize, main-wind, mini);
         mainThrusts.remove(0);
         miniThrusts.remove(0);
     }

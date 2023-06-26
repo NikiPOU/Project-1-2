@@ -5,7 +5,7 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import twentyone.App;
 
-public class solverChooserScreenController {
+public class SolverScreenController {
     
     /**
      * When the {@code Adams-Bashforth Button} gets pressed, the chosen {@code Solver} will be set to the {@code Adams-Bashforth solver}. It will then change to the next screen.

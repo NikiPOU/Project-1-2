@@ -97,7 +97,7 @@ public class GradientDescentPosition {
 
                 // applying the gradient descent for coordinates
 
-                euler.Eulers(allBodies, j, 10);
+                euler.eulers(allBodies, j, 10);
                 xCoor = xCoor - LearingRate * dfdx;
                 yCoor = yCoor - LearingRate * dfdy;
                 zCoor = zCoor - LearingRate * dfdz;
@@ -144,13 +144,13 @@ public class GradientDescentPosition {
 
             for (int z = 0; z <= 11; z++) {
 
-                euler.Eulers(allBodies, z, 10);
+                euler.eulers(allBodies, z, 10);
 
                 // Second derivative of coordinates and first derivative of velocity
 
-                double dfdxdx = euler.sumOf_Forces(allBodies, 11).getX() / allBodies[11].getMass();
-                double dfdydy = euler.sumOf_Forces(allBodies, 11).getY() / allBodies[11].getMass();
-                double dfdzdz = euler.sumOf_Forces(allBodies, 11).getZ() / allBodies[11].getMass();
+                double dfdxdx = euler.sumOfForces(allBodies, 11).getX() / allBodies[11].getMass();
+                double dfdydy = euler.sumOfForces(allBodies, 11).getY() / allBodies[11].getMass();
+                double dfdzdz = euler.sumOfForces(allBodies, 11).getZ() / allBodies[11].getMass();
 
                 // applying the gradient descent for velocity
 

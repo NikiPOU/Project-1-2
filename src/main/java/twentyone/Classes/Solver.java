@@ -54,7 +54,7 @@ public abstract class Solver {
      * @param desiredPlanet as an {@code integer}
      * @return the sum of all forces as a {@code Vector3d Class}
      */
-    public Vector3d sumOf_Forces(CelestialBody[] theCelBodies, int desiredPlanet){
+    public Vector3d sumOfForces(CelestialBody[] theCelBodies, int desiredPlanet){
         //create the variables
         Vector3d sumForces = new Vector3d(0, 0, 0);
         Vector3d vector = new Vector3d(0, 0, 0);

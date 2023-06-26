@@ -26,7 +26,7 @@ public class AdamsMoulton extends Solver{
     public CelestialBody[] adams(CelestialBody[] allBodies, int bodyIndex, double stepsize) {
 
         //The derivative of velocity is the sum of all forces since a = V' and a = F/m (/m happens inside sumOf_Forces)
-        Vector3d velocity0Derivative = sumOf_Forces(allBodies, bodyIndex);
+        Vector3d velocity0Derivative = sumOfForces(allBodies, bodyIndex);
 
         Vector3d velocity0 = new Vector3d(0,0,0);
         //For the first run Vn is the initial velocity that is given, after that it is the velocity saved in the placeholder
@@ -61,7 +61,7 @@ public class AdamsMoulton extends Solver{
         }
         
         //Now that the velocity is updated, the Vn+1' can be calculated the same way as Vn'
-        Vector3d velocity1Derivative = sumOf_Forces(allBodies, bodyIndex); 
+        Vector3d velocity1Derivative = sumOfForces(allBodies, bodyIndex); 
         //The old velocity is now Vn+1 instead of Vn
         oldVelocity[bodyIndex] = velocity1;
 
@@ -91,7 +91,7 @@ public class AdamsMoulton extends Solver{
 
         Vector3d velocity2AM = new Vector3d(0, 0,0);
 
-        Vector3d velocity2Derivative = sumOf_Forces(allBodies, bodyIndex); 
+        Vector3d velocity2Derivative = sumOfForces(allBodies, bodyIndex); 
 
         //Single iteration for the corrector
         velocity2AM = velocity1.add((velocity2Derivative.mul((double)5/12*stepsize)).add((velocity1Derivative.mul((double)8/12*stepsize)).

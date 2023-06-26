@@ -14,7 +14,7 @@ import twentyone.App;
 import twentyone.Classes.PositionCalculationThread;
 import twentyone.Classes.Vector3d;
 
-public class TitanChooserScreenController implements Initializable {
+public class TitanScreenController implements Initializable {
 
     @FXML
     private TextField positionX;
