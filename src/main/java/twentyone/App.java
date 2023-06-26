@@ -1,6 +1,5 @@
 package twentyone;
 
-import java.awt.Toolkit;
 import javafx.geometry.Rectangle2D;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

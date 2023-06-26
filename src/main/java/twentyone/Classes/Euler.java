@@ -38,8 +38,8 @@ public class Euler extends Solver{
     }
 
         //Euler solver for landing
-    public void landing(UnidentifiedFlyingObject ufo, double stepSize, double mainThrust, double miniThrust) {
-        if (mainThrust > UnidentifiedFlyingObject.uMax) {
+    public void landing(LandingModule ufo, double stepSize, double mainThrust, double miniThrust) {
+        if (mainThrust > LandingModule.uMax) {
             //System.out.println("Main thrust too high");
             //mainThrust = UnidentifiedFlyingObject.uMax;
         }
@@ -58,7 +58,7 @@ public class Euler extends Solver{
         double newY = position.getY() + velocity.getY() * stepSize;
     
         double newVelocityX = velocity.getX() + mainThrust * Math.sin(position.getZ()) * stepSize;
-        double newVelocityY = velocity.getY() + (mainThrust * Math.cos(position.getZ()) - UnidentifiedFlyingObject.g) * stepSize;
+        double newVelocityY = velocity.getY() + (mainThrust * Math.cos(position.getZ()) - LandingModule.g) * stepSize;
 
         double newRotation = position.getZ() + velocity.getZ() * stepSize;
         

@@ -10,7 +10,7 @@ public class GradientDescentTest {
     @Test
     public void testGradientDescentMethod() {
         initiateCB(1, 1, 1, 1, 1, 1);
-        double[] res = GradientDescent.GradientDescentMethod(1, 1, 1, 1, 1, 1, bodies);
+        double[] res = GradientDescentPosition.GradientDescentMethod(1, 1, 1, 1, 1, 1, bodies);
 
         double[] answer = {1.0,1.0,1.0,1.0,1.0,1.0,4.4210933405693356E14,8.887211298288225E14 };
         assertTrue(Math.abs(res[6]-answer[6]) < 0.001);

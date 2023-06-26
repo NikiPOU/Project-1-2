@@ -1,10 +1,10 @@
 package twentyone.Classes;
 import java.util.ArrayList;
 
-public class Lagrange{
+public class WindModel{
 
     public static void main(String[] args) {
-        double d = lagrangeRandomGusted(200);
+        double d = lagrangeRandomGusted(200, 0.5);
         System.out.println(d/60/60);
     }
 
@@ -86,9 +86,10 @@ public class Lagrange{
     /**
      * A lagrange formula with a random component and random gusts of wind
      * @param x distance between rocket and surface Titan
+     * @param range variance of the stochastic component
      * @return windspeed in km/h
      */
-    public static double lagrangeRandomGusted(double x){
+    public static double lagrangeRandomGusted(double x, double variance){
         double[] xAra = {0, 13, 160};
         double[] yAra = {1.08, 122.4, 432};
         ArrayList<ArrayList<Double>> liX = new ArrayList<>();
@@ -99,7 +100,7 @@ public class Lagrange{
         }
         
 
-        //get reult of p(x)
+        //get result of p(x)
         double apex = 1;
         double eden = 0;
         for(int i = 0; i<liX.size(); i++){
@@ -114,7 +115,9 @@ public class Lagrange{
                 }
             }
         }
-        double s = (Math.random()*0.8) + 0.5;
+        double min = 1-variance/2;
+        double s = min + Math.random()*variance;
+        eden = eden*s;
         eden = gustMultiplier(x, eden, s);
         return eden;
     }
@@ -202,10 +205,10 @@ public class Lagrange{
         double goodSimulations = 0.0;
         //int fail = 0;
         double jado = (i+j)/2.0;
-        double averageBounder = lagrangeRandomGusted(jado);
+        double averageBounder = lagrangeRandomGusted(jado, 0.5);
         double gustDiscrepancy =  (1 + ((((averageBounder)/((i-j))) * Math.random())/100)) + (j/1000.0);
         for (int k = 0; k < amountOfSimulations; k++) {
-            double simulatedInterGustWind = lagrangeRandomGusted(distanceAwayFromSurface);
+            double simulatedInterGustWind = lagrangeRandomGusted(distanceAwayFromSurface, 0.5);
             //System.out.println(simulatedInterGustWind + "gust of simulation" + (k+1));
             if(averageBounder >= simulatedInterGustWind){
                 goodSimulations = goodSimulations + 1;

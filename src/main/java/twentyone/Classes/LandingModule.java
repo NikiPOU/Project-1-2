@@ -1,12 +1,15 @@
 package twentyone.Classes;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class UnidentifiedFlyingObject {
+public class LandingModule {
 
     //Main thruster class
     // x is the horizontal position 
@@ -71,7 +74,7 @@ public class UnidentifiedFlyingObject {
     List<Double> miniThrusts = new ArrayList<>();
 
 
-    public UnidentifiedFlyingObject(Vector3d position, Vector3d velocity){
+    public LandingModule(Vector3d position, Vector3d velocity){
         this.position = position;
         this.velocity = velocity;
     }
@@ -81,14 +84,14 @@ public class UnidentifiedFlyingObject {
     double stepSize = 0.00001;
     // in km / s
     public static void main(String[] args) {
-        UnidentifiedFlyingObject ufo = new UnidentifiedFlyingObject(new Vector3d(200, 200, -Math.PI/2),new Vector3d(0, 0, 0));
+        LandingModule ufo = new LandingModule(new Vector3d(50, 200, -Math.PI/2),new Vector3d(-0.5, 0, 0));
         Euler e = new Euler();
 
         while (ufo.getPosition().getY() != 0.0) {
             ufo.feedbackController(e);
-            //System.out.println(ufo.getPosition().toString());
-            //System.out.println(ufo.getVelocity().toString());
-            //System.out.println();
+            System.out.println(ufo.getPosition().toString());
+            System.out.println(ufo.getVelocity().toString());
+            System.out.println();
         }
     }
 
@@ -159,13 +162,13 @@ public class UnidentifiedFlyingObject {
 
     public void feedbackController(Euler e) {
         if (!hasLanded) {
-            double wind = Lagrange.lagrangeRandomGusted(0);
+            double wind = WindModel.lagrangeRandomGusted(0, 0.2);
             double mainThrust = 0;
             double miniThrust = 0;
 
             for (int i = 0; i < 1/stepSize; i++) {
                 if (position.getX() > 50 && velocity.getX() >= 0) {
-                    mainThrust = 1.5;
+                    mainThrust = 0.01352;
                 }
                 else if (Math.abs(position.getX()) < deltaX*0.9){
                     mainThrust = -Math.abs(velocity.getX())/stepSize;
@@ -185,7 +188,48 @@ public class UnidentifiedFlyingObject {
                     mainThrust = Math.abs(velocity.getY())/stepSize - g;
                 }
                 
+                //writeToFile(mainThrust, miniThrust, "src\\main\\resources\\twentyone\\thrusts.txt");
                 e.landing(this, stepSize, mainThrust-wind, miniThrust);
+
+                if (position.getY() < 1e-4) {
+                    boundChecks();
+                    System.out.println("Total used fuel: " + fuel);
+                    hasLanded = true;
+                    velocity.setZ(0);
+                    velocity.setX(0);
+                    velocity.setY(0);
+                    position.setY(0);
+                    break;
+                }
+            }
+        }
+    }
+
+    public void feedbackController2(Euler e) {
+        // max main thrust: 0.01352
+        if (!hasLanded) {
+            double mainThrust = 0;
+            double miniThrust = 0;
+
+            for (int i = 0; i < 1/stepSize; i++) {
+                double wind = WindModel.lagrangeRandomGusted(0, 0.2)/60/60;
+                if (position.getX() > 100 && velocity.getX() > 0) {
+                    mainThrust = 0.00352;
+                }
+                else if (position.getX() < 100 && velocity.getX() < 0) {
+                    mainThrust = 0;
+                }
+
+                if (position.getZ() > 0 && Math.abs(position.getX()) < 50) {
+                    miniThrust = -0.1;
+                }
+                else if (position.getZ() < 0 && Math.abs(position.getX()) < 50) {
+                    miniThrust = 0.1;
+                }
+                
+                //writeToFile(mainThrust, miniThrust, "src\\main\\resources\\twentyone\\thrusts.txt");
+                //System.out.println("thrust-wind: " + d);
+                e.landing(this, stepSize, mainThrust+wind, miniThrust);
 
                 if (position.getY() < 1e-4) {
                     boundChecks();
@@ -254,12 +298,22 @@ public class UnidentifiedFlyingObject {
                 ex.printStackTrace();
             }
         }
-        double wind = Lagrange.lagrangeRandomGusted(0);
+        double wind = WindModel.lagrangeRandomGusted(0, 0.2);
         double main = mainThrusts.get(0);
         double mini = miniThrusts.get(0);
         e.landing(this, stepSize, main-wind, mini);
         mainThrusts.remove(0);
         miniThrusts.remove(0);
-
     }
-}
+
+    public static void writeToFile(double main, double mini, String filename) {
+        try(FileWriter fw = new FileWriter(filename, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw))
+        {
+            out.println(main + " " + mini);
+
+        } catch (Exception e) {
+            System.out.println("file not found");
+        }
+    }}

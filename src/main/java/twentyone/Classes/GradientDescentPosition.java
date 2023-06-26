@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Finding the best launching coordinates
  * using coordinates and velocity
  */
-public class GradientDescent {
+public class GradientDescentPosition {
 
     public static int Count = 0;
     public static CelestialBody[] allBodies = new CelestialBody[12];

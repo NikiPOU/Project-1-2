@@ -1,6 +1,6 @@
 package twentyone.Classes;
 
-public class GradientDescentRemixus {
+public class GradientDescentTrajectory {
     
     public static CelestialBody[] allBodies = new CelestialBody[12];
 

@@ -21,7 +21,7 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import twentyone.App;
 import twentyone.Classes.Euler;
-import twentyone.Classes.UnidentifiedFlyingObject;
+import twentyone.Classes.LandingModule;
 import twentyone.Classes.Vector3d;
 
 public class LandingScreenController implements Initializable {
@@ -43,7 +43,7 @@ public class LandingScreenController implements Initializable {
      * The Rocket object as a {@code UnidentifiedFlyingObject}
      * @see {@link twentyone.Classes.UnidentifiedFlyingObject UFO}
      */
-    private UnidentifiedFlyingObject ufo;
+    private LandingModule ufo;
     /**
      * The {@code Euler Solver}
      * @see twentyone.Classes.Euler
@@ -77,7 +77,7 @@ public class LandingScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         // ufo = new UnidentifiedFlyingObject(new Vector3d(200, 200, -Math.PI/2),new
         // Vector3d(5.570e-3, 0, 0));
-        ufo = new UnidentifiedFlyingObject(new Vector3d(App.titanPos.getX(), App.titanPos.getY(), App.titanPos.getZ()),
+        ufo = new LandingModule(new Vector3d(App.titanPos.getX(), App.titanPos.getY(), App.titanPos.getZ()),
                 new Vector3d(App.titanVel.getX(), App.titanVel.getY(), App.titanVel.getZ()));
         e = new Euler();
 
@@ -136,9 +136,9 @@ public class Movement implements EventHandler<ActionEvent> {
         // Choose in GUI which controller to use
         if (true) {
             ufo.feedbackController(e);
-        } else {
-            ufo.openLoopController(e, null, null);
-        }
+        } //else {
+          //  ufo.openLoopController(e, null, null);
+        //}
         Titan.rotateProperty().set(-ufo.getPosition().getX());
         // Saturn.setLayoutX(Saturn.getLayoutX() + ufo.getPosition().getX()*5e-3);
         Saturn.setLayoutX(Saturn.getLayoutX() - 0.5);
