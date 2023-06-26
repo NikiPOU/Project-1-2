@@ -156,10 +156,6 @@ public class SolarScene3DController implements Initializable {
      */
     int eulerLoops = 5000;
 
-    // final Vector3d initialPosProbe = new Vector3d(-148186906.893642 + 6370, -27823158.5715694, 33746.8987977113);
-    // final Vector3d initialVelProbe = new Vector3d(48, -45, 0);
-    // CelestialBody decoyBody;
-
     /**
      * A {@code boolean} to see if the camera is focused.
      */
@@ -457,7 +453,6 @@ public class SolarScene3DController implements Initializable {
     @FXML
     private VBox menu;
     
-
     /**
      * Starts when the scene is started.
      */
@@ -704,7 +699,6 @@ public class SolarScene3DController implements Initializable {
                 pGroup.setTranslateZ(sunPos[2]);
             }
         }
-    
     }
 
     private void setReturnRocket(){
@@ -731,7 +725,6 @@ public class SolarScene3DController implements Initializable {
             e.printStackTrace();
         }
     }
-
 
     /**
      * Initiates all the {@code Celestial Bodies}. It gives the correct {@code positions}, {@code velocities} and {@code masses}.
@@ -825,8 +818,7 @@ public class SolarScene3DController implements Initializable {
         } else {
             return celestialBodies;
         }
-    }
-    
+    }  
     /**
      * The class that calculates the movement of the {@code Celestial Bodies} and updates the time. 
      */

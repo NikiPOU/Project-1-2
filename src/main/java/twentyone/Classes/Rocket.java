@@ -114,18 +114,6 @@ public class Rocket extends CelestialBody{
         return finalVelo;
     }
 
-    /*
-    public void autopilot(CelestialBody[] celBodies){
-        super.getPosition().dist(celBodies[1].getPosition());
-        double currentDistTit = super.getPosition().dist(celBodies[2].getPosition()); //use titan index
-        if(currentDistTit > 100000){
-            System.out.println("not close");
-        }else{
-            System.out.println("go to saturn");
-
-        }
-    }
-    */
     public double gettime(){
         return time;
     }
@@ -137,7 +125,6 @@ public class Rocket extends CelestialBody{
     public void resetTime(){
         time = 1;
     }
-
     
     public double consumeImpulseSimu(Vector3d imp, double timeInterval){
         double foir = norm_Two(imp)*timeInterval;

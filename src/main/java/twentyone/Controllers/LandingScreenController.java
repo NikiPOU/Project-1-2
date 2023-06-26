@@ -82,8 +82,6 @@ public class LandingScreenController implements Initializable {
         App.eulerLoops = 60;
         App.stepSize = 1;
 
-        // convertTime(App.totalSeconds);
-
         chosenStepsizeMenuItem.setText(chosenStepsizeMenuItem.getText() + App.chosenStepsize);
 
         screenCenterX = App.width / 2;
@@ -127,50 +125,41 @@ public class LandingScreenController implements Initializable {
         }
     }
 
-public class Movement implements EventHandler<ActionEvent> {
+    public class Movement implements EventHandler<ActionEvent> {
 
-    @Override
-    public void handle(ActionEvent event) {
-        // Choose in GUI which controller to use
-        if (true) {
-            ufo.feedbackController(e);
-        } //else {
-          //  ufo.openLoopController(e, null, null);
-        //}
-        Titan.rotateProperty().set(-ufo.getPosition().getX());
-        // Saturn.setLayoutX(Saturn.getLayoutX() + ufo.getPosition().getX()*5e-3);
-        Saturn.setLayoutX(Saturn.getLayoutX() - 0.5);
-        Saturn.rotateProperty().set(Saturn.getRotate() - 0.05);
+        @Override
+        public void handle(ActionEvent event) {
+            // Choose in GUI which controller to use
+            if (true) {
+                ufo.feedbackController(e);
+            } //else {
+            //  ufo.openLoopController(e, null, null);
+            //}
+            Titan.rotateProperty().set(-ufo.getPosition().getX());
+            Saturn.setLayoutX(Saturn.getLayoutX() - 0.5);
+            Saturn.rotateProperty().set(Saturn.getRotate() - 0.05);
 
-        rocket.setLayoutX(screenCenterX - 100);
-        // System.out.println(ufo.getPosition().getX());
-        // System.out.println(ufo.getVelocity().getY());
-        rocket.setLayoutY(screenCenterY + 50 - ufo.getPosition().getY());
-        // System.out.println(ufo.getPosition().getY());
-        rocket.rotateProperty().set(ufo.getPosition().getZ() * 180 / Math.PI);
-        // System.out.println(ufo.getRotation()*180/Math.PI);
-        // System.out.println();
+            rocket.setLayoutX(screenCenterX - 100);
+            rocket.setLayoutY(screenCenterY + 50 - ufo.getPosition().getY());
+            rocket.rotateProperty().set(ufo.getPosition().getZ() * 180 / Math.PI);
 
-        // convertTime(App.totalSeconds);
+            timeLabel.setText("Time Elapsed: " + App.years + " years, " + App.months + " months, " + App.days + " days, "
+                    + App.hours + " hours, " + App.minutes + " minutes and " + App.seconds + " seconds");
+            speedLabel.setText("Speed: " + -ufo.getVelocity().getX() + " km/s");
+            heightLabel.setText("Height: " + ufo.getPosition().getY() + " km");
 
-        timeLabel.setText("Time Elapsed: " + App.years + " years, " + App.months + " months, " + App.days + " days, "
-                + App.hours + " hours, " + App.minutes + " minutes and " + App.seconds + " seconds");
-        speedLabel.setText("Speed: " + -ufo.getVelocity().getX() + " km/s");
-        heightLabel.setText("Height: " + ufo.getPosition().getY() + " km");
-
-        if(ufo.hasLanded){
-            timeline.stop();
-            try {
-                App.goingBack = true;
-                App.eulerLoops = 5000;
-                App.stepSize = App.chosenStepsize;
-                App.setRoot("fxml/SolarScene3D");
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(ufo.hasLanded){
+                timeline.stop();
+                try {
+                    App.goingBack = true;
+                    App.eulerLoops = 5000;
+                    App.stepSize = App.chosenStepsize;
+                    App.setRoot("fxml/SolarScene3D");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
-    }
-
     }
 
     /**

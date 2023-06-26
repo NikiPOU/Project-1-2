@@ -52,7 +52,6 @@ public class WindModel{
         lix.add(0.0);
 
         double denom = 1;
-        //double rahal = 1;
         for(int i = 0; i<xAra.length; i++){
             if(i != focusL){
                 lix.add(xAra[i]);
@@ -105,10 +104,3 @@ public class WindModel{
         return legrange;
     }
 }
-    /* 
-    max 120m/s    height 120KM  https://www.esa.int/Science_Exploration/Space_Science/Cassini-Huygens/First_measurement_of_Titan_s_winds_from_Huygens#:~:text=Winds%20on%20Titan%20are%20found,altitude%20of%20about%20120%20km.
-
-    0km    0.3m/s
-
-    34 m/s max from ten clouds on middle and lower troposphere http://web.archive.org/web/20070717081303/http://www.astrobio.net/news/article1480.html
-    */

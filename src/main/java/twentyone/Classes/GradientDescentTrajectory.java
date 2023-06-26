@@ -53,10 +53,7 @@ public class GradientDescentTrajectory {
                     System.out.println("change");
                 }
             }
-            //System.out.println(bods[0].getPosition().toString() + "    1");
-            //simulatedFule = 0;
         }
-        //System.out.println(bods[0].getPosition().toString());
         return returnforce;
     }
 
@@ -112,9 +109,6 @@ public class GradientDescentTrajectory {
 
 
     public static void initiateCB(double x, double y, double z, double xVelo, double yVelo, double zVelo) {
-
-        //(double x, double y, double z, double xVelo, double yVelo, double zVelo)  are for user to put and check
-
         Vector3d sunvel = new Vector3d(0, 0, 0);
         Vector3d sunpos = new Vector3d(0, 0, 0);
 
@@ -175,8 +169,6 @@ public class GradientDescentTrajectory {
         double xVelo = 10000;
         double yVelo = -11.1085713608453;
         double zVelo = -2.25130986174761;
-        //FileHandler axax = new FileHandler();
-        //int cont = 0;
         initiateCB(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo);
         Euler euler = new Euler();
         Vector3d exos = new Vector3d(0, 0, 0);
@@ -201,24 +193,14 @@ public class GradientDescentTrajectory {
                 for (int j = 0; j < allBodies.length; j++) {
                     allBodies = euler.eulers(allBodies, j, 100);
                 }          
-            /*  
-            cont++;
-            if(cont == 1000){
-                double newsupposedBestdist = allBodies[11].getPosition().dist(allBodies[8].getPosition());
-                cont = 0;
-                System.out.println(newsupposedBestdist);
-            } */
             newsupposedBestdist = newsupposedBestdist2;
             newsupposedBestdist2 = allBodies[11].getPosition().dist(allBodies[8].getPosition());
             System.out.println(" ");
             System.out.println(newsupposedBestdist);
             
             System.out.println(" ");
-            //System.out.println(((Rocket)allBodies[11]).getFuel());
         }
         // in the text file save the stepSize final distance to titan and fuel consumption
-        //axax.writeResuts("Data.txt", 230, ((Rocket)allBodies[11]).getFuel(), newsupposedBestdist);
-
 
         //assumption for the rocket going far away from titan at a certain distance 
         //possibility one : most likely one based on trends seen from testing the probe is either "above" or "underneath"

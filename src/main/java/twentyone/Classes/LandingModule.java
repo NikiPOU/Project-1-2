@@ -135,7 +135,7 @@ public class LandingModule {
 
     public void feedbackController(Euler e) {
         if (!hasLanded) {
-            //double wind = WindModel.generateWind(0, 0.2);
+            double wind = WindModel.generateWind(0, 0.2);
             double mainThrust = 0;
             double miniThrust = 0;
 
@@ -161,7 +161,7 @@ public class LandingModule {
                     mainThrust = Math.abs(velocity.getY())/stepSize - g;
                 }
                 
-                e.landingEuler(this, stepSize, mainThrust, miniThrust);
+                e.landingEuler(this, stepSize, mainThrust-wind, miniThrust);
 
                 if (position.getY() < 1e-4) {
                     boundChecks();

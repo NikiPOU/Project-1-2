@@ -82,7 +82,6 @@ public class PositionCalculationThread implements Runnable{
                 }
             }
         }
-        // System.out.println(App.years + " years, " + App.months + " months, " + App.days + " days, " + App.hours + " hours, " + App.minutes + " minutes and " + App.seconds + " seconds");
     }
 
     /**
