@@ -18,9 +18,6 @@ public class GradientDescentPosition {
     public static CelestialBody[] allBodies = new CelestialBody[12];
 
     public static void main(String[] args) {
-
-        //example of coordinates
-
         double xCoor = -148186906.893642 + 6370;
         double yCoor = -27823158.5715694;
         double zCoor = 33746.8987977113;
@@ -30,11 +27,6 @@ public class GradientDescentPosition {
         double zVelo = -2.25130986174761;
 
         System.out.println(Arrays.toString(GradientDescentMethod(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo, allBodies)));
-
-        //System.out.println(MethodConnection(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo, allBodies));
-        //double[] xar = {0, 13, 160};
-        //double[] yar = {1.08, 122.4, 432};
-        //System.out.println(lagrange(xar, yar, 100) + " this is in km/h");
     }
 
      /**
@@ -50,7 +42,7 @@ public class GradientDescentPosition {
      * @return a double array of x,y,z coordinates and x,y,z nad the distance to the Titan from rocket .
      */
     public static double[] GradientDescentMethod(double xCoor, double yCoor, double zCoor, double xVelo, double yVelo,
-            double zVelo, CelestialBody[] allBodies) {
+        double zVelo, CelestialBody[] allBodies) {
 
         Euler euler = new Euler();
                 // jaime don't focus on removing unneccessary lines focus on fixing the assumptions
@@ -59,8 +51,6 @@ public class GradientDescentPosition {
         int LoopTimes = 100000; // does it truly affect it
         double LearingRate = 0.0001; //does step size affect what happens
 
-                //Starting values
-
         //jaime's testers
         double finCordx = 0;
         double finCordy = 0;
@@ -68,8 +58,6 @@ public class GradientDescentPosition {
         double findistCord = 0;
         double findistCord2 = 0;
         int ticks = 0;
-
-        //ends here
 
         double prevOutput = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
         double OutputVelo = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
@@ -87,8 +75,7 @@ public class GradientDescentPosition {
         double dfdyOutput = dfdy;
         double dfdzOutput = dfdz;
 
-                //Gradient Descent for coordinates 
-
+        //Gradient Descent for coordinates 
         for (int i = 0; i < LoopTimes; i++) {
 
             initiateCB(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo);
@@ -96,18 +83,15 @@ public class GradientDescentPosition {
             for (int j = 0; j <= 11; j++) {
 
                 // applying the gradient descent for coordinates
-
                 euler.eulers(allBodies, j, 10);
                 xCoor = xCoor - LearingRate * dfdx;
                 yCoor = yCoor - LearingRate * dfdy;
                 zCoor = zCoor - LearingRate * dfdz;
 
                 //calculating the distance
-
                 OutputCoor = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
 
                 //checking if the new distance is smaller then the previous one
-
                 if (prevOutput > OutputCoor) {
 
                     if (Math.sqrt(xCoor * xCoor + yCoor * yCoor + zCoor * zCoor) >= 148108199.283
@@ -129,7 +113,6 @@ public class GradientDescentPosition {
                         XOutput = xCoor;
                         YOutput = yCoor;
                         ZOutput = zCoor;
-
                     }
                 }
             }
@@ -137,7 +120,6 @@ public class GradientDescentPosition {
         }
 
          //Gradient Descent for velocity 
-
         for (int y = 0; y < LoopTimes; y++) {
 
             initiateCB(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo);
@@ -147,13 +129,11 @@ public class GradientDescentPosition {
                 euler.eulers(allBodies, z, 10);
 
                 // Second derivative of coordinates and first derivative of velocity
-
                 double dfdxdx = euler.sumOfForces(allBodies, 11).getX() / allBodies[11].getMass();
                 double dfdydy = euler.sumOfForces(allBodies, 11).getY() / allBodies[11].getMass();
                 double dfdzdz = euler.sumOfForces(allBodies, 11).getZ() / allBodies[11].getMass();
 
                 // applying the gradient descent for velocity
-
                 dfdx = dfdx - LearingRate * dfdxdx;
                 dfdy = dfdy - LearingRate * dfdydy;
                 dfdz = dfdz - LearingRate * dfdzdz;
@@ -161,14 +141,12 @@ public class GradientDescentPosition {
                 OutputVelo = (allBodies[11].getPosition().dist(allBodies[8].getPosition()));
 
                 // Saving the lowest value
-
                 if (prevOutput > OutputVelo) {
 
                     prevOutput = OutputVelo;
                     dfdxOutput = dfdx;
                     dfdyOutput = dfdy;
                     dfdzOutput = dfdz;
-
                 }
             }
         }
@@ -179,7 +157,6 @@ public class GradientDescentPosition {
                                  "fin dist2 : " + findistCord2 + "\n" +
                                   "fin prevOutput : " +prevOutput+"\n" + "\n");
         return new double[] { XOutput, YOutput, ZOutput, dfdxOutput, dfdyOutput, dfdzOutput, OutputCoor, OutputVelo }; // where 
-
     }
 
      /**
@@ -197,8 +174,7 @@ public class GradientDescentPosition {
 
         double[] GradientDescentOutput = GradientDescentMethod(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo, allBodies);
 
-                //calculating the distance
-
+        //calculating the distance
         double XOutput = GradientDescentOutput[0];
         double YOutput = GradientDescentOutput[1];
         double zOutput = GradientDescentOutput[2];
@@ -208,7 +184,6 @@ public class GradientDescentPosition {
         double OutputOutput = GradientDescentOutput[6];
 
         // Writing the info when it is smalller then the ones recored 
-
         if (OutputOutput < DataReader()) {
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("Data.txt",
@@ -241,10 +216,7 @@ public class GradientDescentPosition {
      * it reads every 7th line as the distance from rocket to Titan because only in every 7th line is the distance recorded
      * @return LowestValue lowestvalue.
      */
-
     public static double DataReader() {
-
-
         double LowestValue = Double.MAX_VALUE;
 
         try (BufferedReader reader = new BufferedReader(new FileReader("Data.txt"))) {
@@ -256,15 +228,11 @@ public class GradientDescentPosition {
                 if (Count % 7 == 0) { 
 
                     // 7 because 1-6 are the coordinates and velocity and the 7th is the distance 
-
                     double Value = Double.parseDouble(Line);
 
                      // Reading and keeping the lowest value of the distance
-
                     if (Value < LowestValue) {
-
                         LowestValue = Value;
-
                     }
                 }
             }
@@ -291,15 +259,13 @@ public class GradientDescentPosition {
     public static double MethodConnection(double xCoor, double yCoor, double zCoor, double xVelo, double yVelo,
             double zVelo, CelestialBody[] allBodies) {
 
-                // Method which connect every method so it would work 
-
+        // Method which connect every method so it would work 
         double[] GradientDescentOutput = GradientDescentMethod(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo, allBodies);
 
         double OutputOutput = GradientDescentOutput[6];
 
-                // Checking if the values in Data.txt file are smaller then the outcome of gradient descent
-                // if yes then it returns the gradient descent values and saves them in Data.txt file
-
+        // Checking if the values in Data.txt file are smaller then the outcome of gradient descent
+        // if yes then it returns the gradient descent values and saves them in Data.txt file
         if (OutputOutput < DataReader()) {
 
             initiateCB(xCoor, yCoor, zCoor, xVelo, yVelo, zVelo);
@@ -309,9 +275,7 @@ public class GradientDescentPosition {
             return OutputOutput;
 
         } else {
-
             //if the gradient descent values are bigger, it returns the (smallest) values in Data.txt file
-
             return DataReader();
         }
     }
@@ -328,9 +292,6 @@ public class GradientDescentPosition {
      * @see Vector3d
      */
     public static void initiateCB(double x, double y, double z, double xVelo, double yVelo, double zVelo) {
-
-        //(double x, double y, double z, double xVelo, double yVelo, double zVelo)  are for user to put and check
-
         Vector3d sunvel = new Vector3d(0, 0, 0);
         Vector3d sunpos = new Vector3d(0, 0, 0);
 
@@ -381,10 +342,6 @@ public class GradientDescentPosition {
         allBodies[11] = new Rocket(probevelo, probeposs);
     }
 
-
-
-
-
     public static double lagrange(double[] xAra, double[] yAra, double x){
         ArrayList<ArrayList<Double>> liX = new ArrayList<>();
         
@@ -393,8 +350,7 @@ public class GradientDescentPosition {
             liX.add(generate_lix(xAra, yAra, i));
         }
         
-
-        //get reult of p(x)
+        //get result of p(x)
         double apex = 1;
         double eden = 0;
         for(int i = 0; i<liX.size(); i++){
@@ -429,8 +385,6 @@ public class GradientDescentPosition {
         return returnMe;
     }
 
-
-
         public static double lagrangeRandom(double[] xAra, double[] yAra, double x){
         ArrayList<ArrayList<Double>> liX = new ArrayList<>();
         
@@ -439,8 +393,7 @@ public class GradientDescentPosition {
             liX.add(generate_lix(xAra, yAra, i));
         }
         
-
-        //get reult of p(x)
+        //get result of p(x)
         double apex = 1;
         double eden = 0;
         for(int i = 0; i<liX.size(); i++){
@@ -459,7 +412,4 @@ public class GradientDescentPosition {
         eden = eden * s;
         return eden;
     }
-
-
-
 }
