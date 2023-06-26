@@ -30,7 +30,7 @@ public class CoordsToFile {
             for (int i = 0; i < 6*60*24; i++) {
                 for (int j = 0; j < bodies.length; j++) {
                     //update bodies with the chosen solver
-                    bodies = e.Eulers(bodies, j, 10);
+                    bodies = e.eulers(bodies, j, 10);
                 }
             }
 
