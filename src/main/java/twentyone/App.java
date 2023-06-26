@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import twentyone.Classes.CelestialBody;
 import twentyone.Classes.PositionCalculationThread;
 import twentyone.Classes.Vector3d;
-import twentyone.Classes.musicPlayer;
+import twentyone.Classes.MusicPlayer;
 
 import java.io.IOException;
 
@@ -139,9 +139,9 @@ public class App extends Application {
     public static int chosenSolver;
     /**
      * The music player to play some background music
-     * @see musicPlayer
+     * @see MusicPlayer
      */
-    public static musicPlayer MP = new musicPlayer("StarWars.mp3");
+    public static MusicPlayer MP = new MusicPlayer("StarWars.mp3");
 
 
     @Override

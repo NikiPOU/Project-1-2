@@ -46,7 +46,7 @@ import twentyone.Classes.Rocket;
 import twentyone.Classes.RungeKutta;
 import twentyone.Classes.Vector3d;
 import twentyone.Classes.Verlet;
-import twentyone.Classes.musicPlayer;
+import twentyone.Classes.MusicPlayer;
 
 public class SolarScene3DController implements Initializable {
 
@@ -83,9 +83,9 @@ public class SolarScene3DController implements Initializable {
 
     /**
      * The {@code Music Player}
-     * @see twentyone.Classes.musicPlayer
+     * @see twentyone.Classes.MusicPlayer
      */
-    private musicPlayer MP;
+    private MusicPlayer MP;
     /**
      * The chosen {@code Solver}. This could be one of the following:
      * <ul>
@@ -567,7 +567,7 @@ public class SolarScene3DController implements Initializable {
         if(App.MP.isRunning()){
 
         } else {
-            App.MP = new musicPlayer("Interstellar.mp3");
+            App.MP = new MusicPlayer("Interstellar.mp3");
             App.MP.run();
         }
     }
@@ -796,7 +796,7 @@ public class SolarScene3DController implements Initializable {
      * Returns to the start screen when pressed.
      * @throws IOException
      * @see javafx.scene.control.Button
-     * @see musicPlayer
+     * @see MusicPlayer
      */
     @FXML
     public void onReturnButton() throws IOException{

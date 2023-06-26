@@ -49,7 +49,7 @@ public class NumberScreenController implements Initializable {
      * After this, the music will fade out and the screen will be changed.
      * 
      * @throws IOException
-     * @see twentyone.Classes.musicPlayer
+     * @see twentyone.Classes.MusicPlayer
      * @see {@link javafx.scene.control.Button Button}
      */
     @FXML

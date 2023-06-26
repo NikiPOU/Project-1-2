@@ -24,7 +24,7 @@ public class StartSceneController implements Initializable{
 
     /**
      * This method will run as soon as the scene is started. In this case, only the music will be started.
-     * @see twentyone.Classes.musicPlayer
+     * @see twentyone.Classes.MusicPlayer
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {

@@ -12,7 +12,7 @@ import java.io.File;
 /**
  * A music player
  */
-public class musicPlayer {
+public class MusicPlayer {
     private String path = "src/main/resources/twentyone/Music/";
     private File file;
     private String fileName;
@@ -22,13 +22,13 @@ public class musicPlayer {
     /**
      * Creates a new musicPlayer.
      */
-    public musicPlayer(){}
+    public MusicPlayer(){}
 
     /**
      * Creates a new musicPlayer with the correct fileName.
      * @param fileName as a {@code String}
      */
-    public musicPlayer(String fileName){
+    public MusicPlayer(String fileName){
         this.fileName = fileName;
         file = new File(path + fileName);
     }
