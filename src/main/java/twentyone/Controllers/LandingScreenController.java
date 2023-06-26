@@ -40,8 +40,8 @@ public class LandingScreenController implements Initializable {
      */
     private double screenCenterY;
     /**
-     * The Rocket object as a {@code UnidentifiedFlyingObject}
-     * @see {@link twentyone.Classes.UnidentifiedFlyingObject UFO}
+     * The Rocket object as a {@code LandingModule}
+     * @see {@link twentyone.Classes.LandingModule UFO}
      */
     private LandingModule ufo;
     /**
@@ -75,8 +75,6 @@ public class LandingScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // ufo = new UnidentifiedFlyingObject(new Vector3d(200, 200, -Math.PI/2),new
-        // Vector3d(5.570e-3, 0, 0));
         ufo = new LandingModule(new Vector3d(App.titanPos.getX(), App.titanPos.getY(), App.titanPos.getZ()),
                 new Vector3d(App.titanVel.getX(), App.titanVel.getY(), App.titanVel.getZ()));
         e = new Euler();

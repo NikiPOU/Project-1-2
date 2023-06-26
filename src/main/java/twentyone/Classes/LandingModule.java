@@ -79,8 +79,6 @@ public class LandingModule {
         this.velocity = velocity;
     }
 
-    //UnidentifiedFlyingObject ufo;
-
     double stepSize = 0.00001;
     // in km / s
     public static void main(String[] args) {
