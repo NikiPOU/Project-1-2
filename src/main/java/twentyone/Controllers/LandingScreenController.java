@@ -25,13 +25,29 @@ import twentyone.Classes.UnidentifiedFlyingObject;
 import twentyone.Classes.Vector3d;
 
 public class LandingScreenController implements Initializable {
-
+    /**
+     * The used {@code Timeline} to keep the {@code Movement} going.
+     * @see Timeline
+     * @see {@link twentyone.Controllers.LandingScreenController.Movement Movement}
+     */
     private Timeline timeline;
-
+    /**
+     * The center of the screen in width (as a {@code double})
+     */
     private double screenCenterX;
+    /**
+     * The center of the screen in height (as a {@code double})
+     */
     private double screenCenterY;
-
+    /**
+     * The Rocket object as a {@code UnidentifiedFlyingObject}
+     * @see {@link twentyone.Classes.UnidentifiedFlyingObject UFO}
+     */
     private UnidentifiedFlyingObject ufo;
+    /**
+     * The {@code Euler Solver}
+     * @see twentyone.Classes.Euler
+     */
     private Euler e;
 
     @FXML
@@ -94,6 +110,7 @@ public class LandingScreenController implements Initializable {
 
     @FXML
     public void onExit() {
+        App.PCT.stop();
         System.exit(0);
     }
 
@@ -146,6 +163,7 @@ public class Movement implements EventHandler<ActionEvent> {
         if(ufo.hasLanded){
             timeline.stop();
             try {
+                App.goingBack = true;
                 App.eulerLoops = 5000;
                 App.stepSize = App.chosenStepsize;
                 App.setRoot("fxml/SolarScene3D");

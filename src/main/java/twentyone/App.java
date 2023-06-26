@@ -60,28 +60,88 @@ public class App extends Application {
      * Amount of {@code years}
      */
     public static int years = 0;
-
+    /**
+     * Check for when we want to go back from Titan to Earth
+     */
     public static boolean goingBack;
 
+    /**
+     * A {@code boolean} to check wether we chose the numbers for Titan or not.
+     */
     public static boolean titanChosen;
+    /**
+     * The position of the {@code Rocket} when entering Titan's orbit
+     * @see Vector3d
+     */
     public static Vector3d titanPos;
+    /**
+     * The velocity of the {@code Rocket} when entering Titan's orbit
+     * @see Vector3d
+     */
     public static Vector3d titanVel;
     
     private static Scene scene;
 
+    /**
+     * The width of the screen
+     */
     public static double width;
+    /**
+     * The height of the screen
+     */
     public static double height;
-    public static double resolution;
 
+    /**
+     * The initial position of the {@code Rocket} when leaving earth
+     * @see Vector3d
+     */
     public static Vector3d initialPosProbe;
+    /**
+     * The initial velocity of the {@code Rocket} when leaving earth
+     * @see Vector3d
+     */
     public static Vector3d initialVelProbe;
 
+    /**
+     * The initial velocity of the {@code Rocket} when going back to earth
+     * @see Vector3d
+     */
+    public static Vector3d goBackVelProbe = new Vector3d(-30, 0, 0);
+
+    /**
+     * The current step size (as a {@code Integer})
+     */
     public static int stepSize;
+    /**
+     * The initial chosen step size (as a {@code Integer})
+     */
     public static int chosenStepsize;
     
+    /**
+     * The time stamp for where we want the extra information (as a {@code Integer}) in seconds
+     */
     public static int timeStamp;
 
+    /**
+     * The chosen {@code Solver}. This could be one of the following:
+     * <ul>
+     * <li> {@code Adams-Bashforth Solver}
+     * <li> {@code Adams-Moulton Solver}
+     * <li> {@code Euler Solver}
+     * <li> {@code Verlet Solver}
+     * <li> {@code Runge-Kutta Solver}
+     * </ul>
+     * @see twentyone.Classes.AdamsBashforth
+     * @see twentyone.Classes.AdamsMoulton
+     * @see twentyone.Classes.Euler
+     * @see twentyone.Classes.VerletSolver
+     * @see twentyone.Classes.RungeKutta
+     */
     public static int chosenSolver;
+    /**
+     * The music player to play some background music
+     * @see musicPlayer
+     */
     public static musicPlayer MP = new musicPlayer("StarWars.mp3");
 
 
@@ -94,7 +154,6 @@ public class App extends Application {
         eulerLoops = 5000;
 
         Rectangle2D bounds = Screen.getPrimary().getBounds();
-        resolution = Toolkit.getDefaultToolkit().getScreenResolution()/100;
         width = bounds.getWidth();
         height = bounds.getHeight();
         System.out.println("width: " + width + " height: " + height);

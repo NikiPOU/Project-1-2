@@ -1,5 +1,6 @@
 package twentyone.Controllers;
 
+import java.awt.Robot;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -556,6 +557,7 @@ public class SolarScene3DController implements Initializable {
         if(App.goingBack){
             App.PCT.stop();
             bodies = App.bodies;
+            setReturnRocket();
         } else {
             initiateCB();
         }
@@ -655,18 +657,18 @@ public class SolarScene3DController implements Initializable {
             if(ke.getCode().equals(KeyCode.PERIOD)){
                 if(eulerLoops == 5000){
                     eulerLoops = 10000;
-                    MP.speedUp();
+                    App.MP.speedUp();
                 } else if(eulerLoops == 10000){
                     eulerLoops = 20000;
-                    MP.speedUp();
+                    App.MP.speedUp();
                 } else {}
             } else if(ke.getCode().equals(KeyCode.COMMA)){
                 if(eulerLoops == 20000){
                     eulerLoops = 10000;
-                    MP.speedDown();
+                    App.MP.speedDown();
                 } else if(eulerLoops == 10000){
                     eulerLoops = 5000;
-                    MP.speedDown();
+                    App.MP.speedDown();
                 } else {}
             } else if(ke.getCode().equals(KeyCode.F)){
                 if(fire.isVisible()){
@@ -681,22 +683,7 @@ public class SolarScene3DController implements Initializable {
                     path.setVisible(true);
                 }
             } else if(ke.getCode().equals(KeyCode.Q)){
-                try {
-                    if(App.titanChosen){
-                        App.bodies = bodies;
-                        App.PCT = new PositionCalculationThread();
-                        Thread thread = new Thread(App.PCT);
-                        thread.start();
-                        timeline.stop();
-                        App.setRoot("fxml/LandingScreen");
-                    } else {
-                        App.bodies = bodies;
-                        timeline.stop();
-                        App.setRoot("fxml/TitanChooserScreen");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                enterTitanOrbit();
             }
         } else {
             if(focused){
@@ -719,6 +706,31 @@ public class SolarScene3DController implements Initializable {
             }
         }
     
+    }
+
+    private void setReturnRocket(){
+        bodies[11].setNewVelocity(App.goBackVelProbe);
+        bodies[11].setNewPostion(bodies[8].getPosition());
+    }
+
+    private void enterTitanOrbit(){
+        try {
+            if(App.titanChosen){
+                titanOrbit = true;
+                App.bodies = bodies;
+                App.PCT = new PositionCalculationThread();
+                Thread thread = new Thread(App.PCT);
+                thread.start();
+                timeline.stop();
+                App.setRoot("fxml/LandingScreen");
+            } else {
+                App.bodies = bodies;
+                timeline.stop();
+                App.setRoot("fxml/TitanChooserScreen");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -830,8 +842,14 @@ public class SolarScene3DController implements Initializable {
             for (int i = 0; i < eulerLoops; i++) {
                 for (int j = 0; j < bodies.length; j++) {
                     bodies = solvers(bodies, j, stepsize);
+                    // if(App.goingBack){
+                    //     System.out.println(j);
+                    // }
                 }
-                bodies = rocketTrajectory(bodies, stepsize, 0);
+
+                if(!App.goingBack){
+                    bodies = rocketTrajectory(bodies, stepsize, 0);
+                }
 
                 //Keep track of the time
                 App.seconds += stepsize;
@@ -954,8 +972,13 @@ public class SolarScene3DController implements Initializable {
             spay /= divider;
             spaz /= divider;
             setGUIcoords(probe, spax, spay, spaz);
-            double probeAngleX = Math.atan2(titan.getTranslateY() - probe.getTranslateY(), titan.getTranslateX() - probe.getTranslateX());
-            probe.setRotate(90 + probeAngleX*90);
+            if(App.goingBack){
+                double probeAngleX = Math.atan2(earth.getTranslateY() - probe.getTranslateY(), earth.getTranslateX() - probe.getTranslateX());
+                probe.setRotate(probeAngleX*90);
+            } else {
+                double probeAngleX = Math.atan2(titan.getTranslateY() - probe.getTranslateY(), titan.getTranslateX() - probe.getTranslateX());
+                probe.setRotate(90 + probeAngleX*90);
+            }
             
             if(lastSpacePos[0] == 5E40){
 
@@ -1250,7 +1273,7 @@ public class SolarScene3DController implements Initializable {
                 force = force.mul(-10/force.norm());
             } 
             else if (dis.norm() < 1.3e7) {
-                titanOrbit = true;
+                enterTitanOrbit();
             }
         }
 
