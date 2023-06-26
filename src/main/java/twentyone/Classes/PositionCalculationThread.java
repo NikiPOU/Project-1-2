@@ -18,9 +18,9 @@ public class PositionCalculationThread implements Runnable{
     private Euler unreal = new Euler();
     /**
      * The {@code Verlet Solver}
-     * @see twentyone.Classes.VerletSolver
+     * @see twentyone.Classes.Verlet
      */
-    private VerletSolver verlet = new VerletSolver();
+    private Verlet verlet = new Verlet();
     /**
      * The {@code Runge-Kutta Solver}
      * @see twentyone.Classes.RungeKutta

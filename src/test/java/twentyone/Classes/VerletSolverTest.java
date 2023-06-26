@@ -11,7 +11,7 @@ public class VerletSolverTest {
     @Test
     public void testVerlet() {
         initiateCB();
-        VerletSolver v = new VerletSolver();
+        Verlet v = new Verlet();
 
         bodies = v.verlet(bodies, 3, 1);
         Vector3d earth1sec = bodies[3].getPosition();

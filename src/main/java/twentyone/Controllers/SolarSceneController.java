@@ -35,7 +35,7 @@ import twentyone.App;
 import twentyone.Classes.CelestialBody;
 import twentyone.Classes.Euler;
 import twentyone.Classes.Vector3d;
-import twentyone.Classes.VerletSolver;
+import twentyone.Classes.Verlet;
 import twentyone.Classes.Rocket;
 
 public class SolarSceneController implements Initializable {
@@ -261,7 +261,7 @@ public class SolarSceneController implements Initializable {
         public void handle(ActionEvent event) {
             //Unreal_Engine unreal = new Unreal_Engine();
             //AdamsBashforth a = new AdamsBashforth();
-            VerletSolver v = new VerletSolver();
+            Verlet v = new Verlet();
 
             //Run the Euler's method to get the next position and velocity of all celestial bodies + probe
             for (int i = 0; i < eulerLoops; i++) {

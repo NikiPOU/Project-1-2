@@ -4,7 +4,7 @@ package twentyone.Classes;
  * A {@code Abstract Class} that gets extended by other classes.
  * @see twentyone.Classes.AdamsBashforth
  * @see twentyone.Classes.Euler
- * @see twentyone.Classes.VerletSolver
+ * @see twentyone.Classes.Verlet
  */
 public abstract class Solver {
     /**Gravitational constant*/

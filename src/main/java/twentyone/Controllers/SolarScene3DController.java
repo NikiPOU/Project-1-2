@@ -45,7 +45,7 @@ import twentyone.Classes.PositionCalculationThread;
 import twentyone.Classes.Rocket;
 import twentyone.Classes.RungeKutta;
 import twentyone.Classes.Vector3d;
-import twentyone.Classes.VerletSolver;
+import twentyone.Classes.Verlet;
 import twentyone.Classes.musicPlayer;
 
 public class SolarScene3DController implements Initializable {
@@ -67,9 +67,9 @@ public class SolarScene3DController implements Initializable {
     private Euler unreal = new Euler();
     /**
      * The {@code Verlet Solver}
-     * @see twentyone.Classes.VerletSolver
+     * @see twentyone.Classes.Verlet
      */
-    private VerletSolver verlet = new VerletSolver();
+    private Verlet verlet = new Verlet();
     /**
      * The {@code Runge-Kutta Solver}
      * @see twentyone.Classes.RungeKutta
@@ -98,7 +98,7 @@ public class SolarScene3DController implements Initializable {
      * @see twentyone.Classes.AdamsBashforth
      * @see twentyone.Classes.AdamsMoulton
      * @see twentyone.Classes.Euler
-     * @see twentyone.Classes.VerletSolver
+     * @see twentyone.Classes.Verlet
      * @see twentyone.Classes.RungeKutta
      */
     private int chosenSolver = App.chosenSolver;
@@ -1192,7 +1192,7 @@ public class SolarScene3DController implements Initializable {
     /**
      * Sets the used Solver method to Verlet.
      * @see MenuItem
-     * @see twentyone.Classes.VerletSolver
+     * @see twentyone.Classes.Verlet
      */
     @FXML
     public void onVerletButton(){

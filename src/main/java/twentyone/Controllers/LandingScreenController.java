@@ -201,7 +201,7 @@ public class Movement implements EventHandler<ActionEvent> {
      * Sets the used Solver method to Verlet.
      * 
      * @see MenuItem
-     * @see twentyone.Classes.VerletSolver
+     * @see twentyone.Classes.Verlet
      */
     @FXML
     public void onVerletButton() {

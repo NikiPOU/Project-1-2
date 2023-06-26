@@ -39,7 +39,7 @@ public class solverChooserScreenController {
      * When the {@code Verlet Button} gets pressed, the chosen {@code Solver} will be set to the {@code Verlet solver}. It will then change to the next screen.
      * @throws IOException
      * @see twentyone.Classes.Solver
-     * @see twentyone.Classes.VerletSolver
+     * @see twentyone.Classes.Verlet
      * @see javafx.scene.control.Button
      */
     @FXML

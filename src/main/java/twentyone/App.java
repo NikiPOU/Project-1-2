@@ -133,7 +133,7 @@ public class App extends Application {
      * @see twentyone.Classes.AdamsBashforth
      * @see twentyone.Classes.AdamsMoulton
      * @see twentyone.Classes.Euler
-     * @see twentyone.Classes.VerletSolver
+     * @see twentyone.Classes.Verlet
      * @see twentyone.Classes.RungeKutta
      */
     public static int chosenSolver;
