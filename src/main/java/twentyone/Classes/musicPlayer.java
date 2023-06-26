@@ -20,12 +20,12 @@ public class MusicPlayer {
     private boolean isRunning = false;
 
     /**
-     * Creates a new musicPlayer.
+     * Creates a new MusicPlayer.
      */
     public MusicPlayer(){}
 
     /**
-     * Creates a new musicPlayer with the correct fileName.
+     * Creates a new MusicPlayer with the correct fileName.
      * @param fileName as a {@code String}
      */
     public MusicPlayer(String fileName){
