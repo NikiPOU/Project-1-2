@@ -81,7 +81,7 @@ public class LandingScreenController implements Initializable {
                 new Vector3d(App.titanVel.getX(), App.titanVel.getY(), App.titanVel.getZ()));
         e = new Euler();
 
-        App.eulerLoops = 1;
+        App.eulerLoops = 60;
         App.stepSize = 1;
 
         // convertTime(App.totalSeconds);
